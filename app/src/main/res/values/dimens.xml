@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_small">12dp</dimen>
+    <dimen name="margin_medium">20dp</dimen>
+    <dimen name="margin_large">28dp</dimen>
+    <dimen name="margin_xLarge">32dp</dimen>
+
+    <dimen name="padding_small">12dp</dimen>
+    <dimen name="padding_medium">20dp</dimen>
+    <dimen name="padding_large">28dp</dimen>
+    <dimen name="padding_xLarge">32dp</dimen>
+
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_medium">20sp</dimen>
+    <dimen name="font_large">28sp</dimen>
+    <dimen name="font_xLarge">32sp</dimen>
+
+    <dimen name="borderRadius_small">10dp</dimen>
+    <dimen name="borderRadius_medium">20dp</dimen>
+    <dimen name="borderRadius_large">30dp</dimen>
+    <dimen name="borderRadius_xLarge">40dp</dimen>
+</resources>

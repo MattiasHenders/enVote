@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TemplateView"
+    android:background="@color/background_beige">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_small"
+        android:paddingBottom="@dimen/padding_xLarge"
+        app:cardCornerRadius="@dimen/borderRadius_large">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_small"
+            android:background="@color/green_forest">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="@dimen/borderRadius_large">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_small"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/filler_title"
+                            android:textSize="@dimen/font_xLarge"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/filler_text"
+                            android:textSize="@dimen/font_medium"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/filler_text"
+                            android:textSize="@dimen/font_large"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green_bright"
+        android:text="@string/email_send"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_medium"
+        android:layout_gravity="bottom|end"
+        android:padding="@dimen/padding_small"
+        app:icon="@drawable/ic_baseline_email_24"
+        app:iconTint="@color/white"
+        app:iconPadding="@dimen/padding_small"
+        android:layout_margin="@dimen/margin_medium"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
