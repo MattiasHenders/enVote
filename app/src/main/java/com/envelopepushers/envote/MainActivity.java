@@ -14,5 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, TemplateView.class);
         startActivity(i);
+
+        Intent i2 = new Intent(this, LocationSelectMap.class);
+        startActivity(i2);
     }
 }

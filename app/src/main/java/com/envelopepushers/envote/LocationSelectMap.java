@@ -10,40 +10,27 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
+
 public class LocationSelectMap extends AppCompatActivity {
+
+    private MapView mapMain;
+    private MapController mapController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_select_map);
 
-        WebView webView = findViewById(R.id.webView);
-        final ProgressBar progressBar = findViewById(R.id.progressBar);
-
-        // Enable JavaScript for the web view
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        // Load URLs in the web view, not in browser app
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false;
-            }
-        });
-
-        // Display the progress bar until the page is 100% loaded
-        webView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                if (progress == 100) {
-                    progressBar.setVisibility(View.GONE);
-                }
-                else {
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        //TODO: Put this in strings.xml getResources().getString("")
-        webView.loadUrl("https://www.bcit.ca");
+        mapMain = (MapView) findViewById(R.id.map_main);
+        mapMain.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+        mapMain.setBuiltInZoomControls(true);
+        mapController = (MapController) mapMain.getController();
+        mapController.setZoom(13);
+        GeoPoint gPt = new GeoPoint(51500000, -150000);
+        mapController.setCenter(gPt);
     }
 }

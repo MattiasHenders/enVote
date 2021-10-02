@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LocationSelectMap">
+    tools:context=".LocationSelectMap"
+    android:background="@color/background_beige">
 
-    <WebView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webView" />
+        android:layout_margin="@dimen/margin_small"
+        app:cardCornerRadius="@dimen/borderRadius_large">
 
-    <ProgressBar
+        <org.osmdroid.views.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map_main"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
+    </androidx.cardview.widget.CardView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_gravity="center" />
-</FrameLayout>
+        android:backgroundTint="@color/green_bright"
+        android:text="@string/location_select"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_medium"
+        android:layout_gravity="bottom|end"
+        android:padding="@dimen/padding_small"
+        app:icon="@drawable/ic_baseline_location_on_24"
+        app:iconTint="@color/white"
+        app:iconPadding="@dimen/padding_small"
+        android:layout_margin="@dimen/margin_medium"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
