@@ -23,7 +23,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/borderRadius_large">
 
                     <LinearLayout
@@ -33,22 +33,23 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_email_to_line"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/filler_title"
                             android:textSize="@dimen/font_xLarge"/>
 
                         <TextView
+                            android:id="@+id/text_email_subject"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/filler_text"
-                            android:textSize="@dimen/font_medium"/>
+                            android:textSize="@dimen/font_large"/>
 
                         <TextView
+                            android:id="@+id/text_email_body"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/filler_text"
-                            android:textSize="@dimen/font_large"/>
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:textSize="@dimen/font_medium"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -56,6 +57,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_send_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_bright"

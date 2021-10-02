@@ -19,10 +19,12 @@
             android:id="@+id/map_main"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            tilesource="Mapnik"
             android:clickable="true" />
-
     </androidx.cardview.widget.CardView>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_location_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_bright"
