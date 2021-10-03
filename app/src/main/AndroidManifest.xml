@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.envelopepushers.envote">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnVote"
         tools:replace="android:allowBackup">
+        <activity
+            android:name=".activity_representative_and_issue_confirmation"
+            android:exported="true" />
+        <activity
+            android:name=".activity_representative_select"
+            android:exported="true" />
+        <activity
+            android:name=".activity_issue_select"
+            android:exported="true" />
         <activity
             android:name=".TemplateView"
             android:exported="true" />
