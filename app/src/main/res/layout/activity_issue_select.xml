@@ -33,7 +33,6 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:text="Showmore..."
         android:textAllCaps="false"
-
         android:layout_height="wrap_content" />
 
     <TextView

@@ -10,4 +10,7 @@
     <string name="issue1">This is the text for issue 1. It is expandable, which means I need to make this string relatively long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="issue2">This is the text for issue 2. It is expandable, which means I need to make this string relatively long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
 
+    <string name="repName1">Representative name</string>
+    <string name="repDesc1">Representative description</string>
+
 </resources>
