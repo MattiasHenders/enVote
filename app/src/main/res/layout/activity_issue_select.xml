@@ -32,7 +32,7 @@
                 android:id="@+id/showMore1"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:text="@string/showmore"
+                android:text="Showmore..."
                 android:textAllCaps="false"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"/>
@@ -55,7 +55,7 @@
         android:orientation="vertical"
         >
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView2"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
@@ -70,10 +70,10 @@
             android:orientation="horizontal"
             >
             <Button
-                android:id="@+id/showMore1"
+                android:id="@+id/showMore2"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:text="@string/showmore"
+                android:text="Showmore..."
                 android:textAllCaps="false"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"/>
