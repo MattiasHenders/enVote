@@ -1,41 +1,40 @@
 package com.envelopepushers.envote;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ProgressBar;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.common.api.Response;
 
+import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.compass.CompassOverlay;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class LocationSelectMap extends Activity implements LocationListener {
 
@@ -96,12 +95,16 @@ public class LocationSelectMap extends Activity implements LocationListener {
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String callURL = "https://represent.opennorth.ca/representatives/?point=" + userLat +"%2C" + userLon;
+                System.out.println(new JsonFromWeb(callURL).getJSONString());
+
                 openActivityIssue();
             }
         });
     }
 
-    @Override
+        @Override
     public void onLocationChanged(Location location) {
         System.out.println("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         userLat = location.getLatitude();
@@ -148,6 +151,5 @@ public class LocationSelectMap extends Activity implements LocationListener {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
     }
-
 
 }
