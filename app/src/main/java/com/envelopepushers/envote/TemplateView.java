@@ -46,7 +46,7 @@ public class TemplateView extends AppCompatActivity {
 
         textEmailTo.setText(getString(R.string.email_to) + " PM Mattias");
         textSubject.setText(getString(R.string.email_subject) + " Fix the Water!");
-        textBody.setText(getString(R.string.filler_text));
+        textBody.setText(getString(R.string.filler_text) + getString(R.string.filler_text));
 
     }
 }

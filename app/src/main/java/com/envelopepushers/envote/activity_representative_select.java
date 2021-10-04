@@ -27,5 +27,6 @@ public class activity_representative_select extends AppCompatActivity {
     public void openActivity() {
         Intent intent = new Intent(this, TemplateView.class);
         startActivity(intent);
+        finish();
     }
 }
