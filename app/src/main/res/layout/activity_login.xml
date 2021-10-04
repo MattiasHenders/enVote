@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:textColor="#369B40"
             android:text="@string/signup" />
+
     </LinearLayout>
 
 
