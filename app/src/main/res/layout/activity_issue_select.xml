@@ -7,53 +7,88 @@
     tools:context=".activity_issue_select"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/nextPageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="665dp"
-        />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:maxLines="3"
-        android:text="@string/issue1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:maxLines="3"
+            android:text="@string/issue1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/showMore1"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:text="@string/showmore"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+            <Button
+                android:id="@+id/nextPageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select"
+                tools:layout_editor_absoluteX="294dp"
+                tools:layout_editor_absoluteY="665dp"
+                android:textAllCaps="false"
+                android:layout_margin="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/showMore1"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:text="Showmore..."
-        android:textAllCaps="false"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:maxLines="3"
-        android:text="@string/issue2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-
-    <Button
-        android:id="@+id/showMore2"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:text="Showmore..."
-        android:textAllCaps="false"
-
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:maxLines="3"
+            android:text="@string/issue1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/showMore1"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:text="@string/showmore"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+            <Button
+                android:id="@+id/nextPageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select"
+                tools:layout_editor_absoluteX="294dp"
+                tools:layout_editor_absoluteY="665dp"
+                android:textAllCaps="false"
+                android:layout_margin="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
