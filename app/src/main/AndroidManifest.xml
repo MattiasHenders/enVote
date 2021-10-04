@@ -20,6 +20,9 @@
         android:theme="@style/Theme.EnVote"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity

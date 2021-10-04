@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_beige"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/imgSize_large"
+        android:layout_marginLeft="@dimen/margin_xLarge"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_xLarge"
+        android:layout_marginBottom="@dimen/margin_xLarge"
+        android:src="@drawable/ic_envote_logo"
+        tools:ignore="ImageContrastCheck" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/signinNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xLarge"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:text="@string/signinNote" />
+
+        <TextView
+            android:id="@+id/signinLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#369B40"
+            android:text="@string/signin" />
+    </LinearLayout>
+
+</LinearLayout>
