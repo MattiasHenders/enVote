@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -60,14 +61,24 @@ public class LocationSelectMap extends AppCompatActivity {
         btnSubmitLocation = findViewById(R.id.btn_location_submit);
 
         //OnClickListeners Set
+//        btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                openActivityIssue();
             }
         });
     }
 
+    public void openActivityIssue() {
+        Intent intent = new Intent(this, activity_issue_select.class);
+        startActivity(intent);
+    }
     public void onResume(){
         super.onResume();
         mapMain.onResume();

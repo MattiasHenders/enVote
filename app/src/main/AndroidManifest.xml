@@ -23,6 +23,15 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
+        android:name=".activity_representative_and_issue_confirmation"
+            android:exported="true" />
+        <activity
+            android:name=".activity_representative_select"
+            android:exported="true" />
+        <activity
+            android:name=".activity_issue_select"
+            android:exported="true" />
+        <activity
             android:name=".TemplateView"
             android:exported="true" />
         <activity
