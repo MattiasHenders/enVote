@@ -1,33 +1,39 @@
 package com.envelopepushers.envote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.j256.ormlite.stmt.query.In;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    LinearLayout pastEmailsLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        pastEmailsLayout = findViewById(R.id.container_past_emails);
-
         generagePastEmailCards();
+
+        setBottomNavBar();
     }
 
     private void generagePastEmailCards() {
@@ -44,6 +50,10 @@ public class HomeActivity extends AppCompatActivity {
                 (int)getResources().getDimension(R.dimen.borderRadius_medium));
 
         pastEmailCard.setLayoutParams(cardLayoutParams);
+
+        ViewGroup.MarginLayoutParams cardViewMarginParams = (ViewGroup.MarginLayoutParams) pastEmailCard.getLayoutParams();
+        cardViewMarginParams.setMargins(50, 30, 50, 30);
+        pastEmailCard.requestLayout();
 
         LinearLayout cardHolderLayout = new LinearLayout(this);
         cardHolderLayout.setOrientation(LinearLayout.VERTICAL);
@@ -128,5 +138,39 @@ public class HomeActivity extends AppCompatActivity {
         view.addView(pastEmailCard, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+    }
+    private void setBottomNavBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.action_new) {
+                    openMapActivity();
+                    return true;
+                }
+                if (item.getItemId() == R.id.action_browse) {
+                    openHomeActivity();
+                    return true;
+                }
+                if (item.getItemId() == R.id.action_profile) {
+                    openIssueActivity();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void openMapActivity() {
+        startActivity(new Intent(this, LocationSelectMap.class));
+    }
+
+    private void openHomeActivity() {
+        startActivity(new Intent(this, HomeActivity.class));
+    }
+
+    private void openIssueActivity() {
+        startActivity(new Intent(this, activity_issue_select.class));
     }
 }
