@@ -78,6 +78,7 @@ public class LocationSelectMap extends AppCompatActivity {
     public void openActivityIssue() {
         Intent intent = new Intent(this, activity_issue_select.class);
         startActivity(intent);
+        finish();
     }
     public void onResume(){
         super.onResume();

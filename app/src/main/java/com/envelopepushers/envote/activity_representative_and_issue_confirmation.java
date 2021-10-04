@@ -26,5 +26,6 @@ public class activity_representative_and_issue_confirmation extends AppCompatAct
     public void openActivity() {
         Intent intent = new Intent(this, LocationSelectMap.class);
         startActivity(intent);
+        finish();
     }
 }

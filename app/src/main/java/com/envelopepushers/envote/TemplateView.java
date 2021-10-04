@@ -2,10 +2,13 @@ package com.envelopepushers.envote;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.j256.ormlite.stmt.query.In;
 
 public class TemplateView extends AppCompatActivity {
 
@@ -29,11 +32,11 @@ public class TemplateView extends AppCompatActivity {
 
         btnSendEmail = findViewById(R.id.btn_send_email);
 
-
         //OnClickListeners Set
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openHomeActivity();
                 finish();
             }
         });
@@ -47,6 +50,20 @@ public class TemplateView extends AppCompatActivity {
         textEmailTo.setText(getString(R.string.email_to) + " PM Mattias");
         textSubject.setText(getString(R.string.email_subject) + " Fix the Water!");
         textBody.setText(getString(R.string.filler_text) + getString(R.string.filler_text));
+    }
 
+    private void openMapActivity() {
+        startActivity(new Intent(this, LocationSelectMap.class));
+        finish();
+    }
+
+    private void openHomeActivity() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
+    }
+
+    private void openIssueActivity() {
+        startActivity(new Intent(this, activity_issue_select.class));
+        finish();
     }
 }
