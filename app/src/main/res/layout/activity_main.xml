@@ -4,89 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_beige"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="275dp"
-        android:layout_height="111dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="180dp"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo1" />
-
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="231dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="43dp"
-        android:background="@drawable/rounded_corner"
-        android:elevation="10dp"
-        android:text="@string/loginUsername"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="230dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="48dp"
-        android:background="@drawable/rounded_corner"
-        android:elevation="10dp"
-        android:text="@string/loginPass"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-    <Button
-        android:id="@+id/login"
-        android:layout_width="153dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="38dp"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="#369B40"
-        android:text="@string/login"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/signupLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
     <TextView
-        android:id="@+id/signupNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="22dp"
-        android:text="@string/signupNote"
-        app:layout_constraintEnd_toStartOf="@+id/signupLink"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/signupLink" />
-
-    <TextView
-        android:id="@+id/signupLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="75dp"
-        android:text="@string/signup"
+        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/signupNote"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

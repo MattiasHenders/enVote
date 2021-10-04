@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent i3 = new Intent(this, HomeActivity.class);
 
-        startActivity(i3);
+        Intent i4 = new Intent(this, LoginActivity.class);
+        startActivity(i4);
     }
 }
