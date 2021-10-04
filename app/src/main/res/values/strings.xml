@@ -29,6 +29,9 @@
     <string name="conservative">Conservative</string>
     <string name="select">Select</string>
 
+    <string name="showmore">Show More</string>
+
+
 
     <string name="loginUsername">Username</string>
     <string name="loginPass">Password</string>
