@@ -22,5 +22,10 @@
 
     <string name="repName1">Representative name</string>
     <string name="repDesc1">Representative description</string>
+    <string name="loginUsername">Username</string>
+    <string name="loginPass">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="signupNote">Don\'t have an account?</string>
+    <string name="signup">Sign Up</string>
 
 </resources>
