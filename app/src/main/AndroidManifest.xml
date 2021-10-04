@@ -20,7 +20,10 @@
         android:theme="@style/Theme.EnVote"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".activity_representative_and_issue_confirmation"
+            android:name=".HomeActivity"
+            android:exported="true" />
+        <activity
+        android:name=".activity_representative_and_issue_confirmation"
             android:exported="true" />
         <activity
             android:name=".activity_representative_select"

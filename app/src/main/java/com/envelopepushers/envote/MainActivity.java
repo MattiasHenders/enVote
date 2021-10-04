@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
         Intent i2 = new Intent(this, LocationSelectMap.class);
         startActivity(i2);
 
-        Intent i3 = new Intent(this, LocationSelectMap.class);
+        Intent i3 = new Intent(this, HomeActivity.class);
+
         startActivity(i3);
     }
 }
