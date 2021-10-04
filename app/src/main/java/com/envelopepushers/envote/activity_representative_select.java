@@ -25,7 +25,7 @@ public class activity_representative_select extends AppCompatActivity {
         });
     }
     public void openActivity() {
-        Intent intent = new Intent(this, activity_representative_and_issue_confirmation.class);
+        Intent intent = new Intent(this, TemplateView.class);
         startActivity(intent);
     }
 }
