@@ -27,7 +27,7 @@
         android:id="@+id/btn_location_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_bright"
+        android:backgroundTint="@color/green_dark"
         android:text="@string/location_select"
         android:textColor="@color/white"
         android:textSize="@dimen/font_medium"
