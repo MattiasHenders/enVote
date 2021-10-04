@@ -22,5 +22,6 @@
 
     <string name="repName1">Representative name</string>
     <string name="repDesc1">Representative description</string>
+    <string name="select">Select</string>
 
 </resources>

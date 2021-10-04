@@ -3,9 +3,9 @@
     <color name="background_beige">#F0EAD2</color>
     <color name="dull_grey">#C4C4C4</color>
     <color name="dark_grey">#797979</color>
-    <color name="green_dark">#203D24</color>
+<!--    <color name="green_dark">#203D24</color>-->
     <color name="green_forest">#507A52</color>
-    <color name="green_bright">#369B40</color>
+<!--    <color name="green_bright">#369B40</color>-->
     <color name="white">#FFFFFF</color>
 
     <color name="blue_dark">#000F42</color>
