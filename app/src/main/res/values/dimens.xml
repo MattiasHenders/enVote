@@ -4,6 +4,7 @@
     <dimen name="margin_medium">20dp</dimen>
     <dimen name="margin_large">28dp</dimen>
     <dimen name="margin_xLarge">32dp</dimen>
+    <dimen name="margin_xxxLarge">100dp</dimen>
 
     <dimen name="padding_small">12dp</dimen>
     <dimen name="padding_medium">20dp</dimen>
@@ -19,4 +20,10 @@
     <dimen name="borderRadius_medium">20dp</dimen>
     <dimen name="borderRadius_large">30dp</dimen>
     <dimen name="borderRadius_xLarge">40dp</dimen>
+
+    <dimen name="imgSize_xSmall">25dp</dimen>
+    <dimen name="imgSize_small">50dp</dimen>
+    <dimen name="imgSize_medium">100dp</dimen>
+    <dimen name="imgSize_large">125dp</dimen>
+    <dimen name="imgSize_xLarge">150dp</dimen>
 </resources>

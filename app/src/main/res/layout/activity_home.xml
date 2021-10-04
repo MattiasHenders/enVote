@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    android:background="@color/background_beige"
+    android:orientation="vertical">
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/imgSize_large"
+        android:layout_marginLeft="@dimen/margin_xLarge"
+        android:layout_marginRight="@dimen/margin_xLarge"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_xLarge"
+        android:src="@drawable/ic_envote_logo" />
+
+    <LinearLayout
+        android:id="@+id/container_past_emails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_past_emails_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/borderRadius_xLarge">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_medium"
+                android:gravity="center"
+                android:background="@color/green_dark">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/imgSize_small"
+                    android:minWidth="@dimen/imgSize_small"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_baseline_access_time_filled_24" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/font_large"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:gravity="center"
+                    android:text="@string/home_past_message_title"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/borderRadius_medium">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_small"
+                android:background="@color/dull_grey">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/font_medium"
+                            android:layout_marginLeft="@dimen/margin_medium"
+                            android:text="@string/home_test_name"
+                            android:textColor="@color/dark_grey"/>
+
+                        <TextView
+                            android:id="@+id/home_past_msg_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/font_medium"
+                            android:layout_marginLeft="@dimen/margin_medium"
+                            android:textColor="@color/dark_grey"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/imgSize_small"
+                        android:minWidth="@dimen/imgSize_small"
+                        android:layout_marginStart="@dimen/margin_xxxLarge"
+                        app:tint="@color/dark_grey"
+                        android:src="@drawable/ic_baseline_eco_24"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:textSize="@dimen/font_small"
+                    android:text="@string/home_test_description"
+                    android:textColor="@color/dark_grey"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView-->
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_nav"
+        android:background="@color/green_forest"/>
+
+</LinearLayout>
