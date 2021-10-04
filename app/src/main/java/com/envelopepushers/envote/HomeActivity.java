@@ -164,13 +164,16 @@ public class HomeActivity extends AppCompatActivity {
 
     private void openMapActivity() {
         startActivity(new Intent(this, LocationSelectMap.class));
+        finish();
     }
 
     private void openHomeActivity() {
         startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     private void openIssueActivity() {
         startActivity(new Intent(this, activity_issue_select.class));
+        finish();
     }
 }
