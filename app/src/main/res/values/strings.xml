@@ -9,6 +9,7 @@
     <string name="home_test_name">Mattias Henders</string>
     <string name="home_test_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 
+    <string name="location_loading">Loading Location...</string>
     <string name="location_select">Select Location</string>
 
     <string name="email_to">To:</string>

@@ -39,7 +39,6 @@ public class JsonFromWeb {
 
         protected String doInBackground(String... params) {
 
-
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 

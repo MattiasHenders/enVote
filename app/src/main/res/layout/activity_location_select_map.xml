@@ -32,8 +32,23 @@
         android:textColor="@color/white"
         android:textSize="@dimen/font_medium"
         android:layout_gravity="bottom|end"
+        android:visibility="gone"
         android:padding="@dimen/padding_small"
         app:icon="@drawable/ic_baseline_location_on_24"
+        app:iconTint="@color/white"
+        app:iconPadding="@dimen/padding_small"
+        android:layout_margin="@dimen/margin_medium"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/view_current_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green_dark"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_medium"
+        android:text="@string/location_loading"
+        android:layout_gravity="top|center"
+        android:padding="@dimen/padding_small"
         app:iconTint="@color/white"
         app:iconPadding="@dimen/padding_small"
         android:layout_margin="@dimen/margin_medium"/>

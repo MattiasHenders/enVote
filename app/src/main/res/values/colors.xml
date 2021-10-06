@@ -12,6 +12,8 @@
     <color name="blue">#002BB8</color>
     <color name="blue_bright">#ADC0FF</color>
 
+    <color name="green_darker">#005C08</color>
+    <color name="green_faded">#434CAF50</color>
     <color name="green_dark">#008F0C</color>
     <color name="green">#00DA31</color>
     <color name="green_bright">#99FFAF</color>
