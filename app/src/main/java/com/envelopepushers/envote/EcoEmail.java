@@ -151,18 +151,15 @@ public class EcoEmail {
         JSONArray deliveredToArr = null;
 
         try {
-            System.out.println("DUMMY" + (JSONArray) emailObject.get("deliveredTo"));
             deliveredToArr = (JSONArray) emailObject.get("deliveredTo");
-            System.out.println("TEST");
         } catch (JSONException e) {
             e.printStackTrace();
-            System.out.println("ERROR");
         }
 
-        try {
-            System.out.println(deliveredToArr.toString(2));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        //Empty array check
+        if (deliveredToArr.length() == 0) {
+            returnArray.add(new EmailReceiver());
+            return returnArray;
         }
 
         try {
@@ -215,6 +212,12 @@ public class EcoEmail {
 
         try {
             ecoIssuesArr = (JSONArray) emailObject.get("ecoIssues");
+
+            //Empty array check
+            if (ecoIssuesArr.length() == 0) {
+                returnArray.add(new EcoIssue());
+                return returnArray;
+            }
 
             for (int i = 0; i < ecoIssuesArr.length(); i++) {
 
