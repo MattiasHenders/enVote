@@ -6,6 +6,8 @@
     <string name="menu_browse">Browse</string>
 
     <string name="home_past_message_title">Your Past Messages</string>
+    <string name="home_no_email_title">No Past Emails</string>
+    <string name="home_no_email_body">Click to Create</string>
     <string name="home_test_name">Mattias Henders</string>
     <string name="home_test_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 

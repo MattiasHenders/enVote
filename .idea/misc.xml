@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/drawable/divider_small.xml" value="0.2703125" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/drawable/email_icon.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/drawable/ic_baseline_eco_24.xml" value="0.2703125" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2703125" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/drawable/ic_envote_logo.xml" value="0.2703125" />
-        <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/layout/activity_issue_select.xml" value="0.1" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/layout/activity_location_select_map.xml" value="0.21610169491525424" />
         <entry key="..\:/Users/hende/Documents/TERM3/MobileDev/Assignment1/enVote/app/src/main/res/layout/activity_login.xml" value="0.1" />
