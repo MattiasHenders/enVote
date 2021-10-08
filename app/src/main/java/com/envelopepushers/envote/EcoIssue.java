@@ -1,16 +1,31 @@
 package com.envelopepushers.envote;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+
 public class EcoIssue {
 
     private String name;
-    private String icon;
+    private int icon;
+    private int colour;
 
     /**
      * Eco Issue Default Constructor
      */
     public EcoIssue() {
         name = "";
-        icon = "";
+        icon = -1;
+        colour = -1;
+    }
+
+    /**
+     * Eco Issue Constructor using ENUM
+     * @param issues
+     */
+    public EcoIssue(EcoIssues issues) {
+        this.name = issues.getName();
+        this.icon = issues.getIcon();
+        this.colour = issues.getColour();
     }
 
     /**
@@ -18,9 +33,10 @@ public class EcoIssue {
      * @param name
      * @param icon
      */
-    public EcoIssue(String name, String icon) {
+    public EcoIssue(String name, int icon, int colour) {
         this.name = name;
         this.icon = icon;
+        this.colour = colour;
     }
 
     /**
@@ -43,15 +59,31 @@ public class EcoIssue {
      * Get Icon filename
      * @return icon location
      */
-    public String getIcon() {
+    public int getIcon() {
         return icon;
     }
 
     /**
-     * Set Icon filename
-     * @param icon filename
+     * Set Icon int
+     * @param icon int
      */
-    public void setIcon(String icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    /**
+     * Get Colour int
+     * @return colour int
+     */
+    public int getColour() {
+        return colour;
+    }
+
+    /**
+     * Set Colour int
+     * @param colour int
+     */
+    public void setColour(int colour) {
+        this.colour = colour;
     }
 }

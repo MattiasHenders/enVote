@@ -1,30 +1,22 @@
 package com.envelopepushers.envote;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.j256.ormlite.stmt.query.In;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
-import java.text.SimpleDateFormat;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", "M Party"));
         testEmail.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail.setDate(new Date());
+        testEmail.addEcoIssue(new EcoIssue(EcoIssues.WATER));
         pastEmails.add(testEmail);
         pastEmails.add(testEmail);
         pastEmails.add(testEmail);
@@ -53,12 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         if (pastEmails.size() == 0) {
             noPastEmailsButton.setVisibility(View.VISIBLE);
 
-            noPastEmailsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openMapActivity();
-                }
-            });
+            noPastEmailsButton.setOnClickListener(view -> openMapActivity());
         } else {
             generagePastEmailCards();
         }
@@ -69,39 +57,33 @@ public class HomeActivity extends AppCompatActivity {
     private void setBottomNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.action_new) {
-                    openMapActivity();
-                    return true;
-                }
-                if (item.getItemId() == R.id.action_browse) {
-                    openHomeActivity();
-                    return true;
-                }
-                if (item.getItemId() == R.id.action_profile) {
-                    openIssueActivity();
-                    return true;
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.action_new) {
+                openMapActivity();
+                return true;
             }
+            if (item.getItemId() == R.id.action_browse) {
+                openHomeActivity();
+                return true;
+            }
+            if (item.getItemId() == R.id.action_profile) {
+                openIssueActivity();
+                return true;
+            }
+            return false;
         });
     }
 
     private void openMapActivity() {
         startActivity(new Intent(this, LocationSelectMap.class));
-        finish();
     }
 
     private void openHomeActivity() {
         startActivity(new Intent(this, HomeActivity.class));
-        finish();
     }
 
     private void openIssueActivity() {
         startActivity(new Intent(this, activity_issue_select.class));
-        finish();
     }
 
     private void generagePastEmailCards() {
@@ -199,10 +181,11 @@ public class HomeActivity extends AppCompatActivity {
             cardIconLayoutParams.setMarginStart((int) getResources().getDimension(R.dimen.margin_xxxLarge));
             cardIcon.setLayoutParams(cardIconLayoutParams);
 
-            cardIcon.setImageIcon(Icon.createWithResource(this, R.drawable.ic_baseline_eco_24));
+            //Get the first EcoIssue icon and color
+            cardIcon.setImageIcon(Icon.createWithResource(this, pastEmail.getEcoIssues().get(0).getIcon()));
             cardIcon.setMinimumHeight((int) getResources().getDimension(R.dimen.imgSize_small));
             cardIcon.setMinimumWidth((int) getResources().getDimension(R.dimen.imgSize_small));
-            cardIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.dark_grey)));
+            cardIcon.setImageTintList(ColorStateList.valueOf(getColor(pastEmail.getEcoIssues().get(0).getColour())));
 
             //Add items in reverse order to the layout holder
             headerTextLayout.addView(cardTitle);

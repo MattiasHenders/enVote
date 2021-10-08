@@ -194,6 +194,7 @@ public class EcoEmail {
             JSONObject holder = new JSONObject();
             holder.put("name", issue.getName());
             holder.put("icon", issue.getIcon());
+            holder.put("colour", issue.getColour());
 
             emailObject.put("ecoIssues", ecoIssues.put(holder));
         } catch (JSONException e) {
@@ -226,7 +227,8 @@ public class EcoEmail {
                 returnArray.add(
                         new EcoIssue(
                                 ecoIssue.getString("name"),
-                                ecoIssue.getString("icon")));
+                                ecoIssue.getInt("icon"),
+                                ecoIssue.getInt("colour")));
             }
 
         } catch (JSONException e) {
