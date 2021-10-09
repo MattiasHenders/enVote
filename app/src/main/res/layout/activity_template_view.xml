@@ -67,6 +67,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_gravity="bottom|end"
         android:padding="@dimen/padding_small"
         app:icon="@drawable/ic_baseline_email_24"
+        android:elevation="@dimen/margin_small"
         app:iconTint="@color/white"
         app:iconPadding="@dimen/padding_small"
         android:layout_margin="@dimen/margin_medium"/>

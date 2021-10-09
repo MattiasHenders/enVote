@@ -7,6 +7,7 @@ public class EcoIssue {
     private int icon;
     private int colourLight;
     private int colourDark;
+    private String apiLink;
 
     /**
      * Eco Issue Constructor using ENUM
@@ -18,6 +19,7 @@ public class EcoIssue {
         this.icon = issues.getIcon();
         this.colourLight = issues.getColourLight();
         this.colourDark = issues.getColourDark();
+        this.apiLink = issues.getAPILink();
     }
 
     /**
@@ -90,5 +92,21 @@ public class EcoIssue {
      */
     public void setColourDark(int colourDark) {
         this.colourDark = colourDark;
+    }
+
+    /**
+     * Get apiLink
+     * @return apiLink
+     */
+    public String getAPILink() {
+        return apiLink;
+    }
+
+    /**
+     * Set apiLink
+     * @param apiLink int
+     */
+    public void setAPILink(String apiLink) {
+        this.apiLink = apiLink;
     }
 }
