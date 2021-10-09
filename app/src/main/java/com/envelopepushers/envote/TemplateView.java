@@ -30,7 +30,7 @@ public class TemplateView extends AppCompatActivity {
         textSubject = findViewById(R.id.text_email_subject);
         textBody = findViewById(R.id.text_email_body);
 
-        EcoEmail newEmail = new EcoEmail();
+        EcoEmail newEmail = getIntent().getParcelableExtra("ecoEmail");
 
         //Get the String from the email Object and pull info to the template
         ArrayList<EmailReceiver> emailRecievers = newEmail.getDeliveredTo();
