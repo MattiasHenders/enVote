@@ -7,7 +7,6 @@ import org.osmdroid.util.GeoPoint;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class EcoEmail {
@@ -192,9 +191,7 @@ public class EcoEmail {
 
         try {
             JSONObject holder = new JSONObject();
-            holder.put("name", issue.getName());
-            holder.put("icon", issue.getIcon());
-            holder.put("colour", issue.getColour());
+            holder.put("key", issue.getKey());
 
             emailObject.put("ecoIssues", ecoIssues.put(holder));
         } catch (JSONException e) {
@@ -216,7 +213,7 @@ public class EcoEmail {
 
             //Empty array check
             if (ecoIssuesArr.length() == 0) {
-                returnArray.add(new EcoIssue());
+                returnArray.add(new EcoIssue(EcoIssues.EMPTY));
                 return returnArray;
             }
 
@@ -224,15 +221,13 @@ public class EcoEmail {
 
                 JSONObject ecoIssue = (JSONObject) ecoIssuesArr.get(i);
 
-                returnArray.add(
-                        new EcoIssue(
-                                ecoIssue.getString("name"),
-                                ecoIssue.getInt("icon"),
-                                ecoIssue.getInt("colour")));
+                returnArray.add(new EcoIssue(EcoIssues.valueOf(ecoIssue.getString("key"))));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+            returnArray.clear();
+            returnArray.add(new EcoIssue(EcoIssues.EMPTY));
             return returnArray;
         }
         return returnArray;

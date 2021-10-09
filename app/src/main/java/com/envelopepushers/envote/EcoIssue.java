@@ -1,42 +1,31 @@
 package com.envelopepushers.envote;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-
 public class EcoIssue {
 
+    private String key;
     private String name;
     private int icon;
-    private int colour;
-
-    /**
-     * Eco Issue Default Constructor
-     */
-    public EcoIssue() {
-        name = "";
-        icon = -1;
-        colour = -1;
-    }
+    private int colourLight;
+    private int colourDark;
 
     /**
      * Eco Issue Constructor using ENUM
      * @param issues
      */
     public EcoIssue(EcoIssues issues) {
+        this.key = issues.getKey();
         this.name = issues.getName();
         this.icon = issues.getIcon();
-        this.colour = issues.getColour();
+        this.colourLight = issues.getColourLight();
+        this.colourDark = issues.getColourDark();
     }
 
     /**
-     * Eco Issue Constructor
-     * @param name
-     * @param icon
+     * Get Key
+     * @return key
      */
-    public EcoIssue(String name, int icon, int colour) {
-        this.name = name;
-        this.icon = icon;
-        this.colour = colour;
+    public String getKey() {
+        return key;
     }
 
     /**
@@ -75,15 +64,31 @@ public class EcoIssue {
      * Get Colour int
      * @return colour int
      */
-    public int getColour() {
-        return colour;
+    public int getColourLight() {
+        return colourLight;
     }
 
     /**
      * Set Colour int
-     * @param colour int
+     * @param colourLight int
      */
-    public void setColour(int colour) {
-        this.colour = colour;
+    public void setColourLight(int colourLight) {
+        this.colourLight = colourLight;
+    }
+
+    /**
+     * Get Colour Dark int
+     * @return colour int
+     */
+    public int getColourDark() {
+        return colourDark;
+    }
+
+    /**
+     * Set Colour Dark int
+     * @param colourDark int
+     */
+    public void setColourDark(int colourDark) {
+        this.colourDark = colourDark;
     }
 }

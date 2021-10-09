@@ -1,6 +1,5 @@
 package com.envelopepushers.envote;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
@@ -31,17 +30,37 @@ public class HomeActivity extends AppCompatActivity {
 
         CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
 
-        EcoEmail testEmail = new EcoEmail();
-        testEmail.addDeliveredTo(
+        EcoEmail testEmail0 = new EcoEmail();
+        testEmail0.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", "M Party"));
-        testEmail.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail.setDate(new Date());
-        testEmail.addEcoIssue(new EcoIssue(EcoIssues.WATER));
-        pastEmails.add(testEmail);
-        pastEmails.add(testEmail);
-        pastEmails.add(testEmail);
-        pastEmails.add(testEmail);
-        pastEmails.add(testEmail);
+        testEmail0.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
+        testEmail0.setDate(new Date());
+        testEmail0.addEcoIssue(new EcoIssue(EcoIssues.EMPTY));
+
+        EcoEmail testEmail1 = new EcoEmail();
+        testEmail1.addDeliveredTo(
+                new EmailReceiver("mattias@gmail.com", "Mattias Henders", "M Party"));
+        testEmail1.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
+        testEmail1.setDate(new Date());
+        testEmail1.addEcoIssue(new EcoIssue(EcoIssues.WATER));
+
+        EcoEmail testEmail2 = new EcoEmail();
+        testEmail2.addDeliveredTo(
+                new EmailReceiver("mattias@gmail.com", "Mattias Henders", "M Party"));
+        testEmail2.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
+        testEmail2.setDate(new Date());
+        testEmail2.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
+
+        EcoEmail testEmail3 = new EcoEmail();
+        testEmail3.addDeliveredTo(
+                new EmailReceiver("mattias@gmail.com", "Mattias Henders", "M Party"));
+        testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
+        testEmail3.setDate(new Date());
+        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
+        pastEmails.add(testEmail0);
+        pastEmails.add(testEmail1);
+        pastEmails.add(testEmail2);
+        pastEmails.add(testEmail3);
 
         if (pastEmails.size() == 0) {
             noPastEmailsButton.setVisibility(View.VISIBLE);
@@ -90,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
 
         for (EcoEmail pastEmail : pastEmails) {
 
+            EcoIssue currentTopIssue = pastEmail.getEcoIssues().get(0);
 
             LinearLayout cardHolder = new LinearLayout(this);
 
@@ -125,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
                     (int) getResources().getDimension(R.dimen.padding_medium),
                     (int) getResources().getDimension(R.dimen.padding_medium));
 
-            cardHolderLayout.setBackgroundColor(getColor(R.color.dull_grey));
+            cardHolderLayout.setBackgroundColor(getColor(currentTopIssue.getColourDark()));
             cardHolderLayout.setLayoutParams(cardHolderLayoutParams);
 
             //Set the Header Layout params and layout
@@ -148,13 +168,13 @@ public class HomeActivity extends AppCompatActivity {
             TextView cardTitle = new TextView(this);
             cardTitle.setText(pastEmail.getDeliveredTo().get(0).getFullName());
             cardTitle.setTextSize(24);
-            cardTitle.setTextColor(getColor(R.color.dark_grey));
+            cardTitle.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the sub-header as the date the email was sent
             TextView cardSubHeader = new TextView(this);
             cardSubHeader.setText(pastEmail.getDate());
             cardSubHeader.setTextSize(22);
-            cardSubHeader.setTextColor(getColor(R.color.dark_grey));
+            cardSubHeader.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the body as the first bit of the email
             TextView cardBody = new TextView(this);
@@ -171,7 +191,7 @@ public class HomeActivity extends AppCompatActivity {
             cardBody.setText(body.substring(0, MAX_BODY_PREVIEW));
             cardBody.setText(body);
             cardBody.setTextSize(14);
-            cardBody.setTextColor(getColor(R.color.dark_grey));
+            cardBody.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the image as the icon for the issue
             ImageView cardIcon = new ImageView(this);
@@ -182,10 +202,10 @@ public class HomeActivity extends AppCompatActivity {
             cardIcon.setLayoutParams(cardIconLayoutParams);
 
             //Get the first EcoIssue icon and color
-            cardIcon.setImageIcon(Icon.createWithResource(this, pastEmail.getEcoIssues().get(0).getIcon()));
+            cardIcon.setImageIcon(Icon.createWithResource(this, currentTopIssue.getIcon()));
             cardIcon.setMinimumHeight((int) getResources().getDimension(R.dimen.imgSize_small));
             cardIcon.setMinimumWidth((int) getResources().getDimension(R.dimen.imgSize_small));
-            cardIcon.setImageTintList(ColorStateList.valueOf(getColor(pastEmail.getEcoIssues().get(0).getColour())));
+            cardIcon.setImageTintList(ColorStateList.valueOf(getColor(currentTopIssue.getColourLight())));
 
             //Add items in reverse order to the layout holder
             headerTextLayout.addView(cardTitle);
