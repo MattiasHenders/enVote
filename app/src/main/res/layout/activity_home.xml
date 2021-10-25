@@ -8,8 +8,6 @@
     android:background="@color/background_beige"
     android:orientation="vertical">
 
-
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/imgSize_large"
@@ -20,7 +18,6 @@
         android:src="@drawable/ic_envote_logo" />
 
     <LinearLayout
-        android:id="@+id/container_past_emails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -38,7 +35,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="horizontal"
-                android:padding="@dimen/padding_medium"
+                android:padding="@dimen/padding_small"
                 android:gravity="center"
                 android:background="@color/green_dark">
 
@@ -53,15 +50,69 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/font_large"
-                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:textSize="@dimen/font_medium"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_small"
                     android:gravity="center"
                     android:text="@string/home_past_message_title"
                     android:textColor="@color/white"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="340dp"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:id="@+id/container_past_emails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/no_past_emails_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/borderRadius_xLarge"
+        android:layout_marginTop="@dimen/margin_xxxLarge"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_large"
+            android:orientation="vertical"
+            android:background="@color/green_darker">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/white"
+                android:text="@string/home_no_email_title"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_medium"
+                android:text="@string/home_no_email_body"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <FrameLayout
         android:layout_width="match_parent"

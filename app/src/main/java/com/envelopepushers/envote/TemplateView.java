@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.j256.ormlite.stmt.query.In;
 
+import java.util.ArrayList;
+
 public class TemplateView extends AppCompatActivity {
 
     public TextView textEmailTo;
@@ -28,7 +30,15 @@ public class TemplateView extends AppCompatActivity {
         textSubject = findViewById(R.id.text_email_subject);
         textBody = findViewById(R.id.text_email_body);
 
-        setEmailTemplate();
+        EcoEmail newEmail = getIntent().getParcelableExtra("ecoEmail");
+
+        //Get the String from the email Object and pull info to the template
+        ArrayList<EmailReceiver> emailRecievers = newEmail.getDeliveredTo();
+        String emailTo = emailRecievers.get(0).getEmail();
+        String emailSubject = newEmail.getSubject();
+        String emailBody = newEmail.getBody();
+
+        setEmailTemplate(emailTo, emailSubject, emailBody);
 
         btnSendEmail = findViewById(R.id.btn_send_email);
 
@@ -36,8 +46,7 @@ public class TemplateView extends AppCompatActivity {
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openHomeActivity();
-                finish();
+                startEmailIntent(emailRecievers, emailSubject, emailBody);
             }
         });
     }
@@ -45,11 +54,31 @@ public class TemplateView extends AppCompatActivity {
     /**
      * Sets the content in the email template.
      */
-    private void setEmailTemplate() {
+    private void setEmailTemplate(String emailTo, String emailSubject, String emailBody) {
 
-        textEmailTo.setText(getString(R.string.email_to) + " PM Mattias");
-        textSubject.setText(getString(R.string.email_subject) + " Fix the Water!");
-        textBody.setText(getString(R.string.filler_text) + getString(R.string.filler_text));
+        textEmailTo.setText(emailTo);
+        textSubject.setText(emailSubject);
+        textBody.setText(emailBody);
+    }
+
+    private void startEmailIntent(ArrayList<EmailReceiver> receivers, String subject, String body) {
+
+        //Get String array of who to send to
+        String[] to = new String[receivers.size()];
+        for (int i = 0; i < receivers.size(); i++) {
+            to[i] = receivers.get(i).getEmail();
+        }
+
+        //Send the email using local browser
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL, to);
+        email.putExtra(Intent.EXTRA_SUBJECT, subject);
+        email.putExtra(Intent.EXTRA_TEXT, body);
+
+        //Need this to prompts email client only
+        email.setType("message/rfc822");
+
+        startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
 
     private void openMapActivity() {
