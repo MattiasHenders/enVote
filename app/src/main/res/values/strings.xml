@@ -41,5 +41,7 @@
     <string name="login">LOGIN</string>
     <string name="signupNote">Don\'t have an account?</string>
     <string name="signup">Sign Up</string>
+    <string name="signinNote">Already have an account?</string>
+    <string name="signin">Log in</string>
 
 </resources>

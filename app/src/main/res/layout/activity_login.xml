@@ -11,36 +11,34 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/imgSize_large"
-        android:layout_marginLeft="@dimen/margin_xLarge"
-        android:layout_marginTop="@dimen/margin_small"
-        android:layout_marginRight="@dimen/margin_xLarge"
-        android:layout_marginBottom="@dimen/margin_xLarge"
+        android:layout_marginVertical="@dimen/margin_xLarge"
+        android:layout_marginHorizontal="@dimen/margin_xLarge"
         android:src="@drawable/ic_envote_logo"
         tools:ignore="ImageContrastCheck" />
 
     <EditText
         android:id="@+id/userName"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/buttonWidth_xLarge"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
-        android:layout_marginBottom="43dp"
+        android:layout_marginBottom="@dimen/margin_xLarge"
         android:background="@drawable/rounded_corner"
-        android:elevation="10dp"
-        android:minHeight="48dp"
+        android:elevation="@dimen/shadowHeight"
+        android:minHeight="@dimen/buttonHeight_xLarge"
         android:hint="@string/loginUsername"
         android:textAlignment="center"
         android:textColor="@android:color/black" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/buttonWidth_xLarge"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="43dp"
         android:background="@drawable/rounded_corner"
-        android:elevation="10dp"
-        android:minHeight="48dp"
+        android:elevation="@dimen/shadowHeight"
+        android:minHeight="@dimen/buttonHeight_xLarge"
         android:hint="@string/loginPass"
         android:textAlignment="center"
         android:textColor="@android:color/black" />
