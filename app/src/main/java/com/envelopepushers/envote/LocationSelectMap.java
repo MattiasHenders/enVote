@@ -43,6 +43,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -78,14 +79,14 @@ public class LocationSelectMap extends Activity implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+            //ActivityCompat.requestPermissions();
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            System.out.println("Permission not granted");
-            return;
+            Toast.makeText(this, getString(R.string.map_error), Toast.LENGTH_SHORT).show();
+            finish();
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
@@ -179,6 +180,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
             @Override
             public void run() {
                 if (returnObj != null && returnObj.getJSONObject() != null) {
+
                     try {
                         addBoundariesToMap();
                     } catch (JSONException e) {
@@ -200,6 +202,27 @@ public class LocationSelectMap extends Activity implements LocationListener {
         JSONObject cordsObj = returnObj.getJSONObject();
         JSONArray array = cordsObj.getJSONArray("objects");
         String cordString = "";
+
+        //Error handling for district not found
+        if (array.length() == 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    titleView.setText(getString(R.string.map_no_location));
+                    titleView.setBackgroundColor(getColor(R.color.red_bright));
+
+                    btnSubmitLocation.setVisibility(View.VISIBLE);
+                    btnSubmitLocation.setText(getText(R.string.map_go_back));
+                    btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+                }
+            });
+        }
 
 
         String areaName = array.getJSONObject(0).getString("name");

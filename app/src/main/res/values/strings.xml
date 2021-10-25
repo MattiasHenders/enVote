@@ -34,7 +34,9 @@
 
     <string name="showmore">Show More</string>
 
-
+    <string name="map_error">Location Permission not granted</string>
+    <string name="map_no_location">Location Not Found</string>
+    <string name="map_go_back">Go Back</string>
 
     <string name="loginUsername">Username</string>
     <string name="loginPass">Password</string>
