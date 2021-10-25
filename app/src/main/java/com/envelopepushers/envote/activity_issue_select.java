@@ -70,7 +70,7 @@ public class activity_issue_select extends AppCompatActivity {
             }
         });
 
-        setBottomNavBar();
+        //setBottomNavBar();
     }
     public void openRepActivity() {
         Intent intent = new Intent(this, activity_representative_select.class);

@@ -29,7 +29,7 @@ public class activity_representative_select extends AppCompatActivity {
             }
         });
 
-        setBottomNavBar();
+        //setBottomNavBar();
     }
 
 

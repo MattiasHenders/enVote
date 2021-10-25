@@ -24,7 +24,7 @@ public enum EcoIssues {
     private final int colourDark;
     private final String apiLink;
 
-    private EcoIssues(String key, String name, int icon, int colourLight, int colourDark, String apiLink) {
+    EcoIssues(String key, String name, int icon, int colourLight, int colourDark, String apiLink) {
         this.key = key;
         this.name = name;
         this.icon = icon;

@@ -171,7 +171,7 @@ public class EcoEmail {
                         new EmailReceiver(
                                 deliveredTo.getString("email"),
                                 deliveredTo.getString("name"),
-                                deliveredTo.getString("party")));
+                                EcoParty.valueOf(deliveredTo.getString("party"))));
             }
 
         } catch (JSONException e) {
