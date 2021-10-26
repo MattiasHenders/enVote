@@ -69,6 +69,14 @@ public class LocationSelectMap extends Activity implements LocationListener {
     //Users location
     private double userLat = 0, userLon = 0;
 
+    //Key issue variables
+    boolean airIssue = false;
+    boolean waterIssue = false;
+    boolean trashIssue = false;
+
+    //Local Reps
+    JSONArray localReps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,10 +126,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String callURL = "https://represent.opennorth.ca/representatives/?point=" + userLat +"%2C" + userLon;
-                System.out.println(new JsonFromWeb(callURL).getJSONString());
-
                 openActivityIssue();
             }
         });
@@ -161,7 +165,33 @@ public class LocationSelectMap extends Activity implements LocationListener {
 
 
     public void openActivityIssue() {
+
+        //Check the local reps
+        String repString = "{}";
+        if (localReps != null) {
+            repString = localReps.toString();
+        }
+
+        //Get the issues found in the area
+        String issues = "";
+        if (airIssue) {
+            issues += EcoIssues.AIR.getKey() + ", ";
+        }
+        if (waterIssue) {
+            issues += EcoIssues.WATER.getKey() + ", ";
+        }
+        if (trashIssue) {
+            issues += EcoIssues.TRASH.getKey() + ", ";
+        }
+
+        if (!issues.isEmpty()) {
+            issues = issues.substring(0, issues.length() - 2);
+        }
+
+        //Start the next activity
         Intent intent = new Intent(this, activity_issue_select.class);
+        intent.putExtra("reps", repString);
+        intent.putExtra("issues", issues);
         startActivity(intent);
         finish();
     }
@@ -233,8 +263,8 @@ public class LocationSelectMap extends Activity implements LocationListener {
         }
 
         //Start getting other JSONs if all is good
-        //getLocalIssues();
-        //getLocalReps();
+        getLocalReps();
+        getLocalIssues();
 
         //At this point the JSON is good
         String areaName = array.getJSONObject(0).getString("name");
@@ -272,6 +302,102 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.getOverlays().add(polygon);
         mapMain.getOverlays().add(myPath);
         mapMain.invalidate();
+    }
+
+    private void getLocalReps() {
+
+        String urlCall = "https://represent.opennorth.ca/representatives/?point=" +
+                userLat + "%2C" +
+                userLon;
+
+        JsonFromWeb reps = new JsonFromWeb(urlCall);
+        final JSONObject[] repsJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (reps.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                repsJSONHolder[0] = reps.getJSONObject();
+                try {
+                    localReps = repsJSONHolder[0].getJSONArray("objects");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("REPS", "Got reps!");
+            }
+        }, 100);
+    }
+
+    private void getLocalIssues() {
+
+        getAirIssue();
+    }
+
+    private void getAirIssue() {
+
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=demo";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
+            }
+        }, 100);
+    }
+
+    private void getWaterIssue() {
+
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=demo";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
+            }
+        }, 100);
     }
 
     private GeoPoint computeCentroid(ArrayList<GeoPoint> points) {
