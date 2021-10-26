@@ -50,16 +50,23 @@ import java.util.TimerTask;
 
 public class LocationSelectMap extends Activity implements LocationListener {
 
+    //Map variables
     private MapView mapMain;
     private IMapController mapController;
-    private Button btnSubmitLocation;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    private boolean setLocation = false;
-    private JsonFromWeb returnObj;
-    public ExtendedFloatingActionButton titleView;
     Timer updateMapTimer;
 
+    //Location submission
+    private Button btnSubmitLocation;
+    protected LocationManager locationManager;
+    private boolean setLocation = false;
+
+    //Calls to online APIs
+    private JsonFromWeb returnObj;
+
+    //Buttons for moving to next page
+    public ExtendedFloatingActionButton titleView;
+
+    //Users location
     private double userLat = 0, userLon = 0;
 
     @Override
@@ -213,6 +220,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
                     titleView.setBackgroundColor(getColor(R.color.red_bright));
 
                     btnSubmitLocation.setVisibility(View.VISIBLE);
+                    btnSubmitLocation.setBackgroundColor(getColor(R.color.red_bright));
                     btnSubmitLocation.setText(getText(R.string.map_go_back));
                     btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -224,7 +232,11 @@ public class LocationSelectMap extends Activity implements LocationListener {
             });
         }
 
+        //Start getting other JSONs if all is good
+        //getLocalIssues();
+        //getLocalReps();
 
+        //At this point the JSON is good
         String areaName = array.getJSONObject(0).getString("name");
 
         runOnUiThread(new Runnable() {
