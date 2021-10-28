@@ -41,6 +41,8 @@
         android:minHeight="@dimen/buttonHeight_xLarge"
         android:hint="@string/loginPass"
         android:textAlignment="center"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="@android:color/black" />
 
     <Button
@@ -58,22 +60,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/signupNote"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/margin_xxxLarge"
             android:text="@string/signupNote" />
 
         <TextView
             android:id="@+id/signupLink"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textColor="#369B40"
+            android:textColor="@color/green_dark"
             android:text="@string/signup" />
 
     </LinearLayout>
