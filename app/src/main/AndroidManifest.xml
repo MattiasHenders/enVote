@@ -20,6 +20,15 @@
         android:theme="@style/Theme.EnVote"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".RepresentativeAndIssueSelectActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RepresentativeSelectActivity"
+            android:exported="true" />
+        <activity
+            android:name=".IssueSelectActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -27,19 +36,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity_representative_and_issue_confirmation"
-            android:exported="true" />
-        <activity
-            android:name=".activity_representative_select"
-            android:exported="true" />
-        <activity
-            android:name=".activity_issue_select"
             android:exported="true" />
         <activity
             android:name=".TemplateView"
@@ -49,8 +48,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -92,7 +92,7 @@ public class TemplateView extends AppCompatActivity {
     }
 
     private void openIssueActivity() {
-        startActivity(new Intent(this, activity_issue_select.class));
+        startActivity(new Intent(this, IssueSelectActivity.class));
         finish();
     }
 }
