@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class activity_representative_select extends AppCompatActivity {
+public class RepresentativeSelectActivity extends AppCompatActivity {
 
     private Button btnSubmitLocation;
 
@@ -74,7 +74,7 @@ public class activity_representative_select extends AppCompatActivity {
     }
 
     private void openIssueActivity() {
-        startActivity(new Intent(this, activity_issue_select.class));
+        startActivity(new Intent(this, IssueSelectActivity.class));
         finish();
     }
 }

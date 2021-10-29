@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class activity_representative_and_issue_confirmation extends AppCompatActivity {
+public class RepresentativeAndIssueSelectActivity extends AppCompatActivity {
     private Button btnSubmitLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_representative_and_issue_confirmation);
+        setContentView(R.layout.activity_representative_and_issue_select);
         btnSubmitLocation = findViewById(R.id.nextPageButton);
 
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
