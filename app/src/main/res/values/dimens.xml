@@ -26,4 +26,6 @@
     <dimen name="imgSize_medium">100dp</dimen>
     <dimen name="imgSize_large">125dp</dimen>
     <dimen name="imgSize_xLarge">150dp</dimen>
+
+    <dimen name="bannerHeight">300dp</dimen>
 </resources>

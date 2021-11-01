@@ -20,6 +20,9 @@
         android:theme="@style/Theme.EnVote"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -27,7 +30,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".HomeActivity"
@@ -49,8 +51,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

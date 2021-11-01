@@ -43,5 +43,11 @@
     <string name="login">LOGIN</string>
     <string name="signupNote">Don\'t have an account?</string>
     <string name="signup">Sign Up</string>
+    <string name="full_name">Fest Fester</string>
+    <string name="username">festy12</string>
+    <string name="fullNameHint">Full Name</string>
+    <string name="updateProfile">UPDATE</string>
+    <string name="userNameHint">Username</string>
+    <string name="emailHint">Email Address</string>
 
 </resources>
