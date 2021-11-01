@@ -37,19 +37,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        logout = findViewById(R.id.btnLogout);
+//        logout = findViewById(R.id.btnLogout);
 //        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
 //        if(signInAccount != null) {
 //            name.setText(signInAccount.getDisplayName());
 //        }
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
 
         CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
 
@@ -105,7 +97,10 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.action_browse) {
-                openHomeActivity();
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
                 return true;
             }
             if (item.getItemId() == R.id.action_profile) {
