@@ -29,6 +29,7 @@ public class IssueSelectActivity extends AppCompatActivity {
     Button showMore2;
     double userLat;
     double userLon;
+    boolean airIssue = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class IssueSelectActivity extends AppCompatActivity {
 
         userLat = intent.getDoubleExtra("lat", 0);
         userLon = intent.getDoubleExtra("lon", 0);
-
+        getAirIssue();
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,37 +128,52 @@ public class IssueSelectActivity extends AppCompatActivity {
 //        getAirIssue();
 //    }
 
-//    private void getAirIssue() {
-//
-//        String urlCall = "https://api.waqi.info/feed/geo:" +
-//                userLat + ";" +
-//                userLon +
-//                "/?token=demo";
-//
-//        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
-//        final JSONObject[] airQualityJSONHolder = {null};
-//
-//        //Use new timer to get response
-//        new Timer().schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                while (airQuality.getJSONObject() == null) {
-//                    //Wait for response on separate thread
-//                }
-//                airQualityJSONHolder[0] = airQuality.getJSONObject();
-//                try {
-//                    if (airQualityJSONHolder[0]
-//                            .getJSONObject("data")
-//                            .getInt("aqi") > 80) {
-//                        airIssue = true;
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
-//            }
-//        }, 100);
-//    }
+    private void getAirIssue() {
+
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=demo";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+        final int[] AQIScore = new int[1];
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                    AQIScore[0] = airQualityJSONHolder[0].getJSONObject("data").getInt("aqi");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ( AQIScore[0] > 150 ) {
+                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is an unhealthy air quality level.");
+                        } else if ( AQIScore[0] > 80 ) {
+                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is a moderate air quality level that may be harmful to sensitive individuals");
+                        } else {
+                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is a safe air quality level for most individuals.");
+                        }
+                    }
+                });
+
+            }
+        }, 100);
+    }
 
 //    private void getWaterIssue() {
 //
