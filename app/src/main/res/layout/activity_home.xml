@@ -114,6 +114,12 @@
 
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -128,5 +134,11 @@
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav"
         android:background="@color/green_forest"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
 </LinearLayout>

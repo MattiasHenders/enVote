@@ -8,6 +8,7 @@ import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,10 +30,26 @@ public class HomeActivity extends AppCompatActivity {
     public ArrayList<EcoEmail> pastEmails = new ArrayList<>();
     final int MAX_BODY_PREVIEW = 50;
 
+    Button logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        logout = findViewById(R.id.btnLogout);
+//        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+//        if(signInAccount != null) {
+//            name.setText(signInAccount.getDisplayName());
+//        }
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
 
         CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
 
