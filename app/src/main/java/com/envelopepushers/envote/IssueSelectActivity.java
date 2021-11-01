@@ -77,6 +77,7 @@ public class IssueSelectActivity extends AppCompatActivity {
                 {
                     textView2.setMaxLines(Integer.MAX_VALUE);//your TextView
                     showMore2.setText("Showless");
+
                 }
                 else
                 {
