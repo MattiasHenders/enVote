@@ -31,4 +31,6 @@
     <dimen name="buttonHeight_xLarge">50dp</dimen>
 
     <dimen name="shadowHeight">10dp</dimen>
+
+    <dimen name="bannerHeight">300dp</dimen>
 </resources>

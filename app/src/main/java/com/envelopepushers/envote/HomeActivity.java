@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.action_profile) {
-                openIssueActivity();
+                openProfileActivity();
                 return true;
             }
             return false;
@@ -105,14 +105,18 @@ public class HomeActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(this, LocationSelectMap.class));
         } else {
-            ActivityCompat.requestPermissions(this, new String[] {
-                            Manifest.permission.ACCESS_FINE_LOCATION}, 8);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 8);
             Toast.makeText(this, "Can't access map", Toast.LENGTH_LONG).show();
         }
     }
 
     private void openHomeActivity() {
         startActivity(new Intent(this, HomeActivity.class));
+    }
+
+    private void openProfileActivity() {
+        startActivity(new Intent(this, ProfileActivity.class));
     }
 
     private void openIssueActivity() {
