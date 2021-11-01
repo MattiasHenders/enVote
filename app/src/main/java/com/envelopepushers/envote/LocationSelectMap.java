@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Response;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,23 +42,39 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class LocationSelectMap extends Activity implements LocationListener {
 
+    //Map variables
     private MapView mapMain;
     private IMapController mapController;
-    private Button btnSubmitLocation;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    private boolean setLocation = false;
-    private JsonFromWeb returnObj;
-    public ExtendedFloatingActionButton titleView;
     Timer updateMapTimer;
 
+    //Location submission
+    private Button btnSubmitLocation;
+    protected LocationManager locationManager;
+    private boolean setLocation = false;
+
+    //Calls to online APIs
+    private JsonFromWeb returnObj;
+
+    //Buttons for moving to next page
+    public ExtendedFloatingActionButton titleView;
+
+    //Users location
     private double userLat = 0, userLon = 0;
+
+    //Key issue variables
+    boolean airIssue = false;
+    boolean waterIssue = false;
+    boolean trashIssue = false;
+
+    //Local Reps
+    JSONArray localReps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +93,14 @@ public class LocationSelectMap extends Activity implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+            //ActivityCompat.requestPermissions();
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            System.out.println("Permission not granted");
-            return;
+            Toast.makeText(this, getString(R.string.map_error), Toast.LENGTH_SHORT).show();
+            finish();
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
@@ -110,10 +125,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String callURL = "https://represent.opennorth.ca/representatives/?point=" + userLat +"%2C" + userLon;
-                System.out.println(new JsonFromWeb(callURL).getJSONString());
-
                 openActivityIssue();
             }
         });
@@ -153,7 +164,33 @@ public class LocationSelectMap extends Activity implements LocationListener {
 
 
     public void openActivityIssue() {
+
+        //Check the local reps
+        String repString = "{}";
+        if (localReps != null) {
+            repString = localReps.toString();
+        }
+
+        //Get the issues found in the area
+        String issues = "";
+        if (airIssue) {
+            issues += EcoIssues.AIR.getKey() + ", ";
+        }
+        if (waterIssue) {
+            issues += EcoIssues.WATER.getKey() + ", ";
+        }
+        if (trashIssue) {
+            issues += EcoIssues.TRASH.getKey() + ", ";
+        }
+
+        if (!issues.isEmpty()) {
+            issues = issues.substring(0, issues.length() - 2);
+        }
+
+        //Start the next activity
         Intent intent = new Intent(this, activity_issue_select.class);
+        intent.putExtra("reps", repString);
+        intent.putExtra("issues", issues);
         startActivity(intent);
         finish();
     }
@@ -179,6 +216,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
             @Override
             public void run() {
                 if (returnObj != null && returnObj.getJSONObject() != null) {
+
                     try {
                         addBoundariesToMap();
                     } catch (JSONException e) {
@@ -201,7 +239,33 @@ public class LocationSelectMap extends Activity implements LocationListener {
         JSONArray array = cordsObj.getJSONArray("objects");
         String cordString = "";
 
+        //Error handling for district not found
+        if (array.length() == 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
+                    titleView.setText(getString(R.string.map_no_location));
+                    titleView.setBackgroundColor(getColor(R.color.red_bright));
+
+                    btnSubmitLocation.setVisibility(View.VISIBLE);
+                    btnSubmitLocation.setBackgroundColor(getColor(R.color.red_bright));
+                    btnSubmitLocation.setText(getText(R.string.map_go_back));
+                    btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+                }
+            });
+        }
+
+        //Start getting other JSONs if all is good
+        getLocalReps();
+        getLocalIssues();
+
+        //At this point the JSON is good
         String areaName = array.getJSONObject(0).getString("name");
 
         runOnUiThread(new Runnable() {
@@ -237,6 +301,102 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.getOverlays().add(polygon);
         mapMain.getOverlays().add(myPath);
         mapMain.invalidate();
+    }
+
+    private void getLocalReps() {
+
+        String urlCall = "https://represent.opennorth.ca/representatives/?point=" +
+                userLat + "%2C" +
+                userLon;
+
+        JsonFromWeb reps = new JsonFromWeb(urlCall);
+        final JSONObject[] repsJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (reps.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                repsJSONHolder[0] = reps.getJSONObject();
+                try {
+                    localReps = repsJSONHolder[0].getJSONArray("objects");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("REPS", "Got reps!");
+            }
+        }, 100);
+    }
+
+    private void getLocalIssues() {
+
+        getAirIssue();
+    }
+
+    private void getAirIssue() {
+
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=demo";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
+            }
+        }, 100);
+    }
+
+    private void getWaterIssue() {
+
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=demo";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
+            }
+        }, 100);
     }
 
     private GeoPoint computeCentroid(ArrayList<GeoPoint> points) {

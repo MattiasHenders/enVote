@@ -5,7 +5,7 @@ public class EmailReceiver {
     private String email;
     private String firstName;
     private String lastName;
-    private String party;
+    private EcoParty party;
 
     /**
      * Receiver Default Constructor
@@ -14,13 +14,13 @@ public class EmailReceiver {
         email = "";
         firstName = "";
         lastName = "";
-        party = "";
+        party = EcoParty.INDEPENDENT;
     }
 
     /**
      * Receiver Constructor
      */
-    public EmailReceiver(String email, String fullName, String party) {
+    public EmailReceiver(String email, String fullName, EcoParty party) {
         this.email = email;
         this.firstName = fullName.split(" ")[0];
         this.lastName = fullName.split(" ")[1];
@@ -30,7 +30,7 @@ public class EmailReceiver {
     /**
      * Receiver Constructor
      */
-    public EmailReceiver(String email, String firstName, String lastName, String party) {
+    public EmailReceiver(String email, String firstName, String lastName, EcoParty party) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -89,7 +89,7 @@ public class EmailReceiver {
      * Gets the persons party
      * @return party
      */
-    public String getParty() {
+    public EcoParty getParty() {
         return party;
     }
 
@@ -97,7 +97,7 @@ public class EmailReceiver {
      * Sets the party
      * @param party
      */
-    public void setParty(String party) {
+    public void setParty(EcoParty party) {
         this.party = party;
     }
 

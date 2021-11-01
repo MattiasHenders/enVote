@@ -29,6 +29,12 @@
     <color name="red_dark">#ED0A0A</color>
     <color name="red_bright">#FF8282</color>
 
+    <color name="orange_dark">#E13500</color>
+    <color name="orange_bright">#EA8D70</color>
+
+    <color name="purple_dark">#4A0555</color>
+    <color name="purple_bright">#A674FF</color>
+
     <color name="colorPrimary">#0F9D58</color>
     <color name="colorPrimaryDark">#0F9D58</color>
     <color name="colorAccent">#05af9b</color>
