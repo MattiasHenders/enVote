@@ -92,6 +92,9 @@ public class IssueSelectActivity extends AppCompatActivity {
     }
     public void openRepActivity() {
         Intent intent = new Intent(this, RepresentativeSelectActivity.class);
+        intent.putExtra("lat", userLat);
+        intent.putExtra("lon", userLon);
+        // TODO add user's selection.
         startActivity(intent);
         finish();
     }

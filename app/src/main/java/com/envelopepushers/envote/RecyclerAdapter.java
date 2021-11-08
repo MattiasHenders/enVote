@@ -49,14 +49,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         Representative currentItem = _toonArrayList.get(position);
 
-        TextView tvId = cardView.findViewById(R.id.id);
         TextView tvName = cardView.findViewById(R.id.name);
-        TextView tvOccupation = cardView.findViewById(R.id.occupation);
+        TextView tvEmail = cardView.findViewById(R.id.email);
+        TextView tvParty = cardView.findViewById(R.id.party);
+        TextView tvGovLevel = cardView.findViewById(R.id.government_level);
+
         ImageView ivPictureUrl = cardView.findViewById(R.id.image_view);
 
-        tvId.setText(String.valueOf(currentItem.getId()));
-        tvName.setText(currentItem.getFirstName() + " " + currentItem.getLastName());
-        tvOccupation.setText(currentItem.getOccupation());
+        tvName.setText(currentItem.getName());
+        tvEmail.setText(currentItem.getEmail());
+        tvParty.setText(currentItem.getParty());
+        tvGovLevel.setText(currentItem.getGovernmentLevel());
 
         if (currentItem.getPictureUrl() != null) {
 //            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());

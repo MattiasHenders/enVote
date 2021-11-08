@@ -3,54 +3,45 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Representative {
-    @SerializedName("id")
+
+    @SerializedName("name")
     @Expose
-    private int id;
-    public int getId() {
-        return id;
+    private String name;
+    public String getName() {
+        return name;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @SerializedName("firstName")
+    @SerializedName("email")
     @Expose
-    private String firstName;
-    public String getFirstName() {
-        return firstName;
+    private String email;
+    public String getEmail() {
+        return email;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @SerializedName("lastName")
+    @SerializedName("party")
     @Expose
-    private String lastName;
-    public String getLastName() {
-        return lastName;
+    private String party;
+    public String getParty() {
+        return party;
     }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setParty(String party) {
+        this.party = party;
     }
 
-    @SerializedName("occupation")
+    @SerializedName("governmentLevel")
     @Expose
-    private String occupation;
-    public String getOccupation() {
-        return occupation;
+    private String governmentLevel;
+    public String getGovernmentLevel() {
+        return governmentLevel;
     }
-    public void setOccupation(String occupation) {
-        this.lastName = occupation;
-    }
-
-    @SerializedName("gender")
-    @Expose
-    private String gender;
-    public String getGender() {
-        return gender;
-    }
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGovernmentLevel(String gov) {
+        this.governmentLevel = governmentLevel;
     }
 
     @SerializedName("pictureUrl")
@@ -63,23 +54,11 @@ public class Representative {
         this.pictureUrl = pictureUrl;
     }
 
-    @SerializedName("votes")
-    @Expose
-    private int votes;
-    public int getVotes() {
-        return votes;
-    }
-    public void setVotes(int votes) {
-        this.id = votes;
-    }
-
-    public Representative(int id, String firstName, String lastName, String occupation, String gender, String pictureUrl, int votes) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.occupation = occupation;
-        this.gender = gender;
+    public Representative(String name, String party, String email, String governmentLevel, String pictureUrl) {
+        this.name = name;
+        this.party = party;
+        this.email = email;
+        this.governmentLevel = governmentLevel;
         this.pictureUrl = pictureUrl;
-        this.votes = votes;
     }
 }
