@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.j256.ormlite.stmt.query.In;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TemplateView extends AppCompatActivity {
@@ -24,6 +28,12 @@ public class TemplateView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_view);
+
+        try {
+            System.out.println(getEmailStringFromTextFile());
+        } catch (IOException ioe) {
+            System.out.println("ERROR: IO");
+        }
 
         //TextView setting objects
         textEmailTo = findViewById(R.id.text_email_to_line);
@@ -49,6 +59,27 @@ public class TemplateView extends AppCompatActivity {
                 startEmailIntent(emailRecievers, emailSubject, emailBody);
             }
         });
+    }
+
+    private String getEmailStringFromTextFile() throws IOException {
+
+        String string = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        InputStream is = this.getResources().openRawResource(R.raw.air);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        while (true) {
+            try {
+                if ((string = reader.readLine()) == null) break;
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            stringBuilder.append(string).append("\n");
+        }
+        is.close();
+
+
+        return stringBuilder.toString();
     }
 
     /**
