@@ -33,12 +33,6 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/text_email_to_line"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textSize="@dimen/font_xLarge"/>
-
-                        <TextView
                             android:id="@+id/text_email_subject"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

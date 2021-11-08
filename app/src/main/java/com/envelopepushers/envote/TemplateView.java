@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class TemplateView extends AppCompatActivity {
 
-    public TextView textEmailTo;
     public TextView textSubject;
     public TextView textBody;
 
@@ -29,26 +28,39 @@ public class TemplateView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_view);
 
+
+
+        //TextView setting objects
+        textSubject = findViewById(R.id.text_email_subject);
+        textBody = findViewById(R.id.text_email_body);
+
+        //EcoEmail newEmail = getIntent().getParcelableExtra("ecoEmail");
+
+        //Get the String from the email Object and pull info to the template
+//        ArrayList<EmailReceiver> emailRecievers = newEmail.getDeliveredTo();
+
+        EmailReceiver toSend = new EmailReceiver("contact@liberalparty.ca",
+                "Justin Trudeau", EcoParty.LIBERAL);
+
+        ArrayList<EmailReceiver> emailRecievers = new ArrayList<>();
+        emailRecievers.add(toSend);
+
+        String emailSubject = "Air Quality Issue";
+
+//        String emailTo = emailRecievers.get(0).getEmail();
+//        String emailSubject = newEmail.getSubject();
+//        String emailBody = newEmail.getBody();
+
+        String rawEmailBody = "";
         try {
-            System.out.println(getEmailStringFromTextFile());
+            rawEmailBody = getEmailStringFromTextFile(emailRecievers);
         } catch (IOException ioe) {
             System.out.println("ERROR: IO");
         }
 
-        //TextView setting objects
-        textEmailTo = findViewById(R.id.text_email_to_line);
-        textSubject = findViewById(R.id.text_email_subject);
-        textBody = findViewById(R.id.text_email_body);
+        final String emailBody = rawEmailBody;
 
-        EcoEmail newEmail = getIntent().getParcelableExtra("ecoEmail");
-
-        //Get the String from the email Object and pull info to the template
-        ArrayList<EmailReceiver> emailRecievers = newEmail.getDeliveredTo();
-        String emailTo = emailRecievers.get(0).getEmail();
-        String emailSubject = newEmail.getSubject();
-        String emailBody = newEmail.getBody();
-
-        setEmailTemplate(emailTo, emailSubject, emailBody);
+        setEmailTemplate(emailRecievers.get(0).getEmail(), emailSubject, emailBody);
 
         btnSendEmail = findViewById(R.id.btn_send_email);
 
@@ -61,7 +73,7 @@ public class TemplateView extends AppCompatActivity {
         });
     }
 
-    private String getEmailStringFromTextFile() throws IOException {
+    private String getEmailStringFromTextFile(ArrayList<EmailReceiver> receivers) throws IOException {
 
         String string = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -78,7 +90,13 @@ public class TemplateView extends AppCompatActivity {
         }
         is.close();
 
-        return stringBuilder.toString();
+        String rawEmail = stringBuilder.toString();
+
+        rawEmail = rawEmail.replace("[REP NAME]", receivers.get(0).getFullName());
+        rawEmail = rawEmail.replace("[REP PARTY]", receivers.get(0).getParty().getPartyName());
+        rawEmail = rawEmail.replace("[SENDER NAME]", "Mattias Henders");
+
+        return rawEmail;
     }
 
     /**
@@ -86,7 +104,6 @@ public class TemplateView extends AppCompatActivity {
      */
     private void setEmailTemplate(String emailTo, String emailSubject, String emailBody) {
 
-        textEmailTo.setText(emailTo);
         textSubject.setText(emailSubject);
         textBody.setText(emailBody);
     }
