@@ -19,6 +19,9 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -97,10 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.action_browse) {
-
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
+                signOut();
                 return true;
             }
             if (item.getItemId() == R.id.action_profile) {
@@ -258,5 +258,19 @@ public class HomeActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
         }
+    }
+    private void signOut() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        startActivity(intent);
     }
 }
