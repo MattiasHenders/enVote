@@ -78,7 +78,6 @@ public class TemplateView extends AppCompatActivity {
         }
         is.close();
 
-
         return stringBuilder.toString();
     }
 
