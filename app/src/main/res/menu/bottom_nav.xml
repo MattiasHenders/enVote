@@ -7,5 +7,7 @@
         android:title="@string/menu_new_email"
         android:icon="@drawable/ic_round_add_24" />
     <item android:id="@+id/action_browse"
-        android:title="@string/logout"/>
+        android:title="@string/logout"
+        android:icon="@drawable/ic_baseline_logout_24" />
+
 </menu>

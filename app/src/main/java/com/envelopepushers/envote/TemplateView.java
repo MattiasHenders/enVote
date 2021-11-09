@@ -28,8 +28,6 @@ public class TemplateView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template_view);
 
-
-
         //TextView setting objects
         textSubject = findViewById(R.id.text_email_subject);
         textBody = findViewById(R.id.text_email_body);
@@ -105,7 +103,7 @@ public class TemplateView extends AppCompatActivity {
     private void setEmailTemplate(String emailTo, String emailSubject, String emailBody) {
 
         textSubject.setText(emailSubject);
-        textBody.setText(emailBody);
+        textBody.setText(emailBody + "\n"); //Give extra padding to the bottom
     }
 
     private void startEmailIntent(ArrayList<EmailReceiver> receivers, String subject, String body) {
