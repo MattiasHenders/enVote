@@ -156,7 +156,7 @@ public class EcoEmail {
         }
 
         //Empty array check
-        if (deliveredToArr.length() == 0) {
+        if (deliveredToArr != null && deliveredToArr.length() == 0) {
             returnArray.add(new EmailReceiver());
             return returnArray;
         }
@@ -174,7 +174,7 @@ public class EcoEmail {
                                 EcoParty.valueOf(deliveredTo.getString("party"))));
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return returnArray;
         }
