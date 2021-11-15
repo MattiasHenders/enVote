@@ -33,6 +33,10 @@ public class TemplateView extends AppCompatActivity {
         textBody = findViewById(R.id.text_email_body);
 
         Intent intent = getIntent();
+        System.out.println(intent.getStringExtra("issue"));
+        System.out.println(intent.getStringExtra("name"));
+        System.out.println(intent.getStringExtra("email"));
+
         String selectedIssueKey = intent.getStringExtra("issue");
 
         selectedIssue = new EcoIssue(EcoIssues.valueOf(selectedIssueKey));

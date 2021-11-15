@@ -51,7 +51,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         final CardView cardView = holder._cardView;
-
         Representative currentItem = _toonArrayList.get(position);
 
         TextView tvName = cardView.findViewById(R.id.name);
@@ -61,30 +60,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Button btn = cardView.findViewById(R.id.next_page);
 
         ImageView ivPictureUrl = cardView.findViewById(R.id.image_view);
-
         tvName.setText(currentItem.getName());
         tvEmail.setText(currentItem.getEmail());
         tvParty.setText(currentItem.getParty());
         tvGovLevel.setText(currentItem.getGovernmentLevel());
-        btn.setText("SELECTS");
-//        btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent prevIntent = ((Activity) _context).getIntent();
-//                String issue = prevIntent.getStringExtra("issue");
-//                Intent intent = new Intent (view.getContext(), TemplateView.class);
-//                intent.putExtra("issue", issue);
-//                intent.putExtra("email", tvEmail.getText().toString());
-//                intent.putExtra("name", tvName.getText().toString());
-//                _context.startActivity(intent);
-//                //                finish();
-//            }
-//        });
-//        if (currentItem.getPictureUrl() != null) {
-
-
-//        if (currentItem.getPictureUrl() != null) {
-//            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent prevIntent = ((Activity) _context).getIntent();
+                String issue = prevIntent.getStringExtra("issue");
+                Intent intent = new Intent (view.getContext(), TemplateView.class);
+                intent.putExtra("issue", issue);
+                intent.putExtra("email", tvEmail.getText().toString());
+                intent.putExtra("name", tvName.getText().toString());
+                _context.startActivity(intent);
+            }
+        });
             Picasso.with(_context)
                     .load(currentItem.getPictureUrl().isEmpty() ? null : currentItem.getPictureUrl())
                     .placeholder(R.drawable.ic_android_black_24dp)
@@ -92,8 +83,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     .fit()
                     .centerInside()
                     .into(ivPictureUrl);
-        }
-//    }
+    }
 
     @Override
     public int getItemCount() {

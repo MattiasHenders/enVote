@@ -147,7 +147,7 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
                         String govLevel = obj.getString("representative_set_name");
                         String pictureUrl = obj.getString("photo_url");
 
-                        _repsList.add(new Representative(name, email, party, govLevel, pictureUrl));
+                        _repsList.add(new Representative(name, party, email, govLevel, pictureUrl));
                     }
                     runOnUiThread(new Runnable() {
                         @Override

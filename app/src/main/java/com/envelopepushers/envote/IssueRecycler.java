@@ -46,26 +46,8 @@ public class IssueRecycler extends RecyclerView.Adapter<IssueRecycler.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull IssueRecycler.ViewHolder holder, int position) {
         final CardView cardView = holder._cardView;
-
         Issue currentItem = _issueArrayList.get(position);
-
-//        TextView tvId = cardView.findViewById(R.id.id);
         TextView tvName = cardView.findViewById(R.id.issueName);
-//        TextView tvOccupation = cardView.findViewById(R.id.occupation);
-//        ImageView ivPictureUrl = cardView.findViewById(R.id.image_view);
-//
-//        tvId.setText(String.valueOf(currentItem.getId()));
-//        tvName.setText(currentItem.getFirstName() + " " + currentItem.getLastName());
-//        tvOccupation.setText(currentItem.getOccupation());
-
-//        if (currentItem.getPictureUrl() != null) {
-////            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());
-//            Picasso.with(_context)
-//                    .load(currentItem.getPictureUrl())
-//                    .fit()
-//                    .centerInside()
-//                    .into(ivPictureUrl);
-//        }
     }
 
     @Override
