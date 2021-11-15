@@ -33,18 +33,18 @@
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".activity_representative_and_issue_confirmation"
+            android:name=".RepresentativeAndIssueSelectActivity"
             android:exported="true" />
         <activity
-            android:name=".activity_representative_select"
+            android:name=".RepresentativeSelectActivity"
             android:exported="true" />
         <activity
             android:name=".activity_issue_select"
             android:exported="true" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".TemplateView"
             android:exported="true" />

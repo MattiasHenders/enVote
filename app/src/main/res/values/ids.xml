@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="airIssueDescription" />
+    <item type="id" name="waterIssueDescription" />
+    <item type="id" name="trashIssueDescription" />
+    <item type="id" name="electricIssueDescription" />
+
+    <item type="id" name="airButton" />
+    <item type="id" name="waterButton" />
+    <item type="id" name="trashButton" />
+    <item type="id" name="electricButton" />
+</resources>
