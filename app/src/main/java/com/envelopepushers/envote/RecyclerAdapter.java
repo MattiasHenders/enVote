@@ -80,15 +80,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //                //                finish();
 //            }
 //        });
-        if (currentItem.getPictureUrl() != null) {
+//        if (currentItem.getPictureUrl() != null) {
+
+
+//        if (currentItem.getPictureUrl() != null) {
 //            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());
             Picasso.with(_context)
-                    .load(currentItem.getPictureUrl())
+                    .load(currentItem.getPictureUrl().isEmpty() ? null : currentItem.getPictureUrl())
+                    .placeholder(R.drawable.ic_android_black_24dp)
+                    .error(R.drawable.ic_android_black_24dp)
                     .fit()
                     .centerInside()
                     .into(ivPictureUrl);
         }
-    }
+//    }
 
     @Override
     public int getItemCount() {

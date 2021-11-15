@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void openIssueActivity() {
-        startActivity(new Intent(this, activity_issue_select.class));
+        startActivity(new Intent(this, IssueSelectActivity.class));
     }
 
     private void generagePastEmailCards() {
@@ -271,7 +271,8 @@ public class HomeActivity extends AppCompatActivity {
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mGoogleSignInClient.signOut();
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        finish();
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
     }
 }

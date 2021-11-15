@@ -11,13 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.util.JsonUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -115,7 +110,7 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
     }
 
     private void openIssueActivity() {
-        startActivity(new Intent(this, activity_issue_select.class));
+        startActivity(new Intent(this, IssueSelectActivity.class));
         finish();
     }
 
