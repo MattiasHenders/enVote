@@ -28,28 +28,29 @@
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
+            android:name=".RepresentativeAndIssueSelectActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RepresentativeSelectActivity"
+            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".IssueSelectActivity"-->
+<!--            android:exported="true" />-->
+        <activity
+            android:name=".activity_issue_select"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
             android:name=".HomeActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".activity_representative_and_issue_confirmation"
-            android:exported="true" />
-        <activity
-            android:name=".activity_representative_select"
-            android:exported="true" />
-        <activity
-            android:name=".activity_issue_select"
-            android:exported="true" />
         <activity
             android:name=".TemplateView"
             android:exported="true" />
@@ -59,10 +60,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

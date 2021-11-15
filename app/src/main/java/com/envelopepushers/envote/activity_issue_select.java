@@ -42,7 +42,7 @@ public class activity_issue_select extends AppCompatActivity {
     }
 
     public void openRepActivity(String issueKey) {
-        Intent intent = new Intent(this, activity_representative_select.class);
+        Intent intent = new Intent(this, RepresentativeSelectActivity.class);
         intent.putExtra("issue", issueKey);
         startActivity(intent);
         finish();
