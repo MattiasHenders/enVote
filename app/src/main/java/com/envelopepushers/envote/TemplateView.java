@@ -20,7 +20,7 @@ public class TemplateView extends AppCompatActivity {
 
     public TextView textSubject;
     public TextView textBody;
-
+    public EcoIssue selectedIssue = new EcoIssue(EcoIssues.EMPTY);
     public Button btnSendEmail;
 
     @Override
@@ -32,10 +32,10 @@ public class TemplateView extends AppCompatActivity {
         textSubject = findViewById(R.id.text_email_subject);
         textBody = findViewById(R.id.text_email_body);
 
-        //EcoEmail newEmail = getIntent().getParcelableExtra("ecoEmail");
+        Intent intent = getIntent();
+        String selectedIssueKey = intent.getStringExtra("issue");
 
-        //Get the String from the email Object and pull info to the template
-//        ArrayList<EmailReceiver> emailRecievers = newEmail.getDeliveredTo();
+        selectedIssue = new EcoIssue(EcoIssues.valueOf(selectedIssueKey));
 
         EmailReceiver toSend = new EmailReceiver("contact@liberalparty.ca",
                 "Justin Trudeau", EcoParty.LIBERAL);
@@ -43,7 +43,7 @@ public class TemplateView extends AppCompatActivity {
         ArrayList<EmailReceiver> emailRecievers = new ArrayList<>();
         emailRecievers.add(toSend);
 
-        String emailSubject = "Air Quality Issue";
+        String emailSubject = selectedIssue.getName() + " Issue";
 
 //        String emailTo = emailRecievers.get(0).getEmail();
 //        String emailSubject = newEmail.getSubject();
@@ -75,7 +75,29 @@ public class TemplateView extends AppCompatActivity {
 
         String string = "";
         StringBuilder stringBuilder = new StringBuilder();
-        InputStream is = this.getResources().openRawResource(R.raw.air);
+
+        InputStream is = null;
+
+        //Select the issue file based on issue
+        switch (selectedIssue.getKey()) {
+            case ("ELECTRIC"):
+                is = this.getResources().openRawResource(R.raw.electric);
+                break;
+
+            case ("WATER"):
+                is = this.getResources().openRawResource(R.raw.water);
+                break;
+
+            case ("TRASH"):
+                is = this.getResources().openRawResource(R.raw.garbage);
+                break;
+
+            default:
+                is = this.getResources().openRawResource(R.raw.air);
+                break;
+        }
+
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         while (true) {
             try {
@@ -124,20 +146,5 @@ public class TemplateView extends AppCompatActivity {
         email.setType("message/rfc822");
 
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
-    }
-
-    private void openMapActivity() {
-        startActivity(new Intent(this, LocationSelectMap.class));
-        finish();
-    }
-
-    private void openHomeActivity() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
-    }
-
-    private void openIssueActivity() {
-        startActivity(new Intent(this, activity_issue_select.class));
-        finish();
     }
 }

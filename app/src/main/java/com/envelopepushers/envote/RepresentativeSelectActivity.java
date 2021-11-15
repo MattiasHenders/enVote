@@ -39,6 +39,8 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
     private RequestQueue _requestQueue;
     double userLat;
     double userLon;
+    public String selectedIssue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
         _recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm = new LinearLayoutManager(this);
         _recyclerView.setLayoutManager(lm);
+
+        selectedIssue = intent.getStringExtra("issue");
 
         btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +100,7 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
 
     public void openEmailActivity() {
         Intent intent = new Intent(this, TemplateView.class);
+        intent.putExtra("issue", selectedIssue);
         startActivity(intent);
         finish();
     }
