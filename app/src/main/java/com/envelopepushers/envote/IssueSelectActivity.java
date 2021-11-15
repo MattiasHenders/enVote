@@ -1,256 +1,289 @@
-//package com.envelopepushers.envote;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.MenuItem;
-//import android.view.View;
-//import android.widget.Button;
-//import android.widget.TextView;
-//
-//import com.google.android.material.bottomnavigation.BottomNavigationView;
-//
-//import org.json.JSONException;
-//import org.json.JSONObject;
-//
-//import java.sql.SQLOutput;
-//import java.util.Timer;
-//import java.util.TimerTask;
-//
-//public class IssueSelectActivity extends AppCompatActivity {
-//
-//    private Button btnSubmitLocation;
-//    TextView textView1;
-//    Button showMore1;
-//    TextView textView2;
-//    Button showMore2;
-//    double userLat;
-//    double userLon;
-//    boolean airIssue = false;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_issue_select);
-//
-//        Intent intent = getIntent();
-//        btnSubmitLocation = findViewById(R.id.nextPageButton);
-//
-//        userLat = intent.getDoubleExtra("lat", 0);
-//        userLon = intent.getDoubleExtra("lon", 0);
-//        getAirIssue();
-//        btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openRepActivity();
-//            }
-//        });
-//
-//        textView1=(TextView)findViewById(R.id.textView1);
-//        showMore1=(Button)findViewById(R.id.showMore1);
-//        showMore1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (showMore1.getText().toString().equalsIgnoreCase("Showmore..."))
-//                {
-//                    textView1.setMaxLines(Integer.MAX_VALUE);//your TextView
-//                    showMore1.setText("Showless");
-//                }
-//                else
-//                {
-//                    textView1.setMaxLines(3);//your TextView
-//                    showMore1.setText("Showmore...");
-//                }
-//            }
-//        });
-//
-//        textView2=(TextView)findViewById(R.id.textView2);
-//        showMore2=(Button)findViewById(R.id.showMore2);
-//        showMore2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (showMore2.getText().toString().equalsIgnoreCase("Showmore..."))
-//                {
-//                    textView2.setMaxLines(Integer.MAX_VALUE);//your TextView
-//                    showMore2.setText("Showless");
-//
-//                }
-//                else
-//                {
-//                    textView2.setMaxLines(3);//your TextView
-//                    showMore2.setText("Showmore...");
-//                }
-//            }
-//        });
-//
-//        //setBottomNavBar();
-//    }
-//    public void openRepActivity() {
-//        Intent intent = new Intent(this, RepresentativeSelectActivity.class);
-//        intent.putExtra("lat", userLat);
-//        intent.putExtra("lon", userLon);
-//        // TODO add user's selection.
-//        startActivity(intent);
-//        finish();
-//    }
-//
-////    private void getLocalReps() {
-////
-////        String urlCall = "https://represent.opennorth.ca/representatives/?point=" +
-////                userLat + "%2C" +
-////                userLon;
-////
-////        JsonFromWeb reps = new JsonFromWeb(urlCall);
-////        final JSONObject[] repsJSONHolder = {null};
-////
-////        //Use new timer to get response
-////        new Timer().schedule(new TimerTask() {
-////            @Override
-////            public void run() {
-////                while (reps.getJSONObject() == null) {
-////                    //Wait for response on separate thread
-////                }
-////                repsJSONHolder[0] = reps.getJSONObject();
-////                try {
-////                    localReps = repsJSONHolder[0].getJSONArray("objects");
-////                } catch (JSONException e) {
-////                    e.printStackTrace();
-////                }
-////                Log.i("REPS", "Got reps!");
-////            }
-////        }, 100);
-////    }
-//
-////    private void getLocalIssues() {
-////
-////        getAirIssue();
-////    }
-//
-//    private void getAirIssue() {
-//
-//        String urlCall = "https://api.waqi.info/feed/geo:" +
-//                userLat + ";" +
-//                userLon +
-//                "/?token=demo";
-//
-//        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
-//        final JSONObject[] airQualityJSONHolder = {null};
-//        final int[] AQIScore = new int[1];
-//        //Use new timer to get response
-//        new Timer().schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                while (airQuality.getJSONObject() == null) {
-//                    //Wait for response on separate thread
-//                }
-//                airQualityJSONHolder[0] = airQuality.getJSONObject();
-//                try {
-//                    if (airQualityJSONHolder[0]
-//                            .getJSONObject("data")
-//                            .getInt("aqi") > 80) {
-//                        airIssue = true;
-//                    }
-//                    AQIScore[0] = airQualityJSONHolder[0].getJSONObject("data").getInt("aqi");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if ( AQIScore[0] > 150 ) {
-//                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is an unhealthy air quality level.");
-//                        } else if ( AQIScore[0] > 80 ) {
-//                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is a moderate air quality level that may be harmful to sensitive individuals");
-//                        } else {
-//                            textView1.setText("The Air quality is: " + AQIScore[0] + ". This is a safe air quality level for most individuals.");
-//                        }
-//                    }
-//                });
-//
-//            }
-//        }, 100);
-//    }
-//
-////    private void getWaterIssue() {
-////
-////        String urlCall = "https://api.waqi.info/feed/geo:" +
-////                userLat + ";" +
-////                userLon +
-////                "/?token=demo";
-////
-////        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
-////        final JSONObject[] airQualityJSONHolder = {null};
-////
-////        //Use new timer to get response
-////        new Timer().schedule(new TimerTask() {
-////            @Override
-////            public void run() {
-////                while (airQuality.getJSONObject() == null) {
-////                    //Wait for response on separate thread
-////                }
-////                airQualityJSONHolder[0] = airQuality.getJSONObject();
-////                try {
-////                    if (airQualityJSONHolder[0]
-////                            .getJSONObject("data")
-////                            .getInt("aqi") > 80) {
-////                        airIssue = true;
-////                    }
-////                } catch (JSONException e) {
-////                    e.printStackTrace();
-////                }
-////                Log.i("AIR", "Air API call done, air is an issue=" + airIssue);
-////            }
-////        }, 100);
-////    }
-//
-//    private void setBottomNavBar() {
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                if (item.getItemId() == R.id.action_new) {
-//                    openMapActivity();
-//                    return true;
-//                }
-//                if (item.getItemId() == R.id.action_browse) {
-//                    openHomeActivity();
-//                    return true;
-//                }
-//                if (item.getItemId() == R.id.action_profile) {
-//                    openIssueActivity();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//    }
-//
-//    public void openEmailActivity() {
-//        Intent intent = new Intent(this, TemplateView.class);
-//        startActivity(intent);
-//        finish();
-//    }
-//
-//    private void openMapActivity() {
-//        startActivity(new Intent(this, LocationSelectMap.class));
-//        finish();
-//    }
-//
-//    private void openHomeActivity() {
-//        startActivity(new Intent(this, HomeActivity.class));
-//        finish();
-//    }
-//
-//    private void openIssueActivity() {
-//        startActivity(new Intent(this, IssueSelectActivity.class));
-//        finish();
-//    }
-//}
+package com.envelopepushers.envote;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Icon;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+
+public class IssueSelectActivity extends AppCompatActivity {
+
+    public LinearLayout issuesContainer;
+    double userLat;
+    double userLon;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_issue_select);
+
+        issuesContainer = findViewById(R.id.issues_container);
+
+        ArrayList<EcoIssue> issuesInOrder = new ArrayList<>();
+
+        issuesInOrder.add(new EcoIssue(EcoIssues.TRASH));
+        issuesInOrder.add(new EcoIssue(EcoIssues.WATER));
+        issuesInOrder.add(new EcoIssue(EcoIssues.ELECTRIC));
+        issuesInOrder.add(new EcoIssue(EcoIssues.AIR));
+
+        Intent intent = getIntent();
+        userLat = intent.getDoubleExtra("lat", 0);
+        userLon = intent.getDoubleExtra("lon", 0);
+
+        generateIssueCards(issuesInOrder);
+    }
+
+    public void openRepActivity(String issueKey) {
+        Intent intent = new Intent(this, RepresentativeSelectActivity.class);
+        intent.putExtra("issue", issueKey);
+        intent.putExtra("lat", userLat);
+        intent.putExtra("lon", userLon);
+        startActivity(intent);
+        finish();
+    }
+
+    private void generateIssueCards(ArrayList<EcoIssue> issues) {
+
+        for (EcoIssue currentIssue : issues) {
+
+            //Create the individual card
+            CardView issueCard = new CardView(this);
+
+            //Set the Card params
+            LinearLayout.LayoutParams cardLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            issueCard.setRadius((int) getResources().getDimension(R.dimen.borderRadius_large));
+            issueCard.setLayoutParams(cardLayoutParams);
+
+            LinearLayout cardVerticalLayout = new LinearLayout(this);
+            cardVerticalLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams cardVerticalLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardVerticalLayout.setLayoutParams(cardVerticalLayoutParams);
+            cardVerticalLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
+
+            ViewGroup.MarginLayoutParams cardViewMarginParams = (ViewGroup.MarginLayoutParams) issueCard.getLayoutParams();
+            cardViewMarginParams.setMargins(10, 30, 50, 20);
+            issueCard.requestLayout();
+
+            LinearLayout cardHolderLayout = new LinearLayout(this);
+            cardHolderLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams cardHolderLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardHolderLayout.setPadding(
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    (int) getResources().getDimension(R.dimen.padding_medium));
+
+            cardHolderLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
+            cardHolderLayout.setLayoutParams(cardHolderLayoutParams);
+
+
+
+            LinearLayout textHolderLayout = new LinearLayout(this);
+            textHolderLayout.setOrientation(LinearLayout.VERTICAL);
+            textHolderLayout.setPadding(
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    0,
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    0);
+
+            //Set the email TO name as the title
+            TextView cardTitle = new TextView(this);
+            cardTitle.setText(currentIssue.getName());
+            cardTitle.setTextSize(26);
+//            cardTitle.setTextSize(getResources().getDimension(R.dimen.font_medium));
+            cardTitle.setTextColor(getColor(currentIssue.getColourLight()));
+
+            //Set the body as the first bit of the email
+            TextView cardBody = new TextView(this);
+            cardBody.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            //Format the email body
+            cardBody.setText(getString(R.string.show_more));
+            cardBody.setTextSize(18);
+//            cardBody.setTextSize(getResources().getDimension(R.dimen.font_small));
+            cardBody.setTextColor(getColor(currentIssue.getColourLight()));
+
+            //Set the image as the icon for the issue
+            ImageView cardIcon = new ImageView(this);
+            LinearLayout.LayoutParams cardIconLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardIconLayoutParams.setMarginStart((int) getResources().getDimension(R.dimen.margin_medium));
+            cardIcon.setLayoutParams(cardIconLayoutParams);
+
+            //Add the button
+            CardView selectButton = new CardView(this);
+            LinearLayout.LayoutParams cardButtonParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardButtonParams.gravity = Gravity.CENTER;
+            cardButtonParams.bottomMargin = (int) getResources().getDimension(R.dimen.margin_medium);
+
+            selectButton.setLayoutParams(cardButtonParams);
+            selectButton.setRadius((int) getResources().getDimension(R.dimen.borderRadius_medium));
+
+            LinearLayout textButtonLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams cardButtonTextParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardButtonParams.gravity = Gravity.CENTER;
+            textButtonLayout.setPadding(
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_medium),
+                    (int) getResources().getDimension(R.dimen.padding_small));
+
+            textButtonLayout.setLayoutParams(cardButtonTextParams);
+            textButtonLayout.setBackgroundColor(getColor(currentIssue.getColourLight()));
+            TextView buttonText = new TextView(this);
+            buttonText.setText(R.string.select_issue_text);
+            buttonText.setTextColor(getColor(currentIssue.getColourDark()));
+
+            textButtonLayout.addView(buttonText);
+            selectButton.addView(textButtonLayout);
+
+            //Get the first EcoIssue icon and color
+            cardIcon.setImageIcon(Icon.createWithResource(this, currentIssue.getIcon()));
+            cardIcon.setMinimumHeight((int) getResources().getDimension(R.dimen.imgSize_small));
+            cardIcon.setMinimumWidth((int) getResources().getDimension(R.dimen.imgSize_small));
+            cardIcon.setImageTintList(ColorStateList.valueOf(getColor(currentIssue.getColourLight())));
+
+            //Add items in reverse order to the layout holder
+            textHolderLayout.addView(cardTitle);
+            textHolderLayout.addView(cardBody);
+            cardHolderLayout.addView(textHolderLayout);
+            cardHolderLayout.addView(cardIcon);
+
+            cardVerticalLayout.addView(cardHolderLayout);
+            cardVerticalLayout.addView(selectButton);
+
+            //Add the filled Linear Layout to the full card
+            issueCard.addView(cardVerticalLayout);
+
+            cardIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openRepActivity(currentIssue.getKey());
+                }
+            });
+
+
+            if (currentIssue.getKey().equals(EcoIssues.WATER.getKey())) {
+                cardBody.setId(R.id.waterIssueDescription);
+                selectButton.setId(R.id.waterButton);
+            } else if (currentIssue.getKey().equals(EcoIssues.ELECTRIC.getKey())) {
+                cardBody.setId(R.id.electricIssueDescription);
+                selectButton.setId(R.id.electricButton);
+            } else if (currentIssue.getKey().equals(EcoIssues.TRASH.getKey())) {
+                cardBody.setId(R.id.trashIssueDescription);
+                selectButton.setId(R.id.trashButton);
+            } else {
+                cardBody.setId(R.id.airIssueDescription);
+                selectButton.setId(R.id.airButton);
+            }
+
+            selectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openRepActivity(currentIssue.getKey());
+                }
+            });
+            selectButton.setVisibility(View.GONE);
+
+            issueCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    cardBody.setText(getString(currentIssue.getDescription()));
+
+                    //Close the other cards
+                    closeOtherCards(currentIssue.getKey());
+                }
+            });
+
+            issuesContainer.addView(issueCard);
+        }
+    }
+
+    private void closeOtherCards(String issue) {
+
+        TextView airText = findViewById(R.id.airIssueDescription);
+        TextView waterText = findViewById(R.id.waterIssueDescription);
+        TextView trashText = findViewById(R.id.trashIssueDescription);
+        TextView electricText = findViewById(R.id.electricIssueDescription);
+
+        CardView airButton = findViewById(R.id.airButton);
+        CardView waterButton = findViewById(R.id.waterButton);
+        CardView trashButton = findViewById(R.id.trashButton);
+        CardView electricButton = findViewById(R.id.electricButton);
+
+        switch (issue) {
+            case "AIR":
+                waterText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.VISIBLE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            case "WATER":
+                airText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.VISIBLE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            case "TRASH":
+                airText.setText(R.string.show_more);
+                waterText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.VISIBLE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            default:
+                airText.setText(R.string.show_more);
+                waterText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+}

@@ -23,11 +23,6 @@
         <activity
             android:name=".SignInActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -39,11 +34,16 @@
             android:name=".RepresentativeSelectActivity"
             android:exported="true" />
         <activity
-            android:name=".activity_issue_select"
+            android:name=".IssueSelectActivity"
             android:exported="true" />
         <activity
             android:name=".HomeActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".TemplateView"

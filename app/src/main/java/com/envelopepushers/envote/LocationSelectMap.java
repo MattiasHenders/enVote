@@ -3,15 +3,12 @@ package com.envelopepushers.envote;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,7 +17,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,19 +26,10 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polygon;
 import org.osmdroid.views.overlay.Polyline;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -183,7 +170,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
 //        }
 
         //Start the next activity
-        Intent intent = new Intent(this, activity_issue_select.class);
+        Intent intent = new Intent(this, IssueSelectActivity.class);
         intent.putExtra("reps", repString);
         intent.putExtra("lat", userLat);
         intent.putExtra("lon", userLon);
