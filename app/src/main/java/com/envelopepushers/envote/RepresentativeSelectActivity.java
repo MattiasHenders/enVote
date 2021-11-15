@@ -61,7 +61,6 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
                 openEmailActivity();
                 finish();
             }
-
         });
 
         userLat = intent.getDoubleExtra("lat", 0);

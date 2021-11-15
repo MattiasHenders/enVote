@@ -1,8 +1,12 @@
 package com.envelopepushers.envote;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private Context _context;
     private ArrayList<Representative> _toonArrayList;
     private String[] captions;
+    Button btnSubmitLocation;
 
     public RecyclerAdapter(Context context, ArrayList<Representative> toonArrayList) {
         _context = context;
@@ -53,6 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView tvEmail = cardView.findViewById(R.id.email);
         TextView tvParty = cardView.findViewById(R.id.party);
         TextView tvGovLevel = cardView.findViewById(R.id.government_level);
+        Button btn = cardView.findViewById(R.id.next_page);
 
         ImageView ivPictureUrl = cardView.findViewById(R.id.image_view);
 
@@ -60,7 +66,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         tvEmail.setText(currentItem.getEmail());
         tvParty.setText(currentItem.getParty());
         tvGovLevel.setText(currentItem.getGovernmentLevel());
-
+        btn.setText("SELECTS");
+//        btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent prevIntent = ((Activity) _context).getIntent();
+//                String issue = prevIntent.getStringExtra("issue");
+//                Intent intent = new Intent (view.getContext(), TemplateView.class);
+//                intent.putExtra("issue", issue);
+//                intent.putExtra("email", tvEmail.getText().toString());
+//                intent.putExtra("name", tvName.getText().toString());
+//                _context.startActivity(intent);
+//                //                finish();
+//            }
+//        });
         if (currentItem.getPictureUrl() != null) {
 //            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());
             Picasso.with(_context)
