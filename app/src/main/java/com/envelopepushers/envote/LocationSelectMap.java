@@ -132,10 +132,10 @@ public class LocationSelectMap extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        System.out.println("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         userLat = location.getLatitude();
         userLon = location.getLongitude();
         if (!setLocation) {
+            System.out.println("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
             GeoPoint startPoint = new GeoPoint(userLat, userLon);
             mapController.setCenter(startPoint);
             setLocation = true;

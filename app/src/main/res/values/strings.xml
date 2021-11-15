@@ -12,7 +12,7 @@
     <string name="home_test_name">Mattias Henders</string>
     <string name="home_test_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 
-    <string name="location_loading">Loading Location...</string>
+    <string name="location_loading">Loading Location…</string>
     <string name="location_select">Select Location</string>
 
     <string name="email_to">To:</string>
@@ -21,8 +21,22 @@
     <string name="email_subject">Subject:</string>
     <string name="filler_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
 
-    <string name="issue1">This is the text for issue 1. It is expandable, which means I need to make this string relatively long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="issue2">This is the text for issue 2. It is expandable, which means I need to make this string relatively long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="issue_title">Select Your Issue</string>
+    <string name="show_more">Click to Show More…</string>
+
+    <string name="issue_empty">No issue, therefore no description.</string>
+    <string name="issue_trash">Negative effects of improper waste management not only ends in a disgusting view but also affects the overall economy of a country.
+                                Moreover, animals depended on the environment also face a great threat due to the oil spills and leaching of chemicals which directly cause soil and water contamination.
+    </string>
+    <string name="issue_water">Clean freshwater is an essential ingredient for a healthy human life.
+                                Drinking water fountains serve fresh, potable water around the city.
+    </string>
+    <string name="issue_electric">EVs have better acceleration than gas cars. That\'s because electric motors deliver full torque right away, unlike internal combustion engines that need to gear up.
+                                    Electric motors are an incredibly efficient and durable technology
+    </string>
+    <string name="issue_air">Decreased air quality introduces a number of health risks and concerns.
+                            Ground-level ozone (a key component of smog) is associated with many health problems.
+    </string>
 
     <string name="repName1">Donald Trump</string>
     <string name="repDesc1">Representative description</string>

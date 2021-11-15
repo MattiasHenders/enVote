@@ -2,16 +2,16 @@ package com.envelopepushers.envote;
 
 public enum EcoParty {
 
-    LIBERAL("LIBERAL", "Party", R.drawable.ic_round_add_24,
+    LIBERAL("LIBERAL", "Liberals", R.drawable.ic_round_add_24,
             R.color.red_bright, R.color.red_dark, "https://liberal.ca/"),
 
-    CONSERVATIVE("CONSERVATIVE", "Conservative", R.drawable.ic_baseline_invert_colors_24,
+    CONSERVATIVE("CONSERVATIVE", "Conservatives", R.drawable.ic_baseline_invert_colors_24,
             R.color.blue_bright, R.color.blue_dark, "https://www.conservative.ca/"),
 
     NDP("NDP", "NPD", R.drawable.ic_baseline_delete_24,
             R.color.orange_bright, R.color.orange_dark, "https://www.ndp.ca/"),
 
-    PPC("PPC", "People's Party Canada", R.drawable.ic_baseline_flash_on_24,
+    PPC("PPC", "People's Party of Canada", R.drawable.ic_baseline_flash_on_24,
             R.color.purple_bright, R.color.purple_dark, "https://www.peoplespartyofcanada.ca/"),
 
     GREEN("GREEN", "Green Party", R.drawable.ic_baseline_invert_colors_24,
