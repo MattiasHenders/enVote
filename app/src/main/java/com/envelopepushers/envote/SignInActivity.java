@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
     GoogleSignInClient mGoogleSignInClient;
@@ -40,13 +41,14 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_in);
 
         mAuth = FirebaseAuth.getInstance();
 
         createRequest();
-
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
@@ -105,7 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
                             openHomeActivity();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(SignUpActivity.this, "Sorry auth failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, "Sorry auth failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

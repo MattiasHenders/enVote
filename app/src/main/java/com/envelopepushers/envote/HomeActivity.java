@@ -272,7 +272,7 @@ public class HomeActivity extends AppCompatActivity {
         mGoogleSignInClient.signOut();
         FirebaseAuth.getInstance().signOut();
         finish();
-        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
     }
 }
