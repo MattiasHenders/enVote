@@ -35,7 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
         if (user != null) {
             openHomeActivity();
         }
-
     }
 
     @Override

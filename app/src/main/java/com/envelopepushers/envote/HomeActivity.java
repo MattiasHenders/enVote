@@ -19,6 +19,9 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,32 +53,34 @@ public class HomeActivity extends AppCompatActivity {
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail0.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail0.setDate(new Date());
-        testEmail0.addEcoIssue(new EcoIssue(EcoIssues.EMPTY));
+        testEmail0.addEcoIssue(new EcoIssue(EcoIssues.WATER));
 
         EcoEmail testEmail1 = new EcoEmail();
         testEmail1.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail1.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail1.setDate(new Date());
-        testEmail1.addEcoIssue(new EcoIssue(EcoIssues.WATER));
+        testEmail1.addEcoIssue(new EcoIssue(EcoIssues.AIR));
 
         EcoEmail testEmail2 = new EcoEmail();
         testEmail2.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail2.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail2.setDate(new Date());
-        testEmail2.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
+        testEmail2.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
 
         EcoEmail testEmail3 = new EcoEmail();
         testEmail3.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail3.setDate(new Date());
-        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
+        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
         pastEmails.add(testEmail0);
         pastEmails.add(testEmail1);
         pastEmails.add(testEmail2);
         pastEmails.add(testEmail3);
+
+        setBottomNavBar();
 
         if (pastEmails.size() == 0) {
             noPastEmailsButton.setVisibility(View.VISIBLE);
@@ -85,7 +90,6 @@ public class HomeActivity extends AppCompatActivity {
             generagePastEmailCards();
         }
 
-        setBottomNavBar();
     }
 
     private void setBottomNavBar() {
@@ -97,10 +101,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.action_browse) {
-
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
+                signOut();
                 return true;
             }
             if (item.getItemId() == R.id.action_profile) {
@@ -258,5 +259,20 @@ public class HomeActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
         }
+    }
+    private void signOut() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut();
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        startActivity(intent);
     }
 }

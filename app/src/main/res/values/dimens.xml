@@ -5,6 +5,7 @@
     <dimen name="margin_large">28dp</dimen>
     <dimen name="margin_xLarge">32dp</dimen>
     <dimen name="margin_xxxLarge">100dp</dimen>
+    <dimen name="margin_xxxxLarge">150dp</dimen>
 
     <dimen name="padding_small">12dp</dimen>
     <dimen name="padding_medium">20dp</dimen>

@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background_beige"
+    android:orientation="vertical"
     tools:context=".SignUpActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/imgSize_large"
         android:layout_marginLeft="@dimen/margin_xLarge"
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginRight="@dimen/margin_xLarge"
         android:layout_marginBottom="@dimen/margin_xLarge"
-        android:src="@drawable/ic_envote_logo"
-        tools:ignore="ImageContrastCheck" />
+        android:src="@drawable/ic_envote_logo" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-</LinearLayout>
+        android:layout_alignStart="@+id/logo"
+        android:layout_alignEnd="@+id/logo"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_xxxxLarge"
+        android:layout_marginHorizontal="@dimen/margin_xxxLarge"
+        android:background="@drawable/common_google_signin_btn_text_dark_normal_background"
+        android:drawableStart="@drawable/common_google_signin_btn_icon_light_normal" />
+</RelativeLayout>
