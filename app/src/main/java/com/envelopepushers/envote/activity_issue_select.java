@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,14 @@ public class activity_issue_select extends AppCompatActivity {
             issueCard.setRadius((int) getResources().getDimension(R.dimen.borderRadius_large));
             issueCard.setLayoutParams(cardLayoutParams);
 
+            LinearLayout cardVerticalLayout = new LinearLayout(this);
+            cardVerticalLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams cardVerticalLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardVerticalLayout.setLayoutParams(cardVerticalLayoutParams);
+            cardVerticalLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
+
             ViewGroup.MarginLayoutParams cardViewMarginParams = (ViewGroup.MarginLayoutParams) issueCard.getLayoutParams();
             cardViewMarginParams.setMargins(10, 30, 50, 20);
             issueCard.requestLayout();
@@ -80,11 +89,10 @@ public class activity_issue_select extends AppCompatActivity {
             cardHolderLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
             cardHolderLayout.setLayoutParams(cardHolderLayoutParams);
 
+
+
             LinearLayout textHolderLayout = new LinearLayout(this);
             textHolderLayout.setOrientation(LinearLayout.VERTICAL);
-            LinearLayout.LayoutParams textHolderLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
             textHolderLayout.setPadding(
                     (int) getResources().getDimension(R.dimen.padding_medium),
                     0,
@@ -119,20 +127,35 @@ public class activity_issue_select extends AppCompatActivity {
             cardIcon.setLayoutParams(cardIconLayoutParams);
 
             //Add the button
-            Button selectButton = new Button(this);
+            CardView selectButton = new CardView(this);
             LinearLayout.LayoutParams cardButtonParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            cardHolderLayout.setPadding(
+            cardButtonParams.gravity = Gravity.CENTER;
+            cardButtonParams.bottomMargin = (int) getResources().getDimension(R.dimen.margin_medium);
+
+            selectButton.setLayoutParams(cardButtonParams);
+            selectButton.setRadius((int) getResources().getDimension(R.dimen.borderRadius_medium));
+
+            LinearLayout textButtonLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams cardButtonTextParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardButtonParams.gravity = Gravity.CENTER;
+            textButtonLayout.setPadding(
+                    (int) getResources().getDimension(R.dimen.padding_medium),
                     (int) getResources().getDimension(R.dimen.padding_small),
-                    (int) getResources().getDimension(R.dimen.padding_small),
-                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_medium),
                     (int) getResources().getDimension(R.dimen.padding_small));
 
-            selectButton.setBackgroundColor(getColor(currentIssue.getColourLight()));
-            selectButton.setTextColor(getColor(currentIssue.getColourDark()));
-            selectButton.setLayoutParams(cardButtonParams);
+            textButtonLayout.setLayoutParams(cardButtonTextParams);
+            textButtonLayout.setBackgroundColor(getColor(currentIssue.getColourLight()));
+            TextView buttonText = new TextView(this);
+            buttonText.setText(R.string.select_issue_text);
+            buttonText.setTextColor(getColor(currentIssue.getColourDark()));
 
+            textButtonLayout.addView(buttonText);
+            selectButton.addView(textButtonLayout);
 
             //Get the first EcoIssue icon and color
             cardIcon.setImageIcon(Icon.createWithResource(this, currentIssue.getIcon()));
@@ -143,12 +166,14 @@ public class activity_issue_select extends AppCompatActivity {
             //Add items in reverse order to the layout holder
             textHolderLayout.addView(cardTitle);
             textHolderLayout.addView(cardBody);
-            textHolderLayout.addView(selectButton);
             cardHolderLayout.addView(textHolderLayout);
             cardHolderLayout.addView(cardIcon);
 
+            cardVerticalLayout.addView(cardHolderLayout);
+            cardVerticalLayout.addView(selectButton);
+
             //Add the filled Linear Layout to the full card
-            issueCard.addView(cardHolderLayout);
+            issueCard.addView(cardVerticalLayout);
 
             cardIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,10 +227,10 @@ public class activity_issue_select extends AppCompatActivity {
         TextView trashText = findViewById(R.id.trashIssueDescription);
         TextView electricText = findViewById(R.id.electricIssueDescription);
 
-        Button airButton = findViewById(R.id.airButton);
-        Button waterButton = findViewById(R.id.waterButton);
-        Button trashButton = findViewById(R.id.trashButton);
-        Button electricButton = findViewById(R.id.electricButton);
+        CardView airButton = findViewById(R.id.airButton);
+        CardView waterButton = findViewById(R.id.waterButton);
+        CardView trashButton = findViewById(R.id.trashButton);
+        CardView electricButton = findViewById(R.id.electricButton);
 
         switch (issue) {
             case "AIR":

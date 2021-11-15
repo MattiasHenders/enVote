@@ -27,14 +27,15 @@
     <string name="show_more">Click to Show More…</string>
 
     <string name="issue_empty">No issue, therefore no description.</string>
-    <string name="issue_trash">Negative effects of improper waste management not only ends in a disgusting view but also affects the overall economy of a country.
-                                Moreover, animals depended on the environment also face a great threat due to the oil spills and leaching of chemicals which directly cause soil and water contamination.
+    <string name="issue_trash">Negative effects of improper waste management not only ends in a disgusting
+                                view but also affects the overall economy of a country.
     </string>
     <string name="issue_water">Clean freshwater is an essential ingredient for a healthy human life.
                                 Drinking water fountains serve fresh, potable water around the city.
     </string>
-    <string name="issue_electric">EVs have better acceleration than gas cars. That\'s because electric motors deliver full torque right away, unlike internal combustion engines that need to gear up.
-                                    Electric motors are an incredibly efficient and durable technology
+    <string name="issue_electric">EVs have better acceleration than gas cars. That\'s because electric motors
+                                deliver full torque right away, unlike internal combustion engines that need to gear up.
+
     </string>
     <string name="issue_air">Decreased air quality introduces a number of health risks and concerns.
                             Ground-level ozone (a key component of smog) is associated with many health problems.
@@ -71,6 +72,7 @@
     <string name="emailHint">Email Address</string>
     <string name="web_client_id">639231938996-96b0p8ugq3id97a5pdph15bhflhp233e.apps.googleusercontent.com</string>
     <string name="logout">Logout</string>
+    <string name="select_issue_text">SELECT ISSUE</string>
 
     <integer name="google_play_services_version">12451000</integer>
 </resources>
