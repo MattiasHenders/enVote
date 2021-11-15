@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.envelopepushers.envote.R;
-import com.envelopepushers.envote.Representative;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -61,15 +59,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         tvParty.setText(currentItem.getParty());
         tvGovLevel.setText(currentItem.getGovernmentLevel());
 
-        if (currentItem.getPictureUrl() != null) {
+
+//        if (currentItem.getPictureUrl() != null) {
 //            new ImageDownloaderTask(ivPictureUrl).execute(currentItem.getPictureUrl());
             Picasso.with(_context)
-                    .load(currentItem.getPictureUrl())
+                    .load(currentItem.getPictureUrl().isEmpty() ? null : currentItem.getPictureUrl())
+                    .placeholder(R.drawable.ic_android_black_24dp)
+                    .error(R.drawable.ic_android_black_24dp)
                     .fit()
                     .centerInside()
                     .into(ivPictureUrl);
         }
-    }
+//    }
 
     @Override
     public int getItemCount() {
