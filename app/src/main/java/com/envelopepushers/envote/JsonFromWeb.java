@@ -87,7 +87,11 @@ public class JsonFromWeb {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            returnString = result;
+            if (result == null) {
+                returnString = "null";
+            } else {
+                returnString = result;
+            }
             try {
                 returnObj = new JSONObject(result);
             } catch (JSONException e) {
