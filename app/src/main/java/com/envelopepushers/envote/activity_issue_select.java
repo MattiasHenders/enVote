@@ -112,7 +112,6 @@ public class activity_issue_select extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
-            //TODO: Add Body Text about issue, make dropdown like Chris had
             //Format the email body
             cardBody.setText(getString(R.string.show_more));
             cardBody.setTextSize(18);
@@ -122,10 +121,26 @@ public class activity_issue_select extends AppCompatActivity {
             //Set the image as the icon for the issue
             ImageView cardIcon = new ImageView(this);
             LinearLayout.LayoutParams cardIconLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             cardIconLayoutParams.setMarginStart((int) getResources().getDimension(R.dimen.margin_medium));
             cardIcon.setLayoutParams(cardIconLayoutParams);
+
+            //Add the button
+            Button selectButton = new Button(this);
+            LinearLayout.LayoutParams cardButtonParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            cardHolderLayout.setPadding(
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small));
+
+            selectButton.setBackgroundColor(getColor(currentIssue.getColourLight()));
+            selectButton.setTextColor(getColor(currentIssue.getColourDark()));
+            selectButton.setLayoutParams(cardButtonParams);
+
 
             //Get the first EcoIssue icon and color
             cardIcon.setImageIcon(Icon.createWithResource(this, currentIssue.getIcon()));
@@ -136,6 +151,7 @@ public class activity_issue_select extends AppCompatActivity {
             //Add items in reverse order to the layout holder
             textHolderLayout.addView(cardTitle);
             textHolderLayout.addView(cardBody);
+            textHolderLayout.addView(selectButton);
             cardHolderLayout.addView(textHolderLayout);
             cardHolderLayout.addView(cardIcon);
 
@@ -149,23 +165,100 @@ public class activity_issue_select extends AppCompatActivity {
                 }
             });
 
+
+            if (currentIssue.getKey().equals(EcoIssues.WATER.getKey())) {
+                cardBody.setId(R.id.waterIssueDescription);
+                selectButton.setId(R.id.waterButton);
+            } else if (currentIssue.getKey().equals(EcoIssues.ELECTRIC.getKey())) {
+                cardBody.setId(R.id.electricIssueDescription);
+                selectButton.setId(R.id.electricButton);
+            } else if (currentIssue.getKey().equals(EcoIssues.TRASH.getKey())) {
+                cardBody.setId(R.id.trashIssueDescription);
+                selectButton.setId(R.id.trashButton);
+            } else {
+                cardBody.setId(R.id.airIssueDescription);
+                selectButton.setId(R.id.airButton);
+            }
+
+            selectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openRepActivity(currentIssue.getKey());
+                }
+            });
+            selectButton.setVisibility(View.GONE);
+
             issueCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     cardBody.setText(getString(currentIssue.getDescription()));
 
-                    issueCard.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openRepActivity(currentIssue.getKey());
-                        }
-                    });
-
+                    //Close the other cards
+                    closeOtherCards(currentIssue.getKey());
                 }
             });
 
             issuesContainer.addView(issueCard);
+        }
+    }
+
+    private void closeOtherCards(String issue) {
+
+        TextView airText = findViewById(R.id.airIssueDescription);
+        TextView waterText = findViewById(R.id.waterIssueDescription);
+        TextView trashText = findViewById(R.id.trashIssueDescription);
+        TextView electricText = findViewById(R.id.electricIssueDescription);
+
+        Button airButton = findViewById(R.id.airButton);
+        Button waterButton = findViewById(R.id.waterButton);
+        Button trashButton = findViewById(R.id.trashButton);
+        Button electricButton = findViewById(R.id.electricButton);
+
+        switch (issue) {
+            case "AIR":
+                waterText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.VISIBLE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            case "WATER":
+                airText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.VISIBLE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            case "TRASH":
+                airText.setText(R.string.show_more);
+                waterText.setText(R.string.show_more);
+                electricText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.VISIBLE);
+                electricButton.setVisibility(View.GONE);
+                break;
+
+            default:
+                airText.setText(R.string.show_more);
+                waterText.setText(R.string.show_more);
+                trashText.setText(R.string.show_more);
+
+                airButton.setVisibility(View.GONE);
+                waterButton.setVisibility(View.GONE);
+                trashButton.setVisibility(View.GONE);
+                electricButton.setVisibility(View.VISIBLE);
+                break;
         }
     }
 }
