@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class activity_issue_select extends AppCompatActivity {
 
     public LinearLayout issuesContainer;
+    double userLat;
+    double userLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,18 @@ public class activity_issue_select extends AppCompatActivity {
         issuesInOrder.add(new EcoIssue(EcoIssues.ELECTRIC));
         issuesInOrder.add(new EcoIssue(EcoIssues.AIR));
 
+        Intent intent = getIntent();
+        userLat = intent.getDoubleExtra("lat", 0);
+        userLon = intent.getDoubleExtra("lon", 0);
+
         generateIssueCards(issuesInOrder);
     }
 
     public void openRepActivity(String issueKey) {
         Intent intent = new Intent(this, RepresentativeSelectActivity.class);
         intent.putExtra("issue", issueKey);
+        intent.putExtra("lat", userLat);
+        intent.putExtra("lon", userLon);
         startActivity(intent);
         finish();
     }

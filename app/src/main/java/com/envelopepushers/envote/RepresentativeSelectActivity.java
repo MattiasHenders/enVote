@@ -32,7 +32,7 @@ import java.util.TimerTask;
 public class RepresentativeSelectActivity extends AppCompatActivity {
 
     private Button btnSubmitLocation;
-    private static final String SERVICE_URL = "https://represent.opennorth.ca/representatives/?point=45.524,-73.596";
+    private static final String SERVICE_URL = "https://represent.opennorth.ca/representatives/?point=";
     private ArrayList<Representative> _repsList;
     private RecyclerView _recyclerView;
     private RecyclerAdapter _recyclerAdapter;
@@ -130,8 +130,8 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
     }
 
     private void queueParseJSON() {
-        String url = SERVICE_URL;
-
+        String url = SERVICE_URL + userLat + "," + userLon;
+        System.out.println(url);
         JsonFromWeb reps = new JsonFromWeb(url);
         final JSONObject[] repJSONHolder = {null};
         final JSONArray[] jsonData = {null};
