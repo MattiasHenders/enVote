@@ -1,20 +1,24 @@
 package com.envelopepushers.envote;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.j256.ormlite.stmt.query.In;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TemplateView extends AppCompatActivity {
 
@@ -22,6 +26,7 @@ public class TemplateView extends AppCompatActivity {
     public TextView textBody;
     public EcoIssue selectedIssue = new EcoIssue(EcoIssues.EMPTY);
     public Button btnSendEmail;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class TemplateView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startEmailIntent(emailRecievers, emailSubject, emailBody);
+                storeEmail();
             }
         });
     }
@@ -150,5 +156,21 @@ public class TemplateView extends AppCompatActivity {
         email.setType("message/rfc822");
 
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
+    }
+
+    private void storeEmail() {
+        DatabaseReference myEmails = database.getReference("Emails");
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        String name = null;
+        if (signInAccount != null) {
+            name = signInAccount.getDisplayName();
+        }
+        EcoEmail email = new EcoEmail();
+        email.addDeliveredTo(new EmailReceiver("bingbong@gmail.com", name, EcoParty.LIBERAL));
+        email.setBody(textBody.toString());
+        email.setDate(new Date());
+        email.addEcoIssue(selectedIssue);
+        myEmails.child("Emails").setValue(email);
+
     }
 }

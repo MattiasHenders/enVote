@@ -40,12 +40,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        logout = findViewById(R.id.btnLogout);
-//        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if(signInAccount != null) {
-//            name.setText(signInAccount.getDisplayName());
-//        }
-
         CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
 
         EcoEmail testEmail0 = new EcoEmail();
