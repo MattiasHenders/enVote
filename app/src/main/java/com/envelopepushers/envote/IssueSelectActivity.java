@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +20,19 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class IssueSelectActivity extends AppCompatActivity {
 
     public LinearLayout issuesContainer;
     double userLat;
     double userLon;
-
+    int aqi = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +41,15 @@ public class IssueSelectActivity extends AppCompatActivity {
         issuesContainer = findViewById(R.id.issues_container);
 
         ArrayList<EcoIssue> issuesInOrder = new ArrayList<>();
-
         issuesInOrder.add(new EcoIssue(EcoIssues.TRASH));
         issuesInOrder.add(new EcoIssue(EcoIssues.WATER));
         issuesInOrder.add(new EcoIssue(EcoIssues.ELECTRIC));
         issuesInOrder.add(new EcoIssue(EcoIssues.AIR));
 
         Intent intent = getIntent();
+        aqi = intent.getIntExtra("aqi", 0);
         userLat = intent.getDoubleExtra("lat", 0);
         userLon = intent.getDoubleExtra("lon", 0);
-
         generateIssueCards(issuesInOrder);
     }
 
@@ -216,8 +221,12 @@ public class IssueSelectActivity extends AppCompatActivity {
             issueCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (currentIssue.getKey().equals("AIR")) {
+                        cardBody.setText("The current AQI is: " + aqi + ". An AQI over 80 is typically considered harmful.\n" + getString(currentIssue.getDescription()));
 
-                    cardBody.setText(getString(currentIssue.getDescription()));
+                    } else {
+                        cardBody.setText(getString(currentIssue.getDescription()));
+                    }
 
                     //Close the other cards
                     closeOtherCards(currentIssue.getKey());
