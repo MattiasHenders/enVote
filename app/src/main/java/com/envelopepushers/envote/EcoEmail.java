@@ -58,12 +58,10 @@ public class EcoEmail {
      * Sets the date
      * @param date
      */
-    public void setDate(Date date) {
+    public void setDate(String date) {
 
-        SimpleDateFormat formater = new SimpleDateFormat("MMM dd yyyy");
-        String strDate = formater.format(date);
         try {
-            emailObject.put("dateSent", strDate);
+            emailObject.put("dateSent", date);
         } catch (JSONException e) {
             e.printStackTrace();
         }

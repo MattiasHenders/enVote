@@ -24,6 +24,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,10 +40,16 @@ public class HomeActivity extends AppCompatActivity {
 
     Button logout;
 
+    //Firebase
+    DatabaseReference database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //Connect to Firebase
+        database = FirebaseDatabase.getInstance().getReference("Emails");
 
 //        logout = findViewById(R.id.btnLogout);
 //        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -46,34 +57,35 @@ public class HomeActivity extends AppCompatActivity {
 //            name.setText(signInAccount.getDisplayName());
 //        }
 
+
         CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
 
         EcoEmail testEmail0 = new EcoEmail();
         testEmail0.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail0.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail0.setDate(new Date());
+        testEmail0.setDate(new Date().toString());
         testEmail0.addEcoIssue(new EcoIssue(EcoIssues.WATER));
 
         EcoEmail testEmail1 = new EcoEmail();
         testEmail1.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail1.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail1.setDate(new Date());
+        testEmail1.setDate(new Date().toString());
         testEmail1.addEcoIssue(new EcoIssue(EcoIssues.AIR));
 
         EcoEmail testEmail2 = new EcoEmail();
         testEmail2.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail2.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail2.setDate(new Date());
+        testEmail2.setDate(new Date().toString());
         testEmail2.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
 
         EcoEmail testEmail3 = new EcoEmail();
         testEmail3.addDeliveredTo(
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail3.setDate(new Date());
+        testEmail3.setDate(new Date().toString());
         testEmail3.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
         pastEmails.add(testEmail0);
         pastEmails.add(testEmail1);
@@ -90,6 +102,12 @@ public class HomeActivity extends AppCompatActivity {
             generagePastEmailCards();
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getPastEmails();
     }
 
     private void setBottomNavBar() {
@@ -110,6 +128,36 @@ public class HomeActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    private void getPastEmails() {
+
+        System.out.println("Starting firebase EcoEmails");
+
+        // Read from the database
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+               // for (DataSnapshot data: dataSnapshot.getChildren()) {
+                    EcoEmail value = dataSnapshot.getValue(EcoEmail.class);
+                    System.out.println("Value is: " + value);
+               // }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("Failed to read value." + error.toException());
+            }
+        });
+
+        //Get the EcoEmail objects
+
+        //Set the objects to pastEmails
+
     }
 
     private void openMapActivity() {
