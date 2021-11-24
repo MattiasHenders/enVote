@@ -34,10 +34,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -98,7 +96,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 pastEmails.add(snapshot.getValue(EcoEmail.class));
-                pastEmails.add(snapshot.getValue(EcoEmail.class));
                 System.out.println("Added Child");
 
                 CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
@@ -112,10 +109,9 @@ public class HomeActivity extends AppCompatActivity {
                     System.out.println("Setting past emails");
                     ScrollView scrollView = findViewById(R.id.scroller);
                     scrollView.getLayoutParams().height = (int) convertDpToPixel(350, getApplicationContext());
-                    generagePastEmailCards();
+                    generatePastEmailCards();
                 }
 
-                generagePastEmailCards();
                 setBottomNavBar();
             }
 
@@ -185,7 +181,11 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(this, IssueSelectActivity.class));
     }
 
-    private void generagePastEmailCards() {
+    private void generatePastEmailCards() {
+
+        //Remove child views first
+        LinearLayout holder = findViewById(R.id.container_past_emails);
+        holder.removeAllViews();
 
         for (EcoEmail pastEmail : pastEmails) {
 
