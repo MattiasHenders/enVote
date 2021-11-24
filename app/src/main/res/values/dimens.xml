@@ -12,6 +12,10 @@
     <dimen name="padding_large">28dp</dimen>
     <dimen name="padding_xLarge">32dp</dimen>
 
+    <dimen name="dynamic_font_small">6sp</dimen>
+    <dimen name="dynamic_font_medium">8sp</dimen>
+    <dimen name="dynamic_font_large">10sp</dimen>
+
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_medium">20sp</dimen>
     <dimen name="font_large">28sp</dimen>
@@ -34,4 +38,5 @@
     <dimen name="shadowHeight">10dp</dimen>
 
     <dimen name="bannerHeight">300dp</dimen>
+    <dimen name="scrollHeight">300dp</dimen>
 </resources>
