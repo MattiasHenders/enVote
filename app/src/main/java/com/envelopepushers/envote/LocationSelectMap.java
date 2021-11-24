@@ -59,10 +59,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
     //Local Reps
     JSONArray localReps;
 
-    //Timers
-    private int timerPeriod = 100;
-    private int timerDelay = 50;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +184,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
     private void scheduleMapUpdate() {
 
         updateMapTimer = new Timer();
+        //Timers
+        int timerPeriod = 100;
+        int timerDelay = 50;
         updateMapTimer.schedule(new TimerTask() {
             @Override
             public void run() {
