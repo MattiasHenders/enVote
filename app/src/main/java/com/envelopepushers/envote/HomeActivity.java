@@ -1,19 +1,24 @@
 package com.envelopepushers.envote;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -24,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,58 +62,8 @@ public class HomeActivity extends AppCompatActivity {
 //        if(signInAccount != null) {
 //            name.setText(signInAccount.getDisplayName());
 //        }
-
-
-        CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
-
-        EcoEmail testEmail0 = new EcoEmail();
-        testEmail0.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail0.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail0.setDate(new Date().toString());
-        testEmail0.addEcoIssue(new EcoIssue(EcoIssues.WATER));
-
-        EcoEmail testEmail1 = new EcoEmail();
-        testEmail1.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail1.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail1.setDate(new Date().toString());
-        testEmail1.addEcoIssue(new EcoIssue(EcoIssues.AIR));
-
-        EcoEmail testEmail2 = new EcoEmail();
-        testEmail2.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail2.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail2.setDate(new Date().toString());
-        testEmail2.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
-
-        EcoEmail testEmail3 = new EcoEmail();
-        testEmail3.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail3.setDate(new Date().toString());
-        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
-        pastEmails.add(testEmail0);
-        pastEmails.add(testEmail1);
-        pastEmails.add(testEmail2);
-        pastEmails.add(testEmail3);
-
-        setBottomNavBar();
-
-        if (pastEmails.size() == 0) {
-            noPastEmailsButton.setVisibility(View.VISIBLE);
-
-            noPastEmailsButton.setOnClickListener(view -> openMapActivity());
-        } else {
-            generagePastEmailCards();
-        }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         getPastEmails();
+        setBottomNavBar();
     }
 
     private void setBottomNavBar() {
@@ -122,12 +78,15 @@ public class HomeActivity extends AppCompatActivity {
                 signOut();
                 return true;
             }
-            if (item.getItemId() == R.id.action_profile) {
-                openProfileActivity();
-                return true;
-            }
             return false;
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 
     private void getPastEmails() {
@@ -135,22 +94,52 @@ public class HomeActivity extends AppCompatActivity {
         System.out.println("Starting firebase EcoEmails");
 
         // Read from the database
-        database.addValueEventListener(new ValueEventListener() {
+        database.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                pastEmails.add(snapshot.getValue(EcoEmail.class));
+                pastEmails.add(snapshot.getValue(EcoEmail.class));
+                System.out.println("Added Child");
 
-               // for (DataSnapshot data: dataSnapshot.getChildren()) {
-                    EcoEmail value = dataSnapshot.getValue(EcoEmail.class);
-                    System.out.println("Value is: " + value);
-               // }
+                CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
+
+                if (pastEmails.isEmpty()) {
+                    System.out.println("Setting NO emails");
+                    noPastEmailsButton.setVisibility(View.VISIBLE);
+
+                    noPastEmailsButton.setOnClickListener(view -> openMapActivity());
+                } else {
+                    System.out.println("Setting past emails");
+                    ScrollView scrollView = findViewById(R.id.scroller);
+                    scrollView.getLayoutParams().height = (int) convertDpToPixel(350, getApplicationContext());
+                    generagePastEmailCards();
+                }
+
+                generagePastEmailCards();
+                setBottomNavBar();
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                System.out.println("Failed to read value." + error.toException());
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                pastEmails.add(snapshot.getValue(EcoEmail.class));
+                System.out.println("Changed Child");
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                pastEmails.add(snapshot.getValue(EcoEmail.class));
+                System.out.println("Moved Child");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -158,6 +147,17 @@ public class HomeActivity extends AppCompatActivity {
 
         //Set the objects to pastEmails
 
+    }
+
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     private void openMapActivity() {
@@ -189,7 +189,7 @@ public class HomeActivity extends AppCompatActivity {
 
         for (EcoEmail pastEmail : pastEmails) {
 
-            EcoIssue currentTopIssue = pastEmail.getEcoIssues().get(0);
+            EcoIssue currentTopIssue = pastEmail.getIssue();
 
             LinearLayout cardHolder = new LinearLayout(this);
 

@@ -121,4 +121,11 @@ public class EcoIssue {
   public void setDescription(int description) {
     this.description = description;
   }
+
+  @Override
+  public String toString() {
+    return "EcoIssue{" +
+            "name='" + name + '\'' +
+            '}';
+  }
 }
