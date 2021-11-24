@@ -39,4 +39,7 @@
 
     <dimen name="bannerHeight">300dp</dimen>
     <dimen name="scrollHeight">300dp</dimen>
+
+    <dimen name="empty">0dp</dimen>
+
 </resources>

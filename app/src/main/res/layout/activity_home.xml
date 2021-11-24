@@ -63,7 +63,7 @@
         <ScrollView
             android:id="@+id/scroller"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/empty"
             android:scrollbars="vertical">
 
             <LinearLayout
@@ -117,7 +117,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/empty"
         android:layout_weight="1"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
