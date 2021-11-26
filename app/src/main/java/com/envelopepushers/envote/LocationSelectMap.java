@@ -163,33 +163,16 @@ public class LocationSelectMap extends Activity implements LocationListener {
             repString = localReps.toString();
         }
 
-//        //Get the issues found in the area
-//        String issues = "";
-//        if (airIssue) {
-//            issues += EcoIssues.AIR.getKey() + ", ";
-//        }
-//        if (waterIssue) {
-//            issues += EcoIssues.WATER.getKey() + ", ";
-//        }
-//        if (trashIssue) {
-//            issues += EcoIssues.TRASH.getKey() + ", ";
-//        }
-//
-//        if (!issues.isEmpty()) {
-//            issues = issues.substring(0, issues.length() - 2);
-//        }
-
         //Start the next activity
         Intent intent = new Intent(this, IssueSelectActivity.class);
         intent.putExtra("reps", repString);
         intent.putExtra("lat", userLat);
         intent.putExtra("lon", userLon);
         intent.putExtra("aqi", aqi);
-//        intent.putExtra("issues", issues);
+        intent.putExtra("emission", emission);
         startActivity(intent);
         finish();
     }
-
 
     /**
      * Checks the phones permissions for storage writing.
@@ -205,7 +188,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
     }
 
     private void scheduleMapUpdate() {
-
         updateMapTimer = new Timer();
         updateMapTimer.schedule(new TimerTask() {
             @Override
@@ -255,10 +237,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
                 }
             });
         }
-
-//        //Start getting other JSONs if all is good
-//        getLocalReps();
-//        getLocalIssues();
 
         //At this point the JSON is good
         String areaName = array.getJSONObject(0).getString("name");
@@ -313,7 +291,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
     }
 
     private void getAirIssue() {
-
         String urlCall = "https://api.waqi.info/feed/geo:" +
                 userLat + ";" +
                 userLon +
@@ -345,34 +322,28 @@ public class LocationSelectMap extends Activity implements LocationListener {
     }
 
     private void getEmissionsIssue() {
-
+        System.out.println("In Emissions Issue");
         String urlCall = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=" + 49 + "&point=" + -123 + "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
-
         JsonFromWeb emissionResult = new JsonFromWeb(urlCall);
+        System.out.println(urlCall);
         final JSONObject[] emissionJSONHolder = {null};
         final int[] emissionScore = new int[1];
         //Use new timer to get response
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("EMISSION RESULT: " + emissionResult.toString());
-                while (emissionResult.toString().equals(null)) {
+                System.out.println("before while loop");
+                while (emissionResult.getJSONObject() == null) {
                     //Wait for response on separate thread
                 }
                 emissionJSONHolder[0] = emissionResult.getJSONObject();
-//                try {
-                    System.out.println(emissionJSONHolder);
-//                    if (emissionJSONHolder[0]
-//                            .getJSONObject("data")
-//                            .getInt("aqi") > 80) {
-//                        airIssue = true;
-//                    }
-//                    emission = emissionJSONHolder[0].getJSONObject("data").getInt("aqi");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    emission = emissionJSONHolder[0].getJSONArray("data").getJSONObject(0).getDouble("average");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }, 100);
     }
-
 }

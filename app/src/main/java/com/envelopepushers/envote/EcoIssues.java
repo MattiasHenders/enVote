@@ -13,8 +13,8 @@ public enum EcoIssues {
     TRASH("TRASH", "Trash Collection", R.drawable.ic_baseline_delete_24,
             R.color.green_bright, R.color.green_darker, R.string.issue_trash),// Resources.getSystem().getString(R.string.issue_trash)),
 
-    ELECTRIC("ELECTRIC", "Electric Stations", R.drawable.ic_baseline_flash_on_24,
-            R.color.yellow_bright, R.color.yellow_darker, R.string.issue_electric),// Resources.getSystem().getString(R.string.issue_electric)),
+    EMISSION("EMISSION", "Local Emissions", R.drawable.ic_baseline_flash_on_24,
+            R.color.yellow_bright, R.color.yellow_darker, R.string.issue_emissions),// Resources.getSystem().getString(R.string.issue_electric)),
 
     AIR("AIR", "Air Quality", R.drawable.ic_baseline_air_24,
              R.color.teal_bright, R.color.teal_dark, R.string.issue_air);// Resources.getSystem().getString(R.string.issue_air));

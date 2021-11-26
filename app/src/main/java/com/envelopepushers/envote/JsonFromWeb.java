@@ -3,6 +3,7 @@ package com.envelopepushers.envote;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,9 +93,18 @@ public class JsonFromWeb {
             } else {
                 returnString = result;
             }
+            if (!result.trim().startsWith("{")) {
+                result = "{\"data\":" + result + "}";
+            }
             try {
                 returnObj = new JSONObject(result);
             } catch (JSONException e) {
+                try {
+                    JSONArray arr = new JSONArray(result);
+                    returnObj = arr.getJSONObject(0);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
                 e.printStackTrace();
             }
         }

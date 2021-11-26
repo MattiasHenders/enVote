@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
         testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
         testEmail3.setDate(new Date());
-        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
+        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.EMISSION));
         pastEmails.add(testEmail0);
         pastEmails.add(testEmail1);
         pastEmails.add(testEmail2);

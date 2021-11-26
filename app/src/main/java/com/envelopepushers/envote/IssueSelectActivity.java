@@ -33,6 +33,7 @@ public class IssueSelectActivity extends AppCompatActivity {
     double userLat;
     double userLon;
     int aqi = 0;
+    double emission = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +44,12 @@ public class IssueSelectActivity extends AppCompatActivity {
         ArrayList<EcoIssue> issuesInOrder = new ArrayList<>();
         issuesInOrder.add(new EcoIssue(EcoIssues.TRASH));
         issuesInOrder.add(new EcoIssue(EcoIssues.WATER));
-        issuesInOrder.add(new EcoIssue(EcoIssues.ELECTRIC));
+        issuesInOrder.add(new EcoIssue(EcoIssues.EMISSION));
         issuesInOrder.add(new EcoIssue(EcoIssues.AIR));
 
         Intent intent = getIntent();
         aqi = intent.getIntExtra("aqi", 0);
+        emission = intent.getDoubleExtra("emission", 0);
         userLat = intent.getDoubleExtra("lat", 0);
         userLon = intent.getDoubleExtra("lon", 0);
         generateIssueCards(issuesInOrder);
@@ -199,7 +201,7 @@ public class IssueSelectActivity extends AppCompatActivity {
             if (currentIssue.getKey().equals(EcoIssues.WATER.getKey())) {
                 cardBody.setId(R.id.waterIssueDescription);
                 selectButton.setId(R.id.waterButton);
-            } else if (currentIssue.getKey().equals(EcoIssues.ELECTRIC.getKey())) {
+            } else if (currentIssue.getKey().equals(EcoIssues.EMISSION.getKey())) {
                 cardBody.setId(R.id.electricIssueDescription);
                 selectButton.setId(R.id.electricButton);
             } else if (currentIssue.getKey().equals(EcoIssues.TRASH.getKey())) {
@@ -223,7 +225,8 @@ public class IssueSelectActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     if (currentIssue.getKey().equals("AIR")) {
                         cardBody.setText("The current AQI is: " + aqi + ". An AQI over 80 is typically considered harmful.\n" + getString(currentIssue.getDescription()));
-
+                    } else if (currentIssue.getKey().equals("EMISSION")) {
+                        cardBody.setText("Your local carbon monoxide emissions are " + emission + getString(currentIssue.getDescription()));
                     } else {
                         cardBody.setText(getString(currentIssue.getDescription()));
                     }
@@ -232,7 +235,6 @@ public class IssueSelectActivity extends AppCompatActivity {
                     closeOtherCards(currentIssue.getKey());
                 }
             });
-
             issuesContainer.addView(issueCard);
         }
     }
