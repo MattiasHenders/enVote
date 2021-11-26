@@ -64,6 +64,9 @@ public class HomeActivity extends AppCompatActivity {
 
         //Get the past emails
         getPastEmails();
+
+        //Generate the bottom navbar
+        setBottomNavBar();
     }
 
     /**
@@ -112,9 +115,6 @@ public class HomeActivity extends AppCompatActivity {
                     //Add cards if emails are found
                     generatePastEmailCards();
                 }
-
-                //Generate the bottom navbar
-                setBottomNavBar();
             }
 
             @Override
