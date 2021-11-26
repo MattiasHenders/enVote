@@ -82,10 +82,7 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
                     openHomeActivity();
                     return true;
                 }
-                if (item.getItemId() == R.id.action_profile) {
-                    openIssueActivity();
-                    return true;
-                }
+
                 return false;
             }
         });

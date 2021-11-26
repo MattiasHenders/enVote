@@ -54,6 +54,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
 
     //Users location
     private double userLat = 0, userLon = 0;
+    private int defaultZoom = 14;
 
     //Local Reps
     JSONArray localReps;
@@ -91,12 +92,12 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.setTileSource(TileSourceFactory.MAPNIK);
 
         mapController = mapMain.getController();
-        mapController.setZoom(14);
+        mapController.setZoom(defaultZoom);
 
         GeoPoint startPoint;
         if (userLon == 0 || userLat == 0) {
             //Burnaby lat/lon as default
-            startPoint = new GeoPoint(49.2488, -122.9805);
+            startPoint = new GeoPoint(0.0, 0.0);
         } else {
             startPoint = new GeoPoint(userLat, userLon);
         }
@@ -144,7 +145,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
         Log.d("Latitude","status");
     }
 
-
+    /**
+     * Opens the next activity screen
+     */
     public void openActivityIssue() {
 
         //Check the local reps
@@ -153,32 +156,14 @@ public class LocationSelectMap extends Activity implements LocationListener {
             repString = localReps.toString();
         }
 
-//        //Get the issues found in the area
-//        String issues = "";
-//        if (airIssue) {
-//            issues += EcoIssues.AIR.getKey() + ", ";
-//        }
-//        if (waterIssue) {
-//            issues += EcoIssues.WATER.getKey() + ", ";
-//        }
-//        if (trashIssue) {
-//            issues += EcoIssues.TRASH.getKey() + ", ";
-//        }
-//
-//        if (!issues.isEmpty()) {
-//            issues = issues.substring(0, issues.length() - 2);
-//        }
-
         //Start the next activity
         Intent intent = new Intent(this, IssueSelectActivity.class);
         intent.putExtra("reps", repString);
         intent.putExtra("lat", userLat);
         intent.putExtra("lon", userLon);
-//        intent.putExtra("issues", issues);
         startActivity(intent);
         finish();
     }
-
 
     /**
      * Checks the phones permissions for storage writing.
@@ -193,9 +178,15 @@ public class LocationSelectMap extends Activity implements LocationListener {
         }
     }
 
+    /**
+     * On a separate timer schedules the map to update
+     */
     private void scheduleMapUpdate() {
 
         updateMapTimer = new Timer();
+        //Timers
+        int timerPeriod = 100;
+        int timerDelay = 50;
         updateMapTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -208,9 +199,13 @@ public class LocationSelectMap extends Activity implements LocationListener {
                     }
                 }
             }
-        }, 50, 100);
+        }, timerDelay, timerPeriod);
     }
 
+    /**
+     * Adds boundaries to the map
+     * @throws JSONException
+     */
     private void addBoundariesToMap() throws JSONException {
 
         updateMapTimer.cancel();
@@ -244,10 +239,6 @@ public class LocationSelectMap extends Activity implements LocationListener {
                 }
             });
         }
-
-//        //Start getting other JSONs if all is good
-//        getLocalReps();
-//        getLocalIssues();
 
         //At this point the JSON is good
         String areaName = array.getJSONObject(0).getString("name");
@@ -286,19 +277,4 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.getOverlays().add(myPath);
         mapMain.invalidate();
     }
-
-
-
-    private GeoPoint computeCentroid(ArrayList<GeoPoint> points) {
-        double latitude = 0;
-        double longitude = 0;
-
-        for (GeoPoint point : points) {
-            latitude += point.getLatitude();
-            longitude += point.getLongitude();
-        }
-
-        return new GeoPoint(latitude / points.size(), longitude / points.size());
-    }
-
 }

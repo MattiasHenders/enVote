@@ -1,19 +1,24 @@
 package com.envelopepushers.envote;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -24,68 +29,46 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
+    //Email card variables
     public ArrayList<EcoEmail> pastEmails = new ArrayList<>();
     final int MAX_BODY_PREVIEW = 50;
 
     Button logout;
+
+    //Firebase variables
+    DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
+        //Connect to Firebase
+        database = FirebaseDatabase.getInstance().getReference("Emails");
 
-        EcoEmail testEmail0 = new EcoEmail();
-        testEmail0.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail0.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail0.setDate(new Date());
-        testEmail0.addEcoIssue(new EcoIssue(EcoIssues.WATER));
+//        logout = findViewById(R.id.btnLogout);
+//        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+//        if(signInAccount != null) {
+//            name.setText(signInAccount.getDisplayName());
+//        }
 
-        EcoEmail testEmail1 = new EcoEmail();
-        testEmail1.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail1.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail1.setDate(new Date());
-        testEmail1.addEcoIssue(new EcoIssue(EcoIssues.AIR));
-
-        EcoEmail testEmail2 = new EcoEmail();
-        testEmail2.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail2.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail2.setDate(new Date());
-        testEmail2.addEcoIssue(new EcoIssue(EcoIssues.TRASH));
-
-        EcoEmail testEmail3 = new EcoEmail();
-        testEmail3.addDeliveredTo(
-                new EmailReceiver("mattias@gmail.com", "Mattias Henders", EcoParty.NDP));
-        testEmail3.setBody("According to all known laws of aviation there is no way a bee should be able to fly.");
-        testEmail3.setDate(new Date());
-        testEmail3.addEcoIssue(new EcoIssue(EcoIssues.ELECTRIC));
-        pastEmails.add(testEmail0);
-        pastEmails.add(testEmail1);
-        pastEmails.add(testEmail2);
-        pastEmails.add(testEmail3);
-
-        setBottomNavBar();
-
-        if (pastEmails.size() == 0) {
-            noPastEmailsButton.setVisibility(View.VISIBLE);
-
-            noPastEmailsButton.setOnClickListener(view -> openMapActivity());
-        } else {
-            generagePastEmailCards();
-        }
-
+        //Get the past emails
+        getPastEmails();
     }
 
+    /**
+     * Show the bottom navbar
+     */
     private void setBottomNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
@@ -98,14 +81,78 @@ public class HomeActivity extends AppCompatActivity {
                 signOut();
                 return true;
             }
-            if (item.getItemId() == R.id.action_profile) {
-                openProfileActivity();
-                return true;
-            }
             return false;
         });
     }
 
+    /**
+     * Access the firebase to find past emails
+     */
+    private void getPastEmails() {
+
+        // Read from the database
+        database.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                pastEmails.add(snapshot.getValue(EcoEmail.class));
+
+                CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
+
+                if (pastEmails.isEmpty()) {
+                    noPastEmailsButton.setVisibility(View.VISIBLE);
+
+                    noPastEmailsButton.setOnClickListener(view -> openMapActivity());
+                } else {
+                    noPastEmailsButton.setVisibility(View.GONE);
+
+                    ScrollView scrollView = findViewById(R.id.scroller);
+                    scrollView.getLayoutParams().height = (int)getResources().getDimension(R.dimen.scrollHeight);
+
+                    //Add cards if emails are found
+                    generatePastEmailCards();
+                }
+
+                //Generate the bottom navbar
+                setBottomNavBar();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    /**
+     * Opens the Map activity after checking for permissions
+     */
     private void openMapActivity() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED &&
@@ -119,30 +166,26 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void openHomeActivity() {
-        startActivity(new Intent(this, HomeActivity.class));
-    }
+    /**
+     * Generates the email cards dynamically
+     */
+    private void generatePastEmailCards() {
 
-    private void openProfileActivity() {
-        startActivity(new Intent(this, ProfileActivity.class));
-    }
+        //Remove child views first
+        LinearLayout view = findViewById(R.id.container_past_emails);
+        view.removeAllViews();
 
-    private void openIssueActivity() {
-        startActivity(new Intent(this, IssueSelectActivity.class));
-    }
-
-    private void generagePastEmailCards() {
-
+        //Loop through all emails
         for (EcoEmail pastEmail : pastEmails) {
 
-            EcoIssue currentTopIssue = pastEmail.getEcoIssues().get(0);
+            EcoIssue currentTopIssue = pastEmail.getIssue();
 
             LinearLayout cardHolder = new LinearLayout(this);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(0, 0, 0, 30);
+            layoutParams.setMargins(0, 0, 0, (int)getResources().getDimension(R.dimen.margin_small));
             cardHolder.setLayoutParams(layoutParams);
 
             //Create the individual card
@@ -156,8 +199,15 @@ public class HomeActivity extends AppCompatActivity {
                     (int) getResources().getDimension(R.dimen.borderRadius_medium));
             pastEmailCard.setLayoutParams(cardLayoutParams);
 
-            ViewGroup.MarginLayoutParams cardViewMarginParams = (ViewGroup.MarginLayoutParams) pastEmailCard.getLayoutParams();
-            cardViewMarginParams.setMargins(10, 30, 50, 20);
+            ViewGroup.MarginLayoutParams cardViewMarginParams =
+                    (ViewGroup.MarginLayoutParams) pastEmailCard.getLayoutParams();
+
+            cardViewMarginParams.setMargins(
+                    (int)getResources().getDimension(R.dimen.margin_large),
+                    (int)getResources().getDimension(R.dimen.margin_large),
+                    (int)getResources().getDimension(R.dimen.margin_large),
+                    (int)getResources().getDimension(R.dimen.margin_large));
+
             pastEmailCard.requestLayout();
 
             LinearLayout cardHolderLayout = new LinearLayout(this);
@@ -166,10 +216,10 @@ public class HomeActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             cardHolderLayout.setPadding(
-                    (int) getResources().getDimension(R.dimen.padding_medium),
-                    (int) getResources().getDimension(R.dimen.padding_medium),
-                    (int) getResources().getDimension(R.dimen.padding_medium),
-                    (int) getResources().getDimension(R.dimen.padding_medium));
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small));
 
             cardHolderLayout.setBackgroundColor(getColor(currentTopIssue.getColourDark()));
             cardHolderLayout.setLayoutParams(cardHolderLayoutParams);
@@ -193,13 +243,13 @@ public class HomeActivity extends AppCompatActivity {
             //Set the email TO name as the title
             TextView cardTitle = new TextView(this);
             cardTitle.setText(pastEmail.getDeliveredTo().get(0).getFullName());
-            cardTitle.setTextSize(24);
+            cardTitle.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_large));
             cardTitle.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the sub-header as the date the email was sent
             TextView cardSubHeader = new TextView(this);
             cardSubHeader.setText(pastEmail.getDate());
-            cardSubHeader.setTextSize(22);
+            cardSubHeader.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_medium));
             cardSubHeader.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the body as the first bit of the email
@@ -216,7 +266,7 @@ public class HomeActivity extends AppCompatActivity {
             }
             cardBody.setText(body.substring(0, MAX_BODY_PREVIEW));
             cardBody.setText(body);
-            cardBody.setTextSize(14);
+            cardBody.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_small));
             cardBody.setTextColor(getColor(currentTopIssue.getColourLight()));
 
             //Set the image as the icon for the issue
@@ -247,13 +297,15 @@ public class HomeActivity extends AppCompatActivity {
             cardHolder.addView(pastEmailCard);
 
             //Add card to the layout that holds the past trips
-            LinearLayout view = findViewById(R.id.container_past_emails);
             view.addView(cardHolder, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
-
         }
     }
+
+    /**
+     * Uses Google Auth to sign the user out
+     */
     private void signOut() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "639231938996",
+    "firebase_url": "https://envote-default-rtdb.firebaseio.com",
+    "project_id": "envote",
+    "storage_bucket": "envote.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639231938996:android:2b3fbc5e85301e0ad362e1",
+        "android_client_info": {
+          "package_name": "com.envelopepushers.envote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639231938996-t02h89n31qhsrb9m1n0vfn22k2n8vhgr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.envelopepushers.envote",
+            "certificate_hash": "dd8a9dbacc80105126204632ae8ddfa619bc9fe5"
+          }
+        },
+        {
+          "client_id": "639231938996-96b0p8ugq3id97a5pdph15bhflhp233e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg_OflwRPaggWqccLbN9k1cAcHs6UKtgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639231938996-96b0p8ugq3id97a5pdph15bhflhp233e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

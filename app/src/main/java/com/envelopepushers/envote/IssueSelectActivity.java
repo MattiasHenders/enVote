@@ -48,6 +48,10 @@ public class IssueSelectActivity extends AppCompatActivity {
         generateIssueCards(issuesInOrder);
     }
 
+    /**
+     * Opens the rep activity passing needed items
+     * @param issueKey
+     */
     public void openRepActivity(String issueKey) {
         Intent intent = new Intent(this, RepresentativeSelectActivity.class);
         intent.putExtra("issue", issueKey);
@@ -57,6 +61,10 @@ public class IssueSelectActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Generates the issues
+     * @param issues
+     */
     private void generateIssueCards(ArrayList<EcoIssue> issues) {
 
         for (EcoIssue currentIssue : issues) {
@@ -80,7 +88,11 @@ public class IssueSelectActivity extends AppCompatActivity {
             cardVerticalLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
 
             ViewGroup.MarginLayoutParams cardViewMarginParams = (ViewGroup.MarginLayoutParams) issueCard.getLayoutParams();
-            cardViewMarginParams.setMargins(10, 30, 50, 20);
+            cardViewMarginParams.setMargins(
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small),
+                    (int) getResources().getDimension(R.dimen.padding_small));
             issueCard.requestLayout();
 
             LinearLayout cardHolderLayout = new LinearLayout(this);
@@ -97,8 +109,6 @@ public class IssueSelectActivity extends AppCompatActivity {
             cardHolderLayout.setBackgroundColor(getColor(currentIssue.getColourDark()));
             cardHolderLayout.setLayoutParams(cardHolderLayoutParams);
 
-
-
             LinearLayout textHolderLayout = new LinearLayout(this);
             textHolderLayout.setOrientation(LinearLayout.VERTICAL);
             textHolderLayout.setPadding(
@@ -110,8 +120,7 @@ public class IssueSelectActivity extends AppCompatActivity {
             //Set the email TO name as the title
             TextView cardTitle = new TextView(this);
             cardTitle.setText(currentIssue.getName());
-            cardTitle.setTextSize(26);
-//            cardTitle.setTextSize(getResources().getDimension(R.dimen.font_medium));
+            cardTitle.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_large));
             cardTitle.setTextColor(getColor(currentIssue.getColourLight()));
 
             //Set the body as the first bit of the email
@@ -122,8 +131,7 @@ public class IssueSelectActivity extends AppCompatActivity {
 
             //Format the email body
             cardBody.setText(getString(R.string.show_more));
-            cardBody.setTextSize(18);
-//            cardBody.setTextSize(getResources().getDimension(R.dimen.font_small));
+            cardBody.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_small));
             cardBody.setTextColor(getColor(currentIssue.getColourLight()));
 
             //Set the image as the icon for the issue
@@ -190,7 +198,6 @@ public class IssueSelectActivity extends AppCompatActivity {
                 }
             });
 
-
             if (currentIssue.getKey().equals(EcoIssues.WATER.getKey())) {
                 cardBody.setId(R.id.waterIssueDescription);
                 selectButton.setId(R.id.waterButton);
@@ -228,6 +235,10 @@ public class IssueSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Closes the other cards to make it more readable
+     * @param issue
+     */
     private void closeOtherCards(String issue) {
 
         TextView airText = findViewById(R.id.airIssueDescription);
