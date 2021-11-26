@@ -63,7 +63,8 @@ public class HomeActivity extends AppCompatActivity {
 //        }
 
         //Get the past emails
-        getPastEmails();
+//        getPastEmails();
+        setBottomNavBar();
     }
 
     /**

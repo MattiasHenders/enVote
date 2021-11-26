@@ -1,12 +1,14 @@
 package com.envelopepushers.envote;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.j256.ormlite.stmt.query.In;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,6 +45,8 @@ public class TemplateView extends AppCompatActivity {
         System.out.println(intent.getStringExtra("email"));
 
         String selectedIssueKey = intent.getStringExtra("issue");
+        String receiverName = intent.getStringExtra("name");
+        String receiverEmail = intent.getStringExtra("email");
 
         selectedIssue = new EcoIssue(EcoIssues.valueOf(selectedIssueKey));
 
@@ -162,15 +166,19 @@ public class TemplateView extends AppCompatActivity {
         DatabaseReference myEmails = database.getReference("Emails");
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         String name = null;
+        String address = null;
         if (signInAccount != null) {
             name = signInAccount.getDisplayName();
+            address = signInAccount.getEmail();
         }
         EcoEmail email = new EcoEmail();
-        email.addDeliveredTo(new EmailReceiver("bingbong@gmail.com", name, EcoParty.LIBERAL));
+        ArrayList<EmailReceiver> receivers = new ArrayList<EmailReceiver>();
+        EmailReceiver receiver = new EmailReceiver(address, name, EcoParty.LIBERAL);
+        receivers.add(receiver);
+        email.setDeliveredTo(receivers);
         email.setBody(textBody.toString());
-        email.setDate(new Date());
-        email.addEcoIssue(selectedIssue);
+        email.setDate(new Date().toString());
+        email.setIssue(selectedIssue);
         myEmails.child("Emails").setValue(email);
-
     }
 }
