@@ -59,6 +59,12 @@ public class LocationSelectMap extends Activity implements LocationListener {
     //Local Reps
     JSONArray localReps;
 
+    boolean airIssue = false;
+    boolean emissionIssue = false;
+
+    int aqi = 0;
+    double emission = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
             String callURL = "https://represent.opennorth.ca/boundaries/simple_shape?contains=" + userLat + "%2C" + userLon;
             returnObj = new JsonFromWeb(callURL);
 
+            // Get the API data from the issue screen once the lat and lon are set
+            getAirIssue();
+            getEmissionsIssue();
             scheduleMapUpdate();
         }
     }
@@ -161,6 +170,8 @@ public class LocationSelectMap extends Activity implements LocationListener {
         intent.putExtra("reps", repString);
         intent.putExtra("lat", userLat);
         intent.putExtra("lon", userLon);
+        intent.putExtra("aqi", aqi);
+        intent.putExtra("emission", emission);
         startActivity(intent);
         finish();
     }
@@ -276,5 +287,62 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.getOverlays().add(polygon);
         mapMain.getOverlays().add(myPath);
         mapMain.invalidate();
+    }
+
+    private void getAirIssue() {
+        String urlCall = "https://api.waqi.info/feed/geo:" +
+                userLat + ";" +
+                userLon +
+                "/?token=bef2f7c377eda84ef9908eeac938ddae88989c5d";
+
+        JsonFromWeb airQuality = new JsonFromWeb(urlCall);
+        final JSONObject[] airQualityJSONHolder = {null};
+        final int[] AQIScore = new int[1];
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                while (airQuality.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                airQualityJSONHolder[0] = airQuality.getJSONObject();
+                try {
+                    if (airQualityJSONHolder[0]
+                            .getJSONObject("data")
+                            .getInt("aqi") > 80) {
+                        airIssue = true;
+                    }
+                    aqi = airQualityJSONHolder[0].getJSONObject("data").getInt("aqi");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 100);
+    }
+
+    private void getEmissionsIssue() {
+        System.out.println("In Emissions Issue");
+        String urlCall = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=" + 49 + "&point=" + -123 + "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
+        JsonFromWeb emissionResult = new JsonFromWeb(urlCall);
+        System.out.println(urlCall);
+        final JSONObject[] emissionJSONHolder = {null};
+        final int[] emissionScore = new int[1];
+        //Use new timer to get response
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("before while loop");
+                while (emissionResult.getJSONObject() == null) {
+                    //Wait for response on separate thread
+                }
+                emissionJSONHolder[0] = emissionResult.getJSONObject();
+                try {
+                    emission = emissionJSONHolder[0].getJSONArray("data").getJSONObject(0).getDouble("average");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 100);
     }
 }

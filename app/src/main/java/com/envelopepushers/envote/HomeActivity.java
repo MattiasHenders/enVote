@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -84,6 +85,10 @@ public class HomeActivity extends AppCompatActivity {
                 signOut();
                 return true;
             }
+//            if (item.getItemId() == R.id.action_profile) {
+//                openProfileActivity();
+//                return true;
+//            }
             return false;
         });
     }
@@ -297,9 +302,11 @@ public class HomeActivity extends AppCompatActivity {
             cardHolder.addView(pastEmailCard);
 
             //Add card to the layout that holds the past trips
-            view.addView(cardHolder, new LinearLayout.LayoutParams(
+            LinearLayout view2 = findViewById(R.id.container_past_emails);
+            view2.addView(cardHolder, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
+
         }
     }
 
