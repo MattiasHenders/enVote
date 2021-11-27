@@ -377,17 +377,14 @@ public class LocationSelectMap extends Activity implements LocationListener {
      * Gets the emission issue value and sends it to the GUI.
      */
     private void getEmissionsIssue() {
-        System.out.println("In Emissions Issue");
         String urlCall = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=" + 49 + "&point=" + -123 + "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
         JsonFromWeb emissionResult = new JsonFromWeb(urlCall);
-        System.out.println(urlCall);
         final JSONObject[] emissionJSONHolder = {null};
         final int[] emissionScore = new int[1];
         //Use new timer to get response
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("before while loop");
                 while (emissionResult.getJSONObject() == null) {
                     //Wait for response on separate thread
                 }

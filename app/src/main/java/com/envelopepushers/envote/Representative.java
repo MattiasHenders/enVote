@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Representative {
 
+    /**
+     * Name of the rep.
+     */
     @SerializedName("name")
     @Expose
     private String name;
@@ -14,6 +17,9 @@ public class Representative {
         this.name = name;
     }
 
+    /**
+     * email of the rep.
+     */
     @SerializedName("email")
     @Expose
     private String email;
@@ -24,6 +30,9 @@ public class Representative {
         this.email = email;
     }
 
+    /**
+     * Party of the rep.
+     */
     @SerializedName("party")
     @Expose
     private String party;
@@ -34,6 +43,9 @@ public class Representative {
         this.party = party;
     }
 
+    /**
+     * Government level of the rep.
+     */
     @SerializedName("governmentLevel")
     @Expose
     private String governmentLevel;
@@ -44,6 +56,9 @@ public class Representative {
         this.governmentLevel = governmentLevel;
     }
 
+    /**
+     * URL of the rep.
+     */
     @SerializedName("pictureUrl")
     @Expose
     private String pictureUrl;
@@ -54,6 +69,14 @@ public class Representative {
         this.pictureUrl = pictureUrl;
     }
 
+    /**
+     * Constructs the Representative object.
+     * @param name String
+     * @param party String
+     * @param email String
+     * @param governmentLevel String
+     * @param pictureUrl String
+     */
     public Representative(String name, String party, String email, String governmentLevel, String pictureUrl) {
         this.name = name;
         this.party = party;
