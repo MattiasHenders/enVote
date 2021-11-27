@@ -160,44 +160,5 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
         }, 100);
         System.out.println("reps list");
         System.out.println(_repsList);
-
-
-//        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, SERVICE_URL, null,
-//                new Response.Listener<JSONArray>() {
-//
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        JSONArray jsonData = null;
-//                        System.out.println(response);
-//                        System.out.println("\n\n\n\n\n\nChris**********************************TP STRING ***************");
-//                        System.out.println(response.toString());
-//                        try {
-//                            jsonData = new JSONArray(response.toString());
-//                            for(int ndx=0; ndx<jsonData.length(); ndx++) {
-//                                JSONObject obj = jsonData.getJSONObject(ndx);
-//                                String name = obj.getString("name");
-//                                String email = obj.getString("email");
-//                                String party = obj.getString("party_name");
-//                                String govLevel = obj.getString("representative_set_name");
-//                                String pictureUrl = obj.getString("photo_url");
-//
-//                                _repsList.add(new Representative(name, email, party, govLevel, pictureUrl));
-//                            }
-//                            _recyclerAdapter = new RecyclerAdapter(RepresentativeSelectActivity.this, _repsList);
-//                            _recyclerView.setAdapter(_recyclerAdapter);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        }
-//        );
-
-//        _requestQueue.add(request);
-//    }
     }
 }

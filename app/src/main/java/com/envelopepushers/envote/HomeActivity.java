@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -48,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
     //Firebase variables
     DatabaseReference database;
 
+    /**
+     * Called on creation of the activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,19 +61,15 @@ public class HomeActivity extends AppCompatActivity {
         //Connect to Firebase
         database = FirebaseDatabase.getInstance().getReference("Emails");
 
-//        logout = findViewById(R.id.btnLogout);
-//        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if(signInAccount != null) {
-//            name.setText(signInAccount.getDisplayName());
-//        }
-
         //Get the past emails
-//        getPastEmails();
+        getPastEmails();
+
+        //Generate the bottom navbar
         setBottomNavBar();
     }
 
     /**
-     * Show the bottom navbar
+     * Show the bottom navbar.
      */
     private void setBottomNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -113,9 +114,6 @@ public class HomeActivity extends AppCompatActivity {
                     //Add cards if emails are found
                     generatePastEmailCards();
                 }
-
-                //Generate the bottom navbar
-                setBottomNavBar();
             }
 
             @Override
@@ -298,9 +296,11 @@ public class HomeActivity extends AppCompatActivity {
             cardHolder.addView(pastEmailCard);
 
             //Add card to the layout that holds the past trips
-            view.addView(cardHolder, new LinearLayout.LayoutParams(
+            LinearLayout view2 = findViewById(R.id.container_past_emails);
+            view2.addView(cardHolder, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
+
         }
     }
 

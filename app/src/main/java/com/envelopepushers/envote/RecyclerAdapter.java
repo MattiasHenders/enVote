@@ -22,15 +22,23 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Context _context;
-    private ArrayList<Representative> _toonArrayList;
+    private ArrayList<Representative> _repArrayList;
     private String[] captions;
     Button btnSubmitLocation;
 
-    public RecyclerAdapter(Context context, ArrayList<Representative> toonArrayList) {
+    /**
+     * Constructor.
+     * @param context
+     * @param repArrayList
+     */
+    public RecyclerAdapter(Context context, ArrayList<Representative> repArrayList) {
         _context = context;
-        _toonArrayList = toonArrayList;
+        _repArrayList = repArrayList;
     }
 
+    /**
+     * Recycler View holder.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView _cardView;
 
@@ -40,6 +48,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
+    /**
+     * On view holder created use the inflater.
+     * @param parent parent class
+     * @param viewType Type of view (recycler)
+     * @return View Holder object
+     */
     @NonNull
     @Override
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,10 +62,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return new ViewHolder(cv);
     }
 
+    /**
+     * On bind, populate cards.
+     * @param holder Recycler view holder
+     * @param position Position in arr
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         final CardView cardView = holder._cardView;
-        Representative currentItem = _toonArrayList.get(position);
+        Representative currentItem = _repArrayList.get(position);
 
         TextView tvName = cardView.findViewById(R.id.name);
         TextView tvEmail = cardView.findViewById(R.id.email);
@@ -85,9 +104,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     .into(ivPictureUrl);
     }
 
+    /**
+     * Gets the item count.
+     * @return returns the size of the reps list
+     */
     @Override
     public int getItemCount() {
-        return _toonArrayList.size();
+        return _repArrayList.size();
     }
 }
 

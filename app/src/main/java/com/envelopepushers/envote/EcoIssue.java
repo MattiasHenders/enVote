@@ -10,6 +10,18 @@ public class EcoIssue {
   private int description;
 
   /**
+   * Default constructor
+   */
+  public EcoIssue() {
+    this.key = EcoIssues.EMPTY.getKey();
+    this.name = EcoIssues.EMPTY.getName();
+    this.icon = EcoIssues.EMPTY.getIcon();
+    this.colourLight = EcoIssues.EMPTY.getColourLight();
+    this.colourDark = EcoIssues.EMPTY.getColourDark();
+    this.description = EcoIssues.EMPTY.getDescription();
+  }
+
+  /**
    * Eco Issue Constructor using ENUM
    *
    * @param issues

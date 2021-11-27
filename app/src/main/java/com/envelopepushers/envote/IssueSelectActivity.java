@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +20,20 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class IssueSelectActivity extends AppCompatActivity {
 
     public LinearLayout issuesContainer;
     double userLat;
     double userLon;
-
+    int aqi = 0;
+    double emission = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +42,16 @@ public class IssueSelectActivity extends AppCompatActivity {
         issuesContainer = findViewById(R.id.issues_container);
 
         ArrayList<EcoIssue> issuesInOrder = new ArrayList<>();
-
         issuesInOrder.add(new EcoIssue(EcoIssues.TRASH));
         issuesInOrder.add(new EcoIssue(EcoIssues.WATER));
-        issuesInOrder.add(new EcoIssue(EcoIssues.ELECTRIC));
+        issuesInOrder.add(new EcoIssue(EcoIssues.EMISSION));
         issuesInOrder.add(new EcoIssue(EcoIssues.AIR));
 
         Intent intent = getIntent();
+        aqi = intent.getIntExtra("aqi", 0);
+        emission = intent.getDoubleExtra("emission", 0);
         userLat = intent.getDoubleExtra("lat", 0);
         userLon = intent.getDoubleExtra("lon", 0);
-
         generateIssueCards(issuesInOrder);
     }
 
@@ -201,7 +208,7 @@ public class IssueSelectActivity extends AppCompatActivity {
             if (currentIssue.getKey().equals(EcoIssues.WATER.getKey())) {
                 cardBody.setId(R.id.waterIssueDescription);
                 selectButton.setId(R.id.waterButton);
-            } else if (currentIssue.getKey().equals(EcoIssues.ELECTRIC.getKey())) {
+            } else if (currentIssue.getKey().equals(EcoIssues.EMISSION.getKey())) {
                 cardBody.setId(R.id.electricIssueDescription);
                 selectButton.setId(R.id.electricButton);
             } else if (currentIssue.getKey().equals(EcoIssues.TRASH.getKey())) {
@@ -223,14 +230,18 @@ public class IssueSelectActivity extends AppCompatActivity {
             issueCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    cardBody.setText(getString(currentIssue.getDescription()));
+                    if (currentIssue.getKey().equals("AIR")) {
+                        cardBody.setText("The current AQI is: " + aqi + ". An AQI over 80 is typically considered harmful.\n" + getString(currentIssue.getDescription()));
+                    } else if (currentIssue.getKey().equals("EMISSION")) {
+                        cardBody.setText("Your local carbon monoxide emissions are " + emission + getString(currentIssue.getDescription()));
+                    } else {
+                        cardBody.setText(getString(currentIssue.getDescription()));
+                    }
 
                     //Close the other cards
                     closeOtherCards(currentIssue.getKey());
                 }
             });
-
             issuesContainer.addView(issueCard);
         }
     }
