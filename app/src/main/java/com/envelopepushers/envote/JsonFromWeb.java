@@ -17,21 +17,44 @@ import java.net.URL;
 
 public class JsonFromWeb {
 
+    /**
+     * JSON object to return from web query
+     */
     private JSONObject returnObj = null;
+
+    /**
+     * String returned from web query
+     */
     private String returnString = null ;
 
+    /**
+     * Executes a web query.
+     * @param url String
+     */
     public JsonFromWeb(String url) {
         new JsonTask().execute(url);
     }
 
+    /**
+     * Gets the JSON string.
+     * @return
+     */
     public String getJSONString() {
         return returnString;
     }
+
+    /**
+     * Gets the JSON object.
+     * @return JSONobject
+     */
     public JSONObject getJSONObject() {
         return returnObj;
     }
 
 
+    /**
+     * Gets the JSON response from a web query. Does the heavy lifting
+     */
     private class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
@@ -42,12 +65,11 @@ public class JsonFromWeb {
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
-
+            // Attempt the query
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-
 
                 InputStream stream = connection.getInputStream();
 
@@ -55,7 +77,7 @@ public class JsonFromWeb {
 
                 StringBuffer buffer = new StringBuffer();
                 String line = "";
-
+                // Read in the response to a string buffer
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
                     Log.d("Response: ", "> " + line);
@@ -63,8 +85,6 @@ public class JsonFromWeb {
                 }
 
                 return buffer.toString();
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -84,6 +104,7 @@ public class JsonFromWeb {
             return null;
         }
 
+        // Creates and Returns a JSON Object
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -93,6 +114,7 @@ public class JsonFromWeb {
             } else {
                 returnString = result;
             }
+            // If the result is a JSON array make it a JSON object
             if (!result.trim().startsWith("{")) {
                 result = "{\"data\":" + result + "}";
             }
@@ -109,5 +131,4 @@ public class JsonFromWeb {
             }
         }
     }
-
 }

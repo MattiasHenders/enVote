@@ -49,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
     //Firebase variables
     DatabaseReference database;
 
+    /**
+     * Called on creation of the activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +60,6 @@ public class HomeActivity extends AppCompatActivity {
 
         //Connect to Firebase
         database = FirebaseDatabase.getInstance().getReference("Emails");
-
-//        logout = findViewById(R.id.btnLogout);
-//        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if(signInAccount != null) {
-//            name.setText(signInAccount.getDisplayName());
-//        }
 
         //Get the past emails
         getPastEmails();
@@ -71,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Show the bottom navbar
+     * Show the bottom navbar.
      */
     private void setBottomNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -85,10 +83,6 @@ public class HomeActivity extends AppCompatActivity {
                 signOut();
                 return true;
             }
-//            if (item.getItemId() == R.id.action_profile) {
-//                openProfileActivity();
-//                return true;
-//            }
             return false;
         });
     }

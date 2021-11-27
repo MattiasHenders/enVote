@@ -118,6 +118,10 @@ public class EmailReceiver {
         this.lastName = name.split(" ")[1];
     }
 
+    /**
+     * Overridden to string method.
+     * @return to string
+     */
     @Override
     public String toString() {
         return "EmailReceiver{" +

@@ -36,35 +36,85 @@ import java.util.TimerTask;
 
 public class LocationSelectMap extends Activity implements LocationListener {
 
-    //Map variables
+    /**
+     * The map view.
+     */
     private MapView mapMain;
+
+    /**
+     * Controls the map view.
+     */
     private IMapController mapController;
+
+    /**
+     * A timer for updating the map.
+     */
     Timer updateMapTimer;
 
-    //Location submission
+    /**
+     * The submit button.
+     */
     private Button btnSubmitLocation;
+
+    /**
+     * Manages user location.
+     */
     protected LocationManager locationManager;
+
+    /**
+     * Determines if location should be set.
+     */
     private boolean setLocation = false;
 
-    //Calls to online APIs
+    /**
+     * Response from call to online APIs.
+     */
     private JsonFromWeb returnObj;
 
-    //Buttons for moving to next page
+    /**
+     * Buttons for moving to next page.
+     */
     public ExtendedFloatingActionButton titleView;
 
-    //Users location
+    /**
+     * The user's location.
+     */
     private double userLat = 0, userLon = 0;
+
+    /**
+     * The default zoom of the map.
+     */
     private int defaultZoom = 14;
 
-    //Local Reps
+    /**
+     * JSON array of all local reps card view.
+     */
     JSONArray localReps;
 
+    /**
+     * The air issue.
+     */
     boolean airIssue = false;
+
+    /**
+     * The emission issue.
+     */
     boolean emissionIssue = false;
 
+    /**
+     * The AQI intent value.
+     */
     int aqi = 0;
+
+    /**
+     * The emission intent value.
+     */
     double emission = 0;
 
+    /**
+     * Called on activity creation.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -289,6 +339,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
         mapMain.invalidate();
     }
 
+    /**
+     * Gets the air issue value and places it in the GUI.
+     */
     private void getAirIssue() {
         String urlCall = "https://api.waqi.info/feed/geo:" +
                 userLat + ";" +
@@ -320,6 +373,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
         }, 100);
     }
 
+    /**
+     * Gets the emission issue value and sends it to the GUI.
+     */
     private void getEmissionsIssue() {
         System.out.println("In Emissions Issue");
         String urlCall = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=" + 49 + "&point=" + -123 + "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
