@@ -106,8 +106,8 @@ public class TemplateView extends AppCompatActivity {
 
         //Select the issue file based on issue
         switch (selectedIssue.getKey()) {
-            case ("ELECTRIC"):
-                is = this.getResources().openRawResource(R.raw.electric);
+            case ("EMISSION"):
+                is = this.getResources().openRawResource(R.raw.emissions);
                 break;
 
             case ("WATER"):
