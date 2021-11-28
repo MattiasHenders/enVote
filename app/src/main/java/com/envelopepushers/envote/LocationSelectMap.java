@@ -111,6 +111,9 @@ public class LocationSelectMap extends Activity implements LocationListener {
      */
     double emission = 0;
 
+    String emissionURLStart = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=";
+    String emissionsURLEnd = "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
+
     /**
      * Called on activity creation.
      * @param savedInstanceState
@@ -377,7 +380,7 @@ public class LocationSelectMap extends Activity implements LocationListener {
      * Gets the emission issue value and sends it to the GUI.
      */
     private void getEmissionsIssue() {
-        String urlCall = "https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?point=" + 49 + "&point=" + -123 + "&begin=2021-01-01&end=2021-11-21&limit=1&offset=0";
+        String urlCall = emissionURLStart + userLat + "&point=" + userLon + emissionsURLEnd;
         JsonFromWeb emissionResult = new JsonFromWeb(urlCall);
         final JSONObject[] emissionJSONHolder = {null};
         final int[] emissionScore = new int[1];

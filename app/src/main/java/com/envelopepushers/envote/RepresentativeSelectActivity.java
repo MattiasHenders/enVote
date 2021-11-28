@@ -32,6 +32,10 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
     double userLon;
     public String selectedIssue;
 
+    String issue = "issue";
+    String lat = "lat";
+    String lon = "lon";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +46,10 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(this);
         _recyclerView.setLayoutManager(lm);
 
-        selectedIssue = intent.getStringExtra("issue");
+        selectedIssue = intent.getStringExtra(issue);
 
-        userLat = intent.getDoubleExtra("lat", 0);
-        userLon = intent.getDoubleExtra("lon", 0);
+        userLat = intent.getDoubleExtra(lat, 0);
+        userLon = intent.getDoubleExtra(lon, 0);
         _repsList = new ArrayList<Representative>();
         _requestQueue = Volley.newRequestQueue(this);
         queueParseJSON();

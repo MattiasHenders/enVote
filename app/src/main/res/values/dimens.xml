@@ -42,4 +42,7 @@
 
     <dimen name="empty">0dp</dimen>
 
+    <dimen name="RepViewX">105dp</dimen>
+    <dimen name="RepViewY">57dp</dimen>
+
 </resources>

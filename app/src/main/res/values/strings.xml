@@ -40,6 +40,7 @@
                             Ground-level ozone (a key component of smog) is associated with many health problems.
     </string>
 
+    <string name="repSelection">Select a Representative</string>
     <string name="repName1">Donald Trump</string>
     <string name="repDesc1">Representative description</string>
     <string name="repName2">Justin Trudeau</string>

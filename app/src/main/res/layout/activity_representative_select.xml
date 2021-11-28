@@ -13,137 +13,15 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Representative Selection"
+        android:text="@string/repSelection"
         android:layout_gravity="center"
         android:textSize="@dimen/font_medium"
         android:layout_marginBottom="@dimen/margin_medium"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="57dp" />
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/cardView1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="@dimen/margin_medium"-->
-<!--        app:cardCornerRadius="@dimen/borderRadius_medium"-->
-<!--        android:background="@color/blue_bright">-->
-<!--            <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:background="@color/blue_bright"-->
-<!--                android:padding="20dp"-->
-<!--            >-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="220dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:orientation="vertical"-->
-<!--                >-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="25dp">-->
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView3"-->
-<!--                        android:layout_width="30dp"-->
-<!--                        android:layout_height="25dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:textSize="@dimen/font_medium"-->
-<!--                        android:text="@string/repName1" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="120dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@string/conservative"-->
-<!--                        android:textSize="@dimen/font_medium"-->
-<!--                        />-->
-
-<!--                </LinearLayout>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/textView4"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="@string/repDesc1" />-->
-<!--            </LinearLayout>-->
-
-<!--        </LinearLayout>-->
-<!--    </androidx.cardview.widget.CardView>-->
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/cardView1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="@dimen/margin_medium"-->
-<!--        app:cardCornerRadius="@dimen/borderRadius_medium"-->
-<!--        android:background="@color/blue_bright">-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:background="@color/red_bright"-->
-<!--            android:padding="20dp"-->
-<!--            >-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="220dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:orientation="vertical"-->
-<!--                >-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="25dp">-->
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView3"-->
-<!--                        android:layout_width="30dp"-->
-<!--                        android:layout_height="25dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:textSize="@dimen/font_medium"-->
-<!--                        android:text="@string/repName2" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="120dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@string/liberal"-->
-<!--                        android:textSize="@dimen/font_medium"-->
-<!--                        />-->
-
-<!--                </LinearLayout>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/textView4"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="@string/repDesc1" />-->
-<!--            </LinearLayout>-->
-
-<!--            <Button-->
-<!--                android:id="@+id/nextPageButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:backgroundTint="@color/red_dark"-->
-<!--                android:text="@string/select"-->
-<!--                tools:layout_editor_absoluteX="200dp"-->
-<!--                tools:layout_editor_absoluteY="147dp" />-->
-<!--        </LinearLayout>-->
-<!--    </androidx.cardview.widget.CardView>-->
-
-
+        tools:layout_editor_absoluteX="@dimen/RepViewX"
+        tools:layout_editor_absoluteY="@dimen/RepViewY" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
-
-
-
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="1"/>-->
-
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottom_nav"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        app:itemIconTint="@color/white"-->
-<!--        app:itemTextColor="@color/white"-->
-<!--        app:menu="@menu/bottom_nav"-->
-<!--        android:background="@color/green_forest"/>-->
-
 </LinearLayout>
