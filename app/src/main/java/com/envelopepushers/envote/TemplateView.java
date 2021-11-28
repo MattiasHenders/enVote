@@ -1,14 +1,12 @@
 package com.envelopepushers.envote;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.j256.ormlite.stmt.query.In;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -50,8 +48,8 @@ public class TemplateView extends AppCompatActivity {
 
         selectedIssue = new EcoIssue(EcoIssues.valueOf(selectedIssueKey));
 
-        EmailReceiver toSend = new EmailReceiver("contact@liberalparty.ca",
-                "Justin Trudeau", EcoParty.LIBERAL);
+        EmailReceiver toSend = new EmailReceiver(receiverEmail,
+                receiverName, EcoParty.LIBERAL);
 
         ArrayList<EmailReceiver> emailRecievers = new ArrayList<>();
         emailRecievers.add(toSend);
@@ -62,17 +60,22 @@ public class TemplateView extends AppCompatActivity {
 //        String emailSubject = newEmail.getSubject();
 //        String emailBody = newEmail.getBody();
 
+
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        String userName = "";
+        if (signInAccount != null) {
+            userName = signInAccount.getDisplayName();
+        }
+
         String rawEmailBody = "";
         try {
-            rawEmailBody = getEmailStringFromTextFile(emailRecievers);
+            rawEmailBody = getEmailStringFromTextFile(emailRecievers, userName);
         } catch (IOException ioe) {
             System.out.println("ERROR: IO");
         }
 
         final String emailBody = rawEmailBody;
-
         setEmailTemplate(emailRecievers.get(0).getEmail(), emailSubject, emailBody);
-
         btnSendEmail = findViewById(R.id.btn_send_email);
 
         //OnClickListeners Set
@@ -80,12 +83,22 @@ public class TemplateView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startEmailIntent(emailRecievers, emailSubject, emailBody);
-                storeEmail();
+                storeEmail(emailRecievers);
             }
         });
     }
 
-    private String getEmailStringFromTextFile(ArrayList<EmailReceiver> receivers) throws IOException {
+    /**
+     * Sends the user back to the home screen after email intent is finished.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
+    }
+
+    private String getEmailStringFromTextFile(ArrayList<EmailReceiver> receivers, String userName) throws IOException {
 
         String string = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -128,7 +141,7 @@ public class TemplateView extends AppCompatActivity {
 
         rawEmail = rawEmail.replace("[REP NAME]", receivers.get(0).getFullName());
         rawEmail = rawEmail.replace("[REP PARTY]", receivers.get(0).getParty().getPartyName());
-        rawEmail = rawEmail.replace("[SENDER NAME]", "Mattias Henders");
+        rawEmail = rawEmail.replace("[SENDER NAME]", userName);
 
         return rawEmail;
     }
@@ -162,23 +175,14 @@ public class TemplateView extends AppCompatActivity {
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
 
-    private void storeEmail() {
+    private void storeEmail(ArrayList<EmailReceiver> receivers) {
+
         DatabaseReference myEmails = database.getReference("Emails");
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        String name = null;
-        String address = null;
-        if (signInAccount != null) {
-            name = signInAccount.getDisplayName();
-            address = signInAccount.getEmail();
-        }
         EcoEmail email = new EcoEmail();
-        ArrayList<EmailReceiver> receivers = new ArrayList<EmailReceiver>();
-        EmailReceiver receiver = new EmailReceiver(address, name, EcoParty.LIBERAL);
-        receivers.add(receiver);
         email.setDeliveredTo(receivers);
-        email.setBody(textBody.toString());
+        email.setBody(textBody.getText().toString());
         email.setDate(new Date().toString());
         email.setIssue(selectedIssue);
-        myEmails.child("Emails").setValue(email);
+        myEmails.push().setValue(email);
     }
 }
