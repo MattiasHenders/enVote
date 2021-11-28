@@ -64,14 +64,6 @@
 <!--                    android:text="@string/repDesc1" />-->
 <!--            </LinearLayout>-->
 
-            <Button
-                android:id="@+id/nextPageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/blue_dark"
-                android:text="@string/select"
-                tools:layout_editor_absoluteX="200dp"
-                tools:layout_editor_absoluteY="147dp" />
 <!--        </LinearLayout>-->
 <!--    </androidx.cardview.widget.CardView>-->
 <!--    <androidx.cardview.widget.CardView-->

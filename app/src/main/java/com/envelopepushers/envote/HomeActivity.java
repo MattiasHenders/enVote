@@ -91,6 +91,11 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void getPastEmails() {
 
+        //If database is null
+        CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
+        noPastEmailsButton.setVisibility(View.VISIBLE);
+        noPastEmailsButton.setOnClickListener(view -> openMapActivity());
+
         // Read from the database
         database.addChildEventListener(new ChildEventListener() {
 
@@ -98,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 pastEmails.add(snapshot.getValue(EcoEmail.class));
 
-                CardView noPastEmailsButton = findViewById(R.id.no_past_emails_button);
+
 
                 if (pastEmails.isEmpty()) {
                     noPastEmailsButton.setVisibility(View.VISIBLE);

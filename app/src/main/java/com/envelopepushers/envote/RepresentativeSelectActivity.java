@@ -1,19 +1,16 @@
 package com.envelopepushers.envote;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -26,7 +23,6 @@ import java.util.TimerTask;
 
 public class RepresentativeSelectActivity extends AppCompatActivity {
 
-    private Button btnSubmitLocation;
     private static final String SERVICE_URL = "https://represent.opennorth.ca/representatives/?point=";
     private ArrayList<Representative> _repsList;
     private RecyclerView _recyclerView;
@@ -36,12 +32,10 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
     double userLon;
     public String selectedIssue;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representative_select);
-        btnSubmitLocation = findViewById(R.id.nextPageButton);
         Intent intent = getIntent();
         _recyclerView = findViewById(R.id.recycler_view);
         _recyclerView.setHasFixedSize(true);
@@ -50,26 +44,11 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
 
         selectedIssue = intent.getStringExtra("issue");
 
-        btnSubmitLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openEmailActivity();
-            }
-        });
-
         userLat = intent.getDoubleExtra("lat", 0);
         userLon = intent.getDoubleExtra("lon", 0);
         _repsList = new ArrayList<Representative>();
         _requestQueue = Volley.newRequestQueue(this);
-        System.out.println("calling QPJ");
         queueParseJSON();
-    }
-
-    public void openEmailActivity() {
-        Intent intent = new Intent(this, TemplateView.class);
-        intent.putExtra("issue", selectedIssue);
-        finish();
-        startActivity(intent);
     }
 
     public void onResponse(JSONArray response) {

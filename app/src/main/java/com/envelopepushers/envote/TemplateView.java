@@ -38,18 +38,24 @@ public class TemplateView extends AppCompatActivity {
         textBody = findViewById(R.id.text_email_body);
 
         Intent intent = getIntent();
-        System.out.println(intent.getStringExtra("issue"));
-        System.out.println(intent.getStringExtra("name"));
-        System.out.println(intent.getStringExtra("email"));
 
         String selectedIssueKey = intent.getStringExtra("issue");
         String receiverName = intent.getStringExtra("name");
+        String partyName = intent.getStringExtra("party");
         String receiverEmail = intent.getStringExtra("email");
 
         selectedIssue = new EcoIssue(EcoIssues.valueOf(selectedIssueKey));
 
+        EcoParty ecoParty;
+        //Check for valid party
+        try {
+            ecoParty = EcoParty.valueOf(partyName);
+        } catch (Exception e) {
+            ecoParty = EcoParty.INDEPENDENT;
+        }
+
         EmailReceiver toSend = new EmailReceiver(receiverEmail,
-                receiverName, EcoParty.LIBERAL);
+                receiverName, ecoParty);
 
         ArrayList<EmailReceiver> emailRecievers = new ArrayList<>();
         emailRecievers.add(toSend);
@@ -57,7 +63,7 @@ public class TemplateView extends AppCompatActivity {
         String emailSubject = selectedIssue.getName() + " Issue";
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        String userName = "";
+        String userName = "A concerned citizen";
         if (signInAccount != null) {
             userName = signInAccount.getDisplayName();
         }
@@ -133,7 +139,12 @@ public class TemplateView extends AppCompatActivity {
         String rawEmail = stringBuilder.toString();
 
         rawEmail = rawEmail.replace("[REP NAME]", receivers.get(0).getFullName());
-        rawEmail = rawEmail.replace("[REP PARTY]", receivers.get(0).getParty().getPartyName());
+        if (receivers.get(0).getParty() == EcoParty.INDEPENDENT) {
+            rawEmail = rawEmail.replace("the [REP PARTY]", "you");
+
+        } else {
+            rawEmail = rawEmail.replace("[REP PARTY]", receivers.get(0).getParty().getPartyName());
+        }
         rawEmail = rawEmail.replace("[SENDER NAME]", userName);
 
         return rawEmail;

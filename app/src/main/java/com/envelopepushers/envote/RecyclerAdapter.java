@@ -92,6 +92,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 intent.putExtra("issue", issue);
                 intent.putExtra("email", tvEmail.getText().toString());
                 intent.putExtra("name", tvName.getText().toString());
+                intent.putExtra("party", tvParty.getText().toString());
+                ((Activity) _context).finish();
                 _context.startActivity(intent);
             }
         });
