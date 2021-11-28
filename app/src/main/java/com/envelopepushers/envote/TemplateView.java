@@ -98,6 +98,14 @@ public class TemplateView extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Grabs the appropriate email template based on the issue.
+     *
+     * @param receivers as ArrayList<EmailReceiver>
+     * @param userName as String
+     * @return rawEmail as String
+     * @throws IOException
+     */
     private String getEmailStringFromTextFile(ArrayList<EmailReceiver> receivers, String userName) throws IOException {
 
         String string = "";
@@ -175,6 +183,10 @@ public class TemplateView extends AppCompatActivity {
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
 
+    /**
+     * Writes the email into the firebase realtime database
+     * @param receivers as ArrayList<EmailReceiver>
+     */
     private void storeEmail(ArrayList<EmailReceiver> receivers) {
 
         DatabaseReference myEmails = database.getReference("Emails");
