@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Email card variables
     public ArrayList<EcoEmail> pastEmails = new ArrayList<>();
-    final int MAX_BODY_PREVIEW = 50;
+    final int MAX_BODY_PREVIEW = 100;
 
     Button logout;
 
@@ -183,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(0, 0, 0, (int)getResources().getDimension(R.dimen.margin_small));
+            layoutParams.setMargins(0, 0, 0, 0);
             cardHolder.setLayoutParams(layoutParams);
 
             //Create the individual card
@@ -201,10 +201,10 @@ public class HomeActivity extends AppCompatActivity {
                     (ViewGroup.MarginLayoutParams) pastEmailCard.getLayoutParams();
 
             cardViewMarginParams.setMargins(
-                    (int)getResources().getDimension(R.dimen.margin_large),
-                    (int)getResources().getDimension(R.dimen.margin_large),
-                    (int)getResources().getDimension(R.dimen.margin_large),
-                    (int)getResources().getDimension(R.dimen.margin_large));
+                    (int)getResources().getDimension(R.dimen.margin_small),
+                    (int)getResources().getDimension(R.dimen.margin_small),
+                    (int)getResources().getDimension(R.dimen.margin_small),
+                    (int)getResources().getDimension(R.dimen.margin_small));
 
             pastEmailCard.requestLayout();
 
@@ -257,12 +257,11 @@ public class HomeActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
             //Format the email body
-            StringBuilder body = new StringBuilder(pastEmail.getBody());
-            body.append("...");
-            while (body.length() <= MAX_BODY_PREVIEW) {
-                body.append(" ");
+            String body = pastEmail.getBody();
+            if (body.length() > MAX_BODY_PREVIEW) {
+                body = body.substring(0, MAX_BODY_PREVIEW);
+                body += "...";
             }
-            cardBody.setText(body.substring(0, MAX_BODY_PREVIEW));
             cardBody.setText(body);
             cardBody.setTextSize((int)getResources().getDimension(R.dimen.dynamic_font_small));
             cardBody.setTextColor(getColor(currentTopIssue.getColourLight()));

@@ -56,11 +56,6 @@ public class TemplateView extends AppCompatActivity {
 
         String emailSubject = selectedIssue.getName() + " Issue";
 
-//        String emailTo = emailRecievers.get(0).getEmail();
-//        String emailSubject = newEmail.getSubject();
-//        String emailBody = newEmail.getBody();
-
-
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         String userName = "";
         if (signInAccount != null) {
@@ -86,16 +81,6 @@ public class TemplateView extends AppCompatActivity {
                 storeEmail(emailRecievers);
             }
         });
-    }
-
-    /**
-     * Sends the user back to the home screen after email intent is finished.
-     */
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
     }
 
     /**
@@ -181,6 +166,8 @@ public class TemplateView extends AppCompatActivity {
         email.setType("message/rfc822");
 
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
+
+        finish();
     }
 
     /**

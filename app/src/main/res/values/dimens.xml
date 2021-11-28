@@ -38,7 +38,7 @@
     <dimen name="shadowHeight">10dp</dimen>
 
     <dimen name="bannerHeight">300dp</dimen>
-    <dimen name="scrollHeight">300dp</dimen>
+    <dimen name="scrollHeight">370dp</dimen>
 
     <dimen name="empty">0dp</dimen>
 

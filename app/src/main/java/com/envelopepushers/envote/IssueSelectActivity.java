@@ -64,8 +64,8 @@ public class IssueSelectActivity extends AppCompatActivity {
         intent.putExtra("issue", issueKey);
         intent.putExtra("lat", userLat);
         intent.putExtra("lon", userLon);
-        startActivity(intent);
         finish();
+        startActivity(intent);
     }
 
     /**

@@ -54,7 +54,6 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openEmailActivity();
-                finish();
             }
         });
 
@@ -64,51 +63,13 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
         _requestQueue = Volley.newRequestQueue(this);
         System.out.println("calling QPJ");
         queueParseJSON();
-        //setBottomNavBar();
     }
-
-
-    private void setBottomNavBar() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.action_new) {
-                    openMapActivity();
-                    return true;
-                }
-                if (item.getItemId() == R.id.action_browse) {
-                    openHomeActivity();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-    }
-
 
     public void openEmailActivity() {
         Intent intent = new Intent(this, TemplateView.class);
         intent.putExtra("issue", selectedIssue);
+        finish();
         startActivity(intent);
-        finish();
-    }
-
-    private void openMapActivity() {
-        startActivity(new Intent(this, LocationSelectMap.class));
-        finish();
-    }
-
-    private void openHomeActivity() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
-    }
-
-    private void openIssueActivity() {
-        startActivity(new Intent(this, IssueSelectActivity.class));
-        finish();
     }
 
     public void onResponse(JSONArray response) {
@@ -158,7 +119,5 @@ public class RepresentativeSelectActivity extends AppCompatActivity {
                 }
             }
         }, 100);
-        System.out.println("reps list");
-        System.out.println(_repsList);
     }
 }

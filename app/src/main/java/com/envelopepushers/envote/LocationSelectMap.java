@@ -222,8 +222,8 @@ public class LocationSelectMap extends Activity implements LocationListener {
         intent.putExtra("lon", userLon);
         intent.putExtra("aqi", aqi);
         intent.putExtra("emission", emission);
-        startActivity(intent);
         finish();
+        startActivity(intent);
     }
 
     /**
