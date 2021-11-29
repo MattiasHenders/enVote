@@ -25,7 +25,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -59,10 +58,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Connect to Firebase
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        String uid = signInAccount.getId();
-        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        database = FirebaseDatabase.getInstance().getReference("users").child(user).child("emails");
+        String user;
+        try {
+            user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            database = FirebaseDatabase.getInstance().getReference("users").child(user).child("emails");
+        } catch (NullPointerException e) {
+            Toast.makeText(this,"No current user signed in", Toast.LENGTH_SHORT).show();
+        }
 
         //Get the past emails
         getPastEmails();

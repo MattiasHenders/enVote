@@ -40,6 +40,7 @@ public class TemplateView extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        // Retrieve data about the email from the intent extras
         String selectedIssueKey = intent.getStringExtra("issue");
         String receiverName = intent.getStringExtra("name");
         String partyName = intent.getStringExtra("party");
@@ -55,20 +56,22 @@ public class TemplateView extends AppCompatActivity {
             ecoParty = EcoParty.INDEPENDENT;
         }
 
+        // Create the receiver for the email using the data from the intent
         EmailReceiver toSend = new EmailReceiver(receiverEmail,
                 receiverName, ecoParty);
-
         ArrayList<EmailReceiver> emailRecievers = new ArrayList<>();
         emailRecievers.add(toSend);
 
         String emailSubject = selectedIssue.getName() + " Issue";
 
+        // Sets the current signed in user's name for the email
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         String userName = "A concerned citizen";
         if (signInAccount != null) {
             userName = signInAccount.getDisplayName();
         }
 
+        // Gets the email body
         String rawEmailBody = "";
         try {
             rawEmailBody = getEmailStringFromTextFile(emailRecievers, userName);
@@ -80,7 +83,7 @@ public class TemplateView extends AppCompatActivity {
         setEmailTemplate(emailRecievers.get(0).getEmail(), emailSubject, emailBody);
         btnSendEmail = findViewById(R.id.btn_send_email);
 
-        //OnClickListeners Set
+        // Sets listener on send email button to open email client and write the email to database
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +128,7 @@ public class TemplateView extends AppCompatActivity {
         }
 
 
+        // Create a rawEmail String using buffered reader from the template resource file
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         while (true) {
             try {
@@ -139,6 +143,7 @@ public class TemplateView extends AppCompatActivity {
 
         String rawEmail = stringBuilder.toString();
 
+        // Replace the placeholders in the template email with receiver information
         rawEmail = rawEmail.replace("[REP NAME]", receivers.get(0).getFullName());
         if (receivers.get(0).getParty() == EcoParty.INDEPENDENT) {
             rawEmail = rawEmail.replace("the [REP PARTY]", "you");
@@ -160,6 +165,13 @@ public class TemplateView extends AppCompatActivity {
         textBody.setText(emailBody + "\n"); //Give extra padding to the bottom
     }
 
+    /**
+     * Starts the implicit intent for the Email
+     *
+     * @param receivers as ArrayList<EmailReceiver>
+     * @param subject as String
+     * @param body as String
+     */
     private void startEmailIntent(ArrayList<EmailReceiver> receivers, String subject, String body) {
 
         //Get String array of who to send to
@@ -187,15 +199,19 @@ public class TemplateView extends AppCompatActivity {
      * @param receivers as ArrayList<EmailReceiver>
      */
     private void storeEmail(ArrayList<EmailReceiver> receivers) {
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        String uid = signInAccount.getId();
+
+        // Get reference to database for emails for the user
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference myEmails = database.getReference().child("users").child(user).child("emails");
+
+        // Create EcoEmail object and attach the email information
         EcoEmail email = new EcoEmail();
         email.setDeliveredTo(receivers);
         email.setBody(textBody.getText().toString());
         email.setDate(new Date().toString());
         email.setIssue(selectedIssue);
+
+        // Write the email to the database
         myEmails.push().setValue(email);
     }
 }

@@ -28,6 +28,9 @@ public class SignInActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
 
+    /**
+     * Opens homeActivity if an existed authenticated user is still signed in.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -38,6 +41,11 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets up the signin process through GoogleAuth for access to our application.
+     *
+     * @param savedInstanceState as Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +54,8 @@ public class SignInActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         createRequest();
+
+        // Sets the signIn button to open the google sign in
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +66,9 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates the request with the google sign in client to sign in a user with their google account.
+     */
     private void createRequest() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -67,16 +80,29 @@ public class SignInActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    /**
+     * Opens the HomeActivity after signing in or current user is still signed in.
+     */
     private void openHomeActivity() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
+    /**
+     * Signs into the google client.
+     */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Handles results from the sign in intent.
+     *
+     * @param requestCode as int
+     * @param resultCode as int
+     * @param data as Intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -95,6 +121,12 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Uses a successful google account sign in to create an authenticated Firebase user for access
+     * read and write to the Firebase Realtime Database.
+     *
+     * @param idToken as String
+     */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
