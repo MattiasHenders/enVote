@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -186,8 +187,10 @@ public class TemplateView extends AppCompatActivity {
      * @param receivers as ArrayList<EmailReceiver>
      */
     private void storeEmail(ArrayList<EmailReceiver> receivers) {
-
-        DatabaseReference myEmails = database.getReference("Emails");
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        String uid = signInAccount.getId();
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference myEmails = database.getReference().child("users").child(user).child("emails");
         EcoEmail email = new EcoEmail();
         email.setDeliveredTo(receivers);
         email.setBody(textBody.getText().toString());

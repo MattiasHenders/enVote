@@ -58,6 +58,5 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-
 }
 apply plugin: 'com.android.application'
